@@ -27,6 +27,8 @@ export const MuruganScene = ({ isOpened }) => {
   const lampRightRef = useRef(null);
   const leafLeftRef = useRef(null);
   const leafRightRef = useRef(null);
+  const toranamRef = useRef(null);
+  const floorRef = useRef(null);
   const hasPlayedRef = useRef(false);
 
   // Cinematic incoming animation sequence
@@ -55,6 +57,8 @@ export const MuruganScene = ({ isOpened }) => {
     // Initial state setup: screen starts in dark, calm temple sanctum
     gsap.set(cameraRef.current, { scale: 1.02 });
     gsap.set(bgLayerRef.current, { opacity: 0 });
+    gsap.set(toranamRef.current, { opacity: 0, y: -16 });
+    gsap.set(floorRef.current, { opacity: 0 });
     gsap.set([leafLeftRef.current, leafRightRef.current], {
       opacity: 0,
       y: 18,
@@ -120,6 +124,17 @@ export const MuruganScene = ({ isOpened }) => {
           ease: "power2.out",
         },
         0.1
+      )
+      // Reveal top festive wedding toranam & sanctum floor
+      .to(
+        [toranamRef.current, floorRef.current],
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1.5,
+          ease: "power2.out",
+        },
+        0.2
       )
       // Banana leaves frame edges with very gentle natural sway
       .to(
@@ -437,6 +452,16 @@ export const MuruganScene = ({ isOpened }) => {
     <section ref={sceneRef} className="murugan-scene-section" id="murugan-scene">
       {/* 2.5D Cinematic Camera Stage */}
       <div ref={cameraRef} className="murugan-camera-stage">
+        {/* Auspicious Festive Wedding Toranam (Top Floral Garland) */}
+        <div ref={toranamRef} className="sanctum-top-toranam" aria-hidden="true">
+          <img
+            src="/assets/decorations/wedding-toranam.png"
+            alt=""
+            className="sanctum-toranam-img"
+            loading="eager"
+          />
+        </div>
+
         {/* Layer 1: Background — Authentic Tamil Nadu Temple Gopuram */}
         <div ref={bgLayerRef} className="murugan-sanctum-bg">
           <img
@@ -576,43 +601,34 @@ export const MuruganScene = ({ isOpened }) => {
           </div>
         </div>
 
-        {/* Layer 4: Traditional Auspicious Wedding Banana Trees (Vazhai Maram) Framing the Sanctum */}
-        <div ref={leafLeftRef} className="sanctum-vazhai-tree sanctum-vazhai-left" aria-hidden="true">
-          <div className="vazhai-trunk-layer">
-            <img
-              src="/assets/decorations/banana-tree-trunk.png"
-              alt=""
-              className="vazhai-part-img"
-              loading="eager"
-            />
-          </div>
-          <div className="vazhai-canopy-layer vazhai-canopy-anim-left">
-            <img
-              src="/assets/decorations/banana-tree-canopy.png"
-              alt=""
-              className="vazhai-part-img"
-              loading="eager"
-            />
-          </div>
+        {/* Layer 4: Traditional Auspicious Wedding Banana Leaves Framing Sanctum */}
+        <div ref={leafLeftRef} className="sanctum-lush-banana sanctum-lush-banana-left" aria-hidden="true">
+          <img
+            src="/assets/decorations/sanctum-banana-left.png"
+            alt=""
+            className="sanctum-banana-img"
+            loading="eager"
+          />
         </div>
 
-        <div ref={leafRightRef} className="sanctum-vazhai-tree sanctum-vazhai-right" aria-hidden="true">
-          <div className="vazhai-trunk-layer">
-            <img
-              src="/assets/decorations/banana-tree-trunk.png"
-              alt=""
-              className="vazhai-part-img"
-              loading="eager"
-            />
-          </div>
-          <div className="vazhai-canopy-layer vazhai-canopy-anim-right">
-            <img
-              src="/assets/decorations/banana-tree-canopy.png"
-              alt=""
-              className="vazhai-part-img"
-              loading="eager"
-            />
-          </div>
+        <div ref={leafRightRef} className="sanctum-lush-banana sanctum-lush-banana-right" aria-hidden="true">
+          <img
+            src="/assets/decorations/sanctum-banana-right.png"
+            alt=""
+            className="sanctum-banana-img"
+            loading="eager"
+          />
+        </div>
+
+        {/* Layer 5: Polished Sanctum Floor Reflection & Scattered Petals */}
+        <div ref={floorRef} className="sanctum-floor-stage" aria-hidden="true">
+          <img
+            src="/assets/decorations/sanctum-floor-reflection.png"
+            alt=""
+            className="sanctum-floor-img"
+            loading="eager"
+          />
+          <div className="sanctum-floor-gradient-overlay" />
         </div>
       </div>
     </section>
