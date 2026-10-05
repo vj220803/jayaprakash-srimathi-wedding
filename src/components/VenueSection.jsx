@@ -69,8 +69,8 @@ export const VenueSection = () => {
       // 2. Phased ScrollTrigger Timeline (Cinematic Entry Sequence)
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 72%",
+          trigger: headerRef.current,
+          start: "top 78%",
           once: true,
         },
         defaults: { ease: "power2.out" },

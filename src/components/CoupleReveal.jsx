@@ -330,24 +330,14 @@ export const CoupleReveal = () => {
         "-=0.8"
       );
 
-    // Seamlessly initiate the royal names and cursive calligraphy quote right as couple arrives!
-    tl.add(() => {
-      playNamesAndQuoteReveal(false);
-    }, "-=0.4");
-
-    setHasAnimated(true);
-  };
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Gentle continuous floating when idle
+    tl.eventCallback("onComplete", () => {
+      // Gentle continuous floating when idle once reveal completes
       gsap.to(coupleImgRef.current, {
         y: -6,
         duration: 3.5,
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut",
-        delay: 2.5,
       });
 
       gsap.to(peacockImgRef.current, {
@@ -356,27 +346,49 @@ export const CoupleReveal = () => {
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut",
-        delay: 2.5,
       });
+    });
+
+    setHasAnimated(true);
+  };
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Initial hidden states
+      gsap.set(peacockImgRef.current, {
+        scale: 0.65,
+        scaleY: 0.7,
+        opacity: 0,
+        filter: "brightness(0.6) blur(6px)",
+        transformOrigin: "bottom center",
+      });
+      gsap.set(coupleImgRef.current, {
+        y: 80,
+        scale: 0.82,
+        opacity: 0,
+        filter: "blur(4px)",
+      });
+      gsap.set(centerFlareRef.current, { scale: 0, opacity: 0 });
+      gsap.set(featherShimmerRef.current, { opacity: 0, scale: 0.6 });
 
       // 1. Trigger peacock reveal when scrolling into the peacock stage
       ScrollTrigger.create({
         trigger: ".peacock-couple-stage",
-        start: "top 80%",
+        start: "top 78%",
         once: true,
         onEnter: () => {
           playPeacockCoupleReveal();
         },
       });
 
-      // 2. ScrollTrigger fallback for names block (in case user jumps/scrolls directly down)
+      // 2. Trigger names block reveal when user scrolls into the names section
       ScrollTrigger.create({
         trigger: namesBlockRef.current,
-        start: "top 85%",
+        start: "top 78%",
         once: true,
         onEnter: () => {
           if (!namesRevealedRef.current) {
-            playNamesAndQuoteReveal(false);
+            playNamesAndQuoteReveal(true);
           }
         },
       });

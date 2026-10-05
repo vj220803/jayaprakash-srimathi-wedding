@@ -126,8 +126,8 @@ export const FamilyBlessings = () => {
       // 3. Master Cinematic Phased ScrollTrigger Timeline
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 60%",
+          trigger: topCrownRef.current,
+          start: "top 78%",
           toggleActions: "play none none none",
           once: true,
         },
