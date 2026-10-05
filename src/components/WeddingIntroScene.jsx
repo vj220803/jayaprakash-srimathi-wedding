@@ -40,6 +40,8 @@ export const WeddingIntroScene = ({ isOpened }) => {
   const curtainRightRef = useRef(null);
   const seamGlowRef = useRef(null);
   const glitterItemsRef = useRef([]);
+  const hasOpenedRef = useRef(false);
+  const playCurtainsOpeningRef = useRef(null);
 
   // Content refs
   const motifRef = useRef(null);
@@ -153,162 +155,184 @@ export const WeddingIntroScene = ({ isOpened }) => {
       gsap.set([leafLeftRef.current, leafRightRef.current], { opacity: 0, y: 15 });
       gsap.set([lampLeftRef.current, lampRightRef.current], { opacity: 0.3 });
 
-      // Master Scroll-Driven Timeline: Curtains open smoothly and immediately as user scrolls down
-      const masterTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "+=85%",
-          pin: true,
-          pinSpacing: true,
-          scrub: 0.5,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        },
-      });
+      // Automatic Grand Incoming Animation: Plays automatically when user reaches the curtains page
+      const playCurtainsOpening = () => {
+        if (hasOpenedRef.current) return;
+        hasOpenedRef.current = true;
 
-      // Choreographed Scroll Sequence (0 to 100 timeline units)
-      masterTl
-        // 0% - 46%: Curtains IMMEDIATELY & SMOOTHLY PART as user scrolls down
-        .to(
+        const tl = gsap.timeline({
+          defaults: { ease: "power2.out" },
+          onComplete: () => {
+            // Ambient gentle fabric respiration and breathing once settled
+            gsap.to(curtainLeftRef.current, {
+              rotation: -0.6,
+              y: -3,
+              duration: 4.8,
+              repeat: -1,
+              yoyo: true,
+              ease: "sine.inOut",
+            });
+            gsap.to(curtainRightRef.current, {
+              rotation: 0.6,
+              y: -3,
+              duration: 5.2,
+              repeat: -1,
+              yoyo: true,
+              ease: "sine.inOut",
+            });
+            gsap.to(centralBloomRef.current, {
+              scale: 1.22,
+              opacity: 0.92,
+              duration: 3.8,
+              repeat: -1,
+              yoyo: true,
+              ease: "sine.inOut",
+            });
+            gsap.to(titleGlowRef.current, {
+              scale: 1.18,
+              opacity: 0.7,
+              duration: 4.2,
+              repeat: -1,
+              yoyo: true,
+              ease: "sine.inOut",
+            });
+          },
+        });
+
+        // Step 1: Curtains smoothly and majestically glide open automatically (1.8s)
+        tl.to(
           seamGlowRef.current,
-          { opacity: 0, scaleX: 3.5, duration: 16, ease: "power2.out" },
+          { opacity: 0, scaleX: 3.5, duration: 0.6, ease: "power2.out" },
           0
         )
-        // Left Curtain: smoothly glides left, compresses folds (scaleX), sways naturally
         .to(
           curtainLeftRef.current,
           {
             xPercent: -82,
             scaleX: 0.88,
             skewY: -1.2,
-            duration: 46,
-            ease: "power1.out",
+            duration: 1.8,
+            ease: "power2.inOut",
           },
           0
         )
-        // Right Curtain: smoothly glides right, compresses folds (scaleX), sways naturally
         .to(
           curtainRightRef.current,
           {
             xPercent: 82,
             scaleX: 0.88,
             skewY: 1.2,
-            duration: 46,
-            ease: "power1.out",
+            duration: 1.8,
+            ease: "power2.inOut",
           },
           0
         )
-        // Settle the curtain fabric sways smoothly at the final open position
         .to(
           [curtainLeftRef.current, curtainRightRef.current],
           {
             skewY: 0,
-            duration: 10,
+            duration: 0.5,
             ease: "sine.out",
           },
-          44
+          1.7
         );
 
-      // 1% - 38%: Auspicious Inauguration Golden Glitter Sprinkle
-      GLITTER_PARTICLES.forEach((p, idx) => {
-        const el = glitterItemsRef.current[idx];
-        if (!el) return;
-        const startUnit = 1 + p.delay * 0.7;
-        // Step 1: Burst outward from parting seam with warm golden sparkle
-        masterTl.to(
-          el,
-          {
-            x: p.targetX,
-            y: p.targetY,
-            scale: p.scale,
-            rotation: p.rot,
-            opacity: 1,
-            duration: 16,
-            ease: "power2.out",
-          },
-          startUnit
-        );
-        // Step 2: Soft celebratory fade out into the atmosphere as curtains complete parting
-        masterTl.to(
-          el,
-          {
-            y: p.targetY + 18,
-            scale: p.scale * 0.35,
-            opacity: 0,
-            duration: 12,
-            ease: "power1.in",
-          },
-          startUnit + 14
-        );
-      });
+        // Step 2: Auspicious Inauguration Golden Glitter Sprinkle
+        GLITTER_PARTICLES.forEach((p, idx) => {
+          const el = glitterItemsRef.current[idx];
+          if (!el) return;
+          const startSec = 0.1 + p.delay * 0.04;
+          tl.to(
+            el,
+            {
+              x: p.targetX,
+              y: p.targetY,
+              scale: p.scale,
+              rotation: p.rot,
+              opacity: 1,
+              duration: 0.75,
+              ease: "power2.out",
+            },
+            startSec
+          );
+          tl.to(
+            el,
+            {
+              y: p.targetY + 20,
+              scale: p.scale * 0.3,
+              opacity: 0,
+              duration: 0.5,
+              ease: "power1.in",
+            },
+            startSec + 0.65
+          );
+        });
 
-      masterTl
-        // 4% - 42%: Golden light beam awakens behind the parting curtains
-        .to(
+        // Step 3: Central Sanctum Light Bloom awakens behind parting curtains
+        tl.to(
           centralBloomRef.current,
-          { opacity: 0.92, scale: 1.18, duration: 36, ease: "power2.out" },
-          4
+          { opacity: 0.92, scale: 1.18, duration: 1.4, ease: "power2.out" },
+          0.2
         )
         .to(
           bgImgRef.current,
           {
             scale: 1.04,
             filter: "brightness(0.55) saturate(1.25)",
-            duration: 42,
+            duration: 1.6,
             ease: "sine.out",
           },
-          2
+          0.1
         )
         .to(
           [lampLeftRef.current, lampRightRef.current],
-          { opacity: 0.95, duration: 25 },
-          8
+          { opacity: 0.95, duration: 0.9 },
+          0.3
         )
         .to(
           [leafLeftRef.current, leafRightRef.current],
-          { opacity: 0.85, y: 0, duration: 25 },
-          8
-        )
+          { opacity: 0.85, y: 0, duration: 0.9 },
+          0.3
+        );
 
-        // 8% - 22%: Sacred Gold Lotus Motif descends into view
-        .to(
+        // Step 4: Sacred Gold Lotus Motif descends into view
+        tl.to(
           motifRef.current,
           {
             opacity: 1,
             scale: 1,
             y: 0,
             filter: "blur(0px)",
-            duration: 12,
-            ease: "power2.out",
+            duration: 0.65,
+            ease: "back.out(1.4)",
           },
-          8
-        )
+          0.5
+        );
 
-        // 16% - 30%: "TOGETHER WITH OUR BELOVED FAMILIES" reveals
-        .to(
+        // Step 5: "TOGETHER WITH OUR BELOVED FAMILIES" reveals
+        tl.to(
           headingFamiliesRef.current,
           {
             opacity: 1,
             y: 0,
             filter: "blur(0px)",
-            duration: 12,
+            duration: 0.6,
             ease: "power2.out",
           },
-          16
-        )
+          0.8
+        );
 
-        // 24% - 36%: "WE CORDIALLY INVITE YOU / TO BE A PART OF OUR" emerges
-        .to(
+        // Step 6: "WE CORDIALLY INVITE YOU / TO BE A PART OF OUR" emerges
+        tl.to(
           inviteLeadLine1Ref.current,
           {
             opacity: 1,
             y: 0,
             filter: "blur(0px)",
-            duration: 10,
+            duration: 0.5,
             ease: "power2.out",
           },
-          24
+          1.1
         )
         .to(
           inviteLeadLine2Ref.current,
@@ -316,59 +340,59 @@ export const WeddingIntroScene = ({ isOpened }) => {
             opacity: 1,
             y: 0,
             filter: "blur(0px)",
-            duration: 10,
+            duration: 0.5,
             ease: "power2.out",
           },
-          28
-        )
+          1.25
+        );
 
-        // 34% - 50%: "Wedding Celebration" sweeps open with left-to-right golden light mask
-        .to(
+        // Step 7: "Wedding Celebration" sweeps open in rich gold
+        tl.to(
           titleRef.current,
           {
             opacity: 1,
             scale: 1,
             clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
             filter: "blur(0px)",
-            duration: 16,
+            duration: 0.85,
             ease: "power2.out",
           },
-          34
+          1.5
         )
         .to(
           titleGlowRef.current,
           {
             opacity: 0.75,
             scale: 1.12,
-            duration: 16,
+            duration: 0.85,
             ease: "power2.out",
           },
-          36
-        )
+          1.55
+        );
 
-        // 44% - 56%: Auspicious Gold Divider draws outward
-        .to(
+        // Step 8: Auspicious Gold Divider draws outward
+        tl.to(
           dividerRef.current,
           {
             opacity: 1,
             scaleX: 1,
-            duration: 10,
+            duration: 0.55,
             ease: "power2.inOut",
           },
-          44
-        )
+          1.9
+        );
 
-        // 50% - 66%: Emotional Invitation Poem reveals line-by-line
-        .to(
+        // Step 9: Emotional Invitation Lines reveal one-by-one automatically
+        tl.to(
           quoteLine1Ref.current,
           {
             opacity: 0.95,
             y: 0,
             filter: "blur(0px)",
-            duration: 8,
+            duration: 0.45,
             ease: "power2.out",
           },
-          50
+          2.1
         )
         .to(
           quoteLine2Ref.current,
@@ -376,10 +400,10 @@ export const WeddingIntroScene = ({ isOpened }) => {
             opacity: 0.95,
             y: 0,
             filter: "blur(0px)",
-            duration: 8,
+            duration: 0.45,
             ease: "power2.out",
           },
-          54
+          2.3
         )
         .to(
           quoteLine3Ref.current,
@@ -387,71 +411,55 @@ export const WeddingIntroScene = ({ isOpened }) => {
             opacity: 1,
             y: 0,
             filter: "blur(0px)",
-            duration: 8,
+            duration: 0.45,
             ease: "power2.out",
           },
-          58
-        )
+          2.5
+        );
 
-        // 64% - 70%: Delicate End Flourish settles in
-        .to(
+        // Step 10: Delicate End Flourish settles in
+        tl.to(
           flourishRef.current,
           {
             opacity: 0.85,
             scale: 1,
-            duration: 6,
+            duration: 0.45,
             ease: "power2.out",
           },
-          64
+          2.7
         );
-        // 70% - 100%: Serene reading window with entire card revealed and curtains gracefully framing the sides
+      };
 
-      // Continuous Lively Ambient Actions on settled elements:
-      gsap.to(curtainLeftRef.current, {
-        rotation: -0.6,
-        y: -3,
-        duration: 4.8,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
-      gsap.to(curtainRightRef.current, {
-        rotation: 0.6,
-        y: -3,
-        duration: 5.2,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
+      playCurtainsOpeningRef.current = playCurtainsOpening;
 
-      gsap.to(centralBloomRef.current, {
-        scale: 1.22,
-        opacity: 0.92,
-        duration: 3.8,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
-
-      gsap.to(titleGlowRef.current, {
-        scale: 1.18,
-        opacity: 0.7,
-        duration: 4.2,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
+      // Automatically trigger opening when the curtains scene scrolls into view
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: "top 75%",
+        onEnter: () => {
+          playCurtainsOpening();
+        },
+        onRefresh: (self) => {
+          if (self.progress > 0 && !hasOpenedRef.current) {
+            playCurtainsOpening();
+          }
+        },
       });
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
-  // Ensure ScrollTrigger coordinates update accurately when invitation is opened
+  // Ensure ScrollTrigger triggers if already visible upon opening or refresh
   useEffect(() => {
-    if (isOpened) {
+    if (isOpened && sectionRef.current) {
       const timer = setTimeout(() => {
         ScrollTrigger.refresh();
-      }, 200);
+        const rect = sectionRef.current?.getBoundingClientRect();
+        if (rect && rect.top < window.innerHeight * 0.75 && !hasOpenedRef.current) {
+          playCurtainsOpeningRef.current?.();
+        }
+      }, 300);
       return () => clearTimeout(timer);
     }
   }, [isOpened]);
@@ -462,6 +470,7 @@ export const WeddingIntroScene = ({ isOpened }) => {
       className="intro-cinematic-scene"
       id="wedding-intro-scene"
       aria-label="Scene 02: Traditional Ceremonial Curtain Opening & Wedding Invitation"
+      onClick={() => playCurtainsOpeningRef.current?.()}
     >
       {/* ========================================================
           BACKGROUND: Sacred Temple Sanctum Backdrop spanning 100% width edge-to-edge
