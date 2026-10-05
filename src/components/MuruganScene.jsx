@@ -23,7 +23,6 @@ export const MuruganScene = ({ isOpened }) => {
   const celestialFlareRef = useRef(null);
   const celestialRaysRef = useRef(null);
   const crownHaloRef = useRef(null);
-  const velGlowRef = useRef(null);
   const lampLeftRef = useRef(null);
   const lampRightRef = useRef(null);
   const leafLeftRef = useRef(null);
@@ -94,7 +93,6 @@ export const MuruganScene = ({ isOpened }) => {
       filter: "blur(22px) brightness(2.6) saturate(1.3)",
       transformOrigin: "center 65%",
     });
-    gsap.set(velGlowRef.current, { opacity: 0, scale: 0.2 });
     gsap.set([lampLeftRef.current, lampRightRef.current], {
       opacity: 0,
       scale: 0.88,
@@ -356,27 +354,6 @@ export const MuruganScene = ({ isOpened }) => {
           stagger: 0.15,
         },
         4.7
-      )
-      // STEP 8 — SACRED VEL TIP (Celestial golden sparkle once Lord Murugan settles)
-      .to(
-        velGlowRef.current,
-        {
-          opacity: 1,
-          scale: 1.4,
-          duration: 0.6,
-          ease: "back.out(1.8)",
-        },
-        5.2
-      )
-      .to(
-        velGlowRef.current,
-        {
-          opacity: 0.8,
-          scale: 1,
-          duration: 0.5,
-          ease: "sine.inOut",
-        },
-        5.8
       );
 
     hasPlayedRef.current = true;
@@ -405,17 +382,7 @@ export const MuruganScene = ({ isOpened }) => {
         ease: "sine.inOut",
       });
 
-      // 2. Glowing pulse on the tip of the Vel
-      gsap.to(velGlowRef.current, {
-        scale: 1.35,
-        opacity: 0.95,
-        duration: 2.4,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
-
-      // 4. Parallax depth with ScrollTrigger across layers
+      // Parallax depth with ScrollTrigger across layers
       // Background Raja Gopuram moves slowly in perspective
       gsap.to(bgLayerRef.current, {
         yPercent: 8,
@@ -590,9 +557,6 @@ export const MuruganScene = ({ isOpened }) => {
 
               {/* Soft Divine Golden Light Aura behind Lord Murugan */}
               <div ref={divineAuraRef} className="murugan-divine-aura" aria-hidden="true" />
-
-              {/* Radiant Vel Sparkle positioned at Vel tip */}
-              <div ref={velGlowRef} className="vel-tip-sparkle" aria-hidden="true" />
 
               {/* Crown Halo */}
               <div ref={crownHaloRef} className="murugan-crown-halo" aria-hidden="true" />
