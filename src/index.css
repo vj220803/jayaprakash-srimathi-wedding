@@ -1,0 +1,155 @@
+/* =========================================================
+   ROYAL SOUTH INDIAN DESIGN SYSTEM — JAYAPRAKASH & SRIMATHI
+   Theme: Lord Murugan • Royal Peacock • Sacred Gold • Temple Grandeur
+========================================================= */
+
+:root {
+  /* Color Palette */
+  --bg-deep: #031418;
+  --bg-peacock: #06262c;
+  --bg-peacock-teal: #083840;
+  --bg-peacock-light: #0e4c57;
+  
+  --gold-primary: #d4af37;
+  --gold-light: #f3e098;
+  --gold-bright: #fff2c4;
+  --gold-antique: #c8a45d;
+  --gold-dark: #8c6d23;
+  --gold-glow: rgba(212, 175, 55, 0.45);
+  --gold-gradient: linear-gradient(135deg, #fff2c4 0%, #e6c87d 25%, #c8a45d 50%, #f4da89 75%, #9d7b30 100%);
+  --gold-gradient-soft: linear-gradient(180deg, #fff7dc 0%, #d8b467 60%, #a88132 100%);
+
+  --ivory: #fffaf0;
+  --cream: #f6eedb;
+  --cream-muted: rgba(246, 238, 219, 0.75);
+
+  --wedding-pink: #c24b70;
+  --wedding-magenta: #912745;
+  --temple-maroon: #541121;
+  --sacred-red: #821c2c;
+
+  /* Typography */
+  --font-display: 'Cinzel', Georgia, serif;
+  --font-decorative: 'Cinzel Decorative', Georgia, serif;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-tamil: 'Noto Serif Tamil', Georgia, serif;
+  --font-script: 'Great Vibes', cursive;
+  --font-body: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Elevation & Shadows */
+  --shadow-gold: 0 10px 30px -5px rgba(200, 164, 93, 0.3);
+  --shadow-deep: 0 20px 50px rgba(0, 0, 0, 0.6);
+  --shadow-card: 0 25px 60px rgba(0, 12, 15, 0.85);
+
+  /* Fluid Content & Safe Area Tokens */
+  --content-max-width: min(92vw, 1160px);
+  --content-padding-inline: clamp(14px, 4vw, 28px);
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+}
+
+/* Box sizing & Resets */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  background-color: var(--bg-deep);
+  color: var(--cream);
+  font-family: var(--font-body);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+@supports not (overflow-x: clip) {
+  html {
+    overflow-x: hidden;
+  }
+}
+
+body {
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-deep);
+  color: var(--cream);
+  overflow-x: clip;
+  position: relative;
+}
+
+@supports not (overflow-x: clip) {
+  body {
+    overflow-x: hidden;
+  }
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  margin: 0;
+  padding: 0;
+  overflow-x: clip;
+  position: relative;
+}
+
+@supports not (overflow-x: clip) {
+  #root {
+    overflow-x: hidden;
+  }
+}
+
+/* Custom Selection */
+::selection {
+  background: var(--gold-antique);
+  color: var(--bg-deep);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--bg-peacock-teal), var(--gold-antique), var(--bg-peacock-teal));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-light);
+}
+
+/* Text Utility Classes */
+.gold-text {
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.gold-glow-text {
+  text-shadow: 0 0 15px rgba(243, 224, 152, 0.6), 0 0 30px rgba(200, 164, 93, 0.3);
+}
+
+/* Touch Friendly Targets */
+button, a {
+  -webkit-tap-highlight-color: transparent;
+}

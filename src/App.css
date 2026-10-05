@@ -1,0 +1,5754 @@
+/* =========================================================
+   CINEMATIC WEDDING INVITATION — JAYAPRAKASH & SRIMATHI
+   Styles for App.jsx and Components
+========================================================= */
+
+/* Root Wrapper */
+.wedding-app-root {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  background-color: var(--bg-deep);
+  color: var(--cream);
+  overflow-x: clip;
+}
+
+@supports not (overflow-x: clip) {
+  .wedding-app-root {
+    overflow-x: hidden;
+  }
+}
+
+/* =========================================================
+   FLOATING AUDIO & SHARE CONTROLS (Safe Area Aware)
+========================================================= */
+.floating-controls-container {
+  position: fixed;
+  top: max(14px, calc(var(--safe-top) + 10px));
+  right: max(14px, calc(var(--safe-right) + 10px));
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.floating-audio-btn,
+.floating-share-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(6, 38, 44, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--gold-antique);
+  border-radius: 30px;
+  padding: 7px 13px;
+  color: var(--gold-light);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all 0.3s var(--ease-smooth);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.floating-share-btn {
+  padding: 7px;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  justify-content: center;
+}
+
+.floating-audio-btn:hover,
+.floating-share-btn:hover {
+  background: var(--bg-peacock-teal);
+  border-color: var(--gold-bright);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(200, 164, 93, 0.35);
+}
+
+.equalizer-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+}
+
+.equalizer-bars .bar {
+  width: 2.5px;
+  background: var(--gold-light);
+  border-radius: 2px;
+  animation: eqPulse 1s ease-in-out infinite alternate;
+}
+
+.bar-1 {
+  height: 8px;
+  animation-delay: 0.1s;
+}
+
+.bar-2 {
+  height: 14px;
+  animation-delay: 0.3s;
+}
+
+.bar-3 {
+  height: 6px;
+  animation-delay: 0.5s;
+}
+
+.bar-4 {
+  height: 11px;
+  animation-delay: 0.2s;
+}
+
+@keyframes eqPulse {
+  0% {
+    transform: scaleY(0.4);
+  }
+
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+@media (max-width: 480px) {
+  .floating-controls-container {
+    top: max(10px, calc(var(--safe-top) + 6px));
+    right: max(10px, calc(var(--safe-right) + 6px));
+    gap: 6px;
+  }
+
+  .floating-audio-btn .audio-label {
+    display: none;
+  }
+
+  .floating-audio-btn {
+    padding: 7px;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    justify-content: center;
+  }
+}
+
+/* =========================================================
+   MASTER PROMPT — SCENE 01: CINEMATIC WEDDING INVITATION OPENING
+   Temple Entrance Doorway, 2.5D Layered Parallax, 7-Step Reveal
+========================================================= */
+.scene01-viewport {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 100svh;
+  z-index: 95;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #031418;
+  overflow: hidden;
+  overflow-x: clip;
+  perspective: 1200px;
+  user-select: none;
+  padding: max(10px, var(--safe-top)) var(--content-padding-inline) max(10px, var(--safe-bottom));
+}
+
+/* Ambient Extended Temple Backdrop for Widescreen Desktop */
+.scene01-desktop-ambient-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/assets/doors/temple-door-clean.jpg');
+  background-size: cover;
+  background-position: center 30%;
+  filter: blur(45px) brightness(0.25) saturate(1.3);
+  transform: scale(1.08);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+/* Step 1 & 3: Deep Temple Darkness Veil */
+.scene01-dark-veil {
+  position: absolute;
+  inset: 0;
+  background: #020c0f;
+  z-index: 50;
+  pointer-events: none;
+  will-change: opacity;
+}
+
+/* Step 2: Golden Ambient Glow blooming from the sacred sanctum */
+.scene01-center-sanctum-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 48%, rgba(255, 230, 140, 0.45) 0%, rgba(212, 175, 55, 0.22) 28%, rgba(6, 38, 44, 0.1) 60%, transparent 80%);
+  z-index: 2;
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+/* Tap to Open: Divine Expanding Golden Light Flare */
+.scene01-expanding-flare {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  width: 180px;
+  height: 180px;
+  margin-top: -90px;
+  margin-left: -90px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 0%, #fff7ce 30%, #d4af37 65%, transparent 80%);
+  filter: blur(10px);
+  z-index: 60;
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+/* Virtual 2.5D Camera Stage */
+.scene01-camera {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  transform-origin: center 48%;
+  will-change: transform;
+}
+
+/* 2.5D Layer Base */
+.scene01-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+/* =========================================================
+   LAYER 1: BACKGROUND (Temple Architecture, Sunbeams, Lamp Flames)
+========================================================= */
+.layer-bg {
+  z-index: 1;
+  pointer-events: none;
+}
+
+.temple-frame-canvas {
+  position: relative;
+  width: 100%;
+  max-width: min(92vw, 500px);
+  height: auto;
+  max-height: calc(100dvh - 20px);
+  max-height: calc(100svh - 20px);
+  aspect-ratio: 9/16;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.95);
+}
+
+.temple-door-full-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Subtle Volumetric Sunbeams streaming from top-left */
+.temple-volumetric-sunbeam {
+  position: absolute;
+  top: -15%;
+  left: -20%;
+  width: 140%;
+  height: 120%;
+  background: linear-gradient(135deg, rgba(255, 240, 180, 0.24) 0%, rgba(255, 225, 140, 0.08) 32%, transparent 58%);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+/* Realistic Small Lamp Flame Flickers */
+.lamp-flame-glow {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 10%, #ffde59 40%, #ff6600 75%, transparent 100%);
+  filter: drop-shadow(0 0 8px rgba(255, 200, 50, 0.9)) drop-shadow(0 0 16px rgba(255, 120, 0, 0.7));
+  animation: lampFlamePulse 2.2s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.flame-step-left {
+  top: 71.5%;
+  left: 17.5%;
+  animation-delay: 0.2s;
+}
+
+.flame-step-right {
+  top: 71.5%;
+  left: 81.5%;
+  animation-delay: 0.7s;
+}
+
+.flame-fg-left {
+  top: 84.5%;
+  left: 11.2%;
+  width: 18px;
+  height: 18px;
+  animation-delay: 0.4s;
+}
+
+@keyframes lampFlamePulse {
+  0% {
+    transform: scale(0.92) translate3d(0, 0, 0);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.08) translate3d(0.5px, -1px, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.96) translate3d(-0.5px, 0.5px, 0);
+    opacity: 0.9;
+  }
+}
+
+/* =========================================================
+   LAYER 2: MIDDLEGROUND (Vel, Typography, Leaves, Button)
+========================================================= */
+.layer-mid {
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.temple-door-mid-content {
+  position: relative;
+  width: 100%;
+  max-width: min(92vw, 500px);
+  height: auto;
+  max-height: calc(100dvh - 20px);
+  max-height: calc(100svh - 20px);
+  aspect-ratio: 9/16;
+  pointer-events: auto;
+}
+
+/* Swaying Banana Leaves (Overlaid for 2.5D Physical Depth) */
+.banana-plant-left,
+.banana-plant-right {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.banana-plant-left {
+  top: 27%;
+  left: 0;
+  width: 38%;
+  height: 38%;
+  transform-origin: 8% 85%;
+  animation: bananaLeafSlowSwayLeft 6.2s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+.banana-plant-right {
+  top: 27%;
+  right: 0;
+  width: 38%;
+  height: 38%;
+  transform-origin: 92% 85%;
+  animation: bananaLeafSlowSwayRight 6.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+.swaying-leaf-left,
+.swaying-leaf-right {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+@keyframes bananaLeafSlowSwayLeft {
+  0% {
+    transform: rotate(0deg) skewY(0deg);
+  }
+  50% {
+    transform: rotate(1.8deg) skewY(0.4deg);
+  }
+  100% {
+    transform: rotate(0deg) skewY(0deg);
+  }
+}
+
+@keyframes bananaLeafSlowSwayRight {
+  0% {
+    transform: rotate(0deg) skewY(0deg);
+  }
+  50% {
+    transform: rotate(-1.9deg) skewY(-0.4deg);
+  }
+  100% {
+    transform: rotate(0deg) skewY(0deg);
+  }
+}
+
+/* Central Door Inscription Area */
+.door-panel-inscriptions {
+  position: absolute;
+  top: 27%;
+  left: 17%;
+  width: 66%;
+  height: 52%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  z-index: 5;
+  pointer-events: auto;
+}
+
+/* Golden Vel Sacred Emblem & Divine Rays */
+.vel-sacred-container {
+  position: relative;
+  width: 76px;
+  height: 82px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2px;
+  will-change: transform, filter;
+}
+
+.golden-vel-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 12px rgba(243, 224, 152, 0.7));
+  display: block;
+}
+
+.vel-divine-rays-aura {
+  position: absolute;
+  inset: -14px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 240, 180, 0.65) 0%, rgba(212, 175, 55, 0.25) 50%, transparent 75%);
+  filter: blur(5px);
+  pointer-events: none;
+  animation: velBreathingPulse 4.2s ease-in-out infinite alternate;
+}
+
+@keyframes velBreathingPulse {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.1);
+    opacity: 0.95;
+  }
+}
+
+/* Typography Container */
+.door-typo-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 1px;
+}
+
+/* 1. Tamil Mantra: வேல் முருகா ! */
+.typo-tamil-motto {
+  font-family: var(--font-tamil), 'Noto Serif Tamil', Georgia, serif;
+  font-size: clamp(0.95rem, 2.2vh, 1.25rem);
+  font-weight: 700;
+  color: #fff2c4;
+  letter-spacing: 0.08em;
+  margin: 0 0 2px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95), 0 0 14px rgba(212, 175, 55, 0.75);
+}
+
+/* 2. English Blessing Lead */
+.typo-blessing-lead {
+  font-family: var(--font-display), 'Cinzel', Georgia, serif;
+  font-size: clamp(0.5rem, 1.08vh, 0.64rem);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: #e8cca0;
+  text-transform: uppercase;
+  margin: 0 0 5px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+}
+
+/* Ornate Thin Gold Flourish Divider */
+.typo-gold-flourish {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 70%;
+  margin: 0 0 4px;
+  opacity: 0.75;
+}
+
+.flourish-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+}
+
+.flourish-star {
+  font-size: 0.65rem;
+  color: #fff2c4;
+}
+
+/* 3 & 5. Groom & Bride Names — Regal Gold Typography */
+.typo-groom-name,
+.typo-bride-name {
+  font-family: var(--font-display), 'Cinzel', Georgia, serif;
+  font-size: clamp(1.4rem, 3.6vh, 2.1rem);
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  margin: 0;
+  background: linear-gradient(135deg, #ffffff 0%, #fff4d2 25%, #e6c87d 50%, #fff7de 75%, #c8a45d 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.95));
+  animation: goldNameShimmer 6s ease-in-out infinite;
+  will-change: transform, filter;
+}
+
+@keyframes goldNameShimmer {
+  0%, 20% {
+    background-position: 0% center;
+  }
+  50% {
+    background-position: 100% center;
+  }
+  80%, 100% {
+    background-position: 200% center;
+  }
+}
+
+/* 4. weds script connector */
+.typo-weds-wrap {
+  margin: 1px 0;
+  line-height: 1;
+}
+
+.typo-weds-sign {
+  font-family: var(--font-script), 'Great Vibes', cursive;
+  font-size: clamp(1.35rem, 3.2vh, 1.85rem);
+  color: #fce2a1;
+  display: inline-block;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9), 0 0 10px rgba(212, 175, 55, 0.5);
+}
+
+/* 6. Sacred Wedding Date: 01 NOVEMBER 2026 */
+.typo-date-lockup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 90%;
+  margin: 6px 0 14px;
+}
+
+.date-border-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #c8a45d 60%, transparent);
+}
+
+.typo-wedding-date {
+  font-family: var(--font-display), 'Cinzel', Georgia, serif;
+  font-size: clamp(0.68rem, 1.5vh, 0.82rem);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #f7e6b5;
+  white-space: nowrap;
+  margin: 0;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.95);
+}
+
+/* 7. Deep Maroon TAP TO OPEN Button */
+.door-button-anchor {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4px;
+  pointer-events: auto;
+}
+
+.maroon-tap-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  background: linear-gradient(180deg, #661828 0%, #440e1a 100%);
+  border: 1.5px solid #d4af37;
+  border-radius: 9999px;
+  padding: 8px 22px;
+  color: #fff2c4;
+  cursor: pointer;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.85), 0 0 14px rgba(212, 175, 55, 0.35);
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+  animation: maroonBtnBreathing 3.6s ease-in-out infinite alternate;
+  will-change: transform, box-shadow;
+}
+
+.maroon-tap-button:hover {
+  transform: scale(1.05);
+  border-color: #ffeaa7;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.9), 0 0 24px rgba(255, 230, 150, 0.65);
+}
+
+.maroon-tap-button:active {
+  transform: scale(0.98);
+}
+
+/* Subtle breathing glow ring around button */
+.btn-glow-ring {
+  position: absolute;
+  inset: -5px;
+  border-radius: 9999px;
+  border: 1px solid rgba(243, 224, 152, 0.4);
+  pointer-events: none;
+  animation: btnGlowRingPulse 2.4s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+}
+
+@keyframes btnGlowRingPulse {
+  0% {
+    transform: scale(0.96);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.18);
+    opacity: 0;
+  }
+}
+
+@keyframes maroonBtnBreathing {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.85), 0 0 12px rgba(212, 175, 55, 0.3);
+  }
+  100% {
+    transform: scale(1.02);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.9), 0 0 18px rgba(243, 224, 152, 0.55);
+  }
+}
+
+.btn-lotus-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 4px rgba(255, 234, 167, 0.8));
+}
+
+.btn-text-content {
+  font-family: var(--font-display), 'Cinzel', Georgia, serif;
+  font-size: clamp(0.72rem, 1.6vh, 0.84rem);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #fff2c4;
+  white-space: nowrap;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+}
+
+/* =========================================================
+   LAYER 3: FOREGROUND (Drifting Flower Petals, Bokeh, Sparkles)
+========================================================= */
+.layer-fg {
+  z-index: 20;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Drifting Flower Petals */
+.fg-petal {
+  position: absolute;
+  width: 14px;
+  height: 18px;
+  background: radial-gradient(ellipse at 40% 30%, #ffb6c1 0%, #ff69b4 50%, #c71585 100%);
+  border-radius: 50% 50% 50% 0;
+  opacity: 0;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.45));
+  will-change: transform, opacity;
+}
+
+.petal-1 {
+  top: 15%;
+  left: 8%;
+  animation: petalDriftSlow 9.5s cubic-bezier(0.4, 0, 0.6, 1) infinite 0.5s;
+}
+
+.petal-2 {
+  top: 35%;
+  right: 12%;
+  transform: rotate(45deg);
+  animation: petalDriftReverse 11.2s cubic-bezier(0.4, 0, 0.6, 1) infinite 2.2s;
+}
+
+.petal-3 {
+  top: 55%;
+  left: 20%;
+  transform: rotate(80deg);
+  animation: petalDriftSlow 8.8s cubic-bezier(0.4, 0, 0.6, 1) infinite 4s;
+}
+
+.petal-4 {
+  top: 70%;
+  right: 22%;
+  transform: rotate(120deg);
+  animation: petalDriftReverse 10.5s cubic-bezier(0.4, 0, 0.6, 1) infinite 1.2s;
+}
+
+.petal-5 {
+  top: 25%;
+  left: 45%;
+  transform: rotate(20deg);
+  animation: petalDriftSlow 12s cubic-bezier(0.4, 0, 0.6, 1) infinite 3s;
+}
+
+@keyframes petalDriftSlow {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.75;
+  }
+  85% {
+    opacity: 0.65;
+  }
+  100% {
+    transform: translate3d(120px, 220px, 0) rotate(320deg);
+    opacity: 0;
+  }
+}
+
+@keyframes petalDriftReverse {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.75;
+  }
+  85% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate3d(-110px, 200px, 0) rotate(-280deg);
+    opacity: 0;
+  }
+}
+
+/* Warm Golden Bokeh Orbs */
+.fg-bokeh {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 235, 170, 0.35) 0%, rgba(212, 175, 55, 0.12) 50%, transparent 70%);
+  filter: blur(12px);
+  pointer-events: none;
+  animation: bokehFloat 8s ease-in-out infinite alternate;
+}
+
+.bokeh-1 {
+  top: 22%;
+  left: 15%;
+  width: 80px;
+  height: 80px;
+  animation-delay: 0.5s;
+}
+
+.bokeh-2 {
+  top: 60%;
+  right: 14%;
+  width: 100px;
+  height: 100px;
+  animation-delay: 2s;
+}
+
+.bokeh-3 {
+  top: 40%;
+  left: 55%;
+  width: 65px;
+  height: 65px;
+  animation-delay: 3.5s;
+}
+
+@keyframes bokehFloat {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.9);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translate3d(15px, -20px, 0) scale(1.15);
+    opacity: 0.8;
+  }
+}
+
+/* Sparse Golden Sparkles */
+.fg-sparkle {
+  position: absolute;
+  color: #fff2c4;
+  font-size: 0.85rem;
+  filter: drop-shadow(0 0 6px #ffe699);
+  animation: sparkleTwinkle 3.2s ease-in-out infinite alternate;
+}
+
+.sparkle-1 {
+  top: 32%;
+  left: 28%;
+  animation-delay: 0.8s;
+}
+
+.sparkle-2 {
+  top: 52%;
+  right: 26%;
+  animation-delay: 2.1s;
+}
+
+@keyframes sparkleTwinkle {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.2;
+  }
+  100% {
+    transform: scale(1.3);
+    opacity: 0.95;
+  }
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 480px) {
+  .temple-frame-canvas,
+  .temple-door-mid-content {
+    max-width: 100%;
+    aspect-ratio: auto;
+    height: 100dvh;
+  }
+  
+  .door-panel-inscriptions {
+    top: 25.5%;
+    left: 14%;
+    width: 72%;
+    height: 54%;
+  }
+
+  .vel-sacred-container {
+    width: 68px;
+    height: 74px;
+  }
+
+  .typo-groom-name,
+  .typo-bride-name {
+    font-size: clamp(1.35rem, 3.4vh, 1.8rem);
+  }
+  
+  .maroon-tap-button {
+    padding: 7px 18px;
+  }
+}
+
+/* =========================================================
+   CINEMATIC MAIN EXPERIENCE
+========================================================= */
+.cinematic-main-experience {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  z-index: 10;
+  opacity: 1;
+  transition: opacity 0.8s ease;
+}
+
+/* =========================================================
+   SCENE 2: LORD MURUGAN & SACRED VEL (CINEMATIC SANCTUM)
+========================================================= */
+.murugan-scene-section {
+  position: relative;
+  width: 100%;
+  min-height: 100svh;
+  min-height: 100dvh;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(36px, 5vh, 65px) var(--content-padding-inline) clamp(22px, 3.5vh, 45px);
+  background-color: var(--bg-deep);
+  overflow: hidden;
+  overflow-x: clip;
+  contain: paint;
+  clip-path: inset(0);
+}
+
+/* 2.5D Cinematic Camera Viewport & Stage */
+.murugan-camera-stage {
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+  transform-origin: center 40%;
+}
+
+/* Layer 1: Background Sanctum Architecture */
+.murugan-sanctum-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.murugan-temple-bg-img {
+  position: absolute;
+  inset: -5%;
+  width: 110%;
+  height: 110%;
+  object-fit: cover;
+  object-position: center 25%;
+  filter: brightness(0.26) saturate(1.22) contrast(1.18);
+  transform-origin: center top;
+  will-change: transform;
+}
+
+.temple-bg-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 38%,
+    rgba(6, 38, 44, 0.2) 0%,
+    rgba(3, 20, 24, 0.86) 60%,
+    #031418 100%
+  );
+}
+
+.temple-light-cone {
+  position: absolute;
+  top: -22%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(92vw, 620px);
+  max-width: 100%;
+  height: clamp(520px, 80vh, 860px);
+  background: radial-gradient(
+    ellipse at top,
+    rgba(255, 225, 150, 0.13) 0%,
+    rgba(200, 164, 93, 0.05) 45%,
+    transparent 72%
+  );
+  filter: blur(42px);
+  pointer-events: none;
+}
+
+.temple-golden-aura {
+  position: absolute;
+  top: 32%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(85vw, 600px);
+  height: min(85vw, 600px);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(212, 175, 55, 0.16) 0%,
+    transparent 70%
+  );
+  filter: blur(48px);
+  pointer-events: none;
+}
+
+/* Ambient Sacred Temple Particles */
+.murugan-temple-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  overflow: hidden;
+}
+
+.temple-ember {
+  position: absolute;
+  border-radius: 50%;
+  background: #ffe49e;
+  box-shadow: 0 0 8px #f3e098;
+  opacity: 0.4;
+  animation: templeEmberFloat 9s infinite linear;
+}
+
+.temple-ember.e1 { width: 3px; height: 3px; top: 25%; left: 18%; animation-duration: 7s; }
+.temple-ember.e2 { width: 4px; height: 4px; top: 60%; left: 82%; animation-duration: 9.5s; animation-delay: 1.5s; }
+.temple-ember.e3 { width: 2.5px; height: 2.5px; top: 40%; left: 75%; animation-duration: 8s; animation-delay: 2.5s; }
+.temple-ember.e4 { width: 3.5px; height: 3.5px; top: 70%; left: 22%; animation-duration: 11s; animation-delay: 0.8s; }
+.temple-ember.e5 { width: 2px; height: 2px; top: 15%; left: 65%; animation-duration: 6.5s; animation-delay: 3s; }
+.temple-ember.e6 { width: 4px; height: 4px; top: 80%; left: 48%; animation-duration: 10s; animation-delay: 2s; }
+
+@keyframes templeEmberFloat {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  15% { opacity: 0.55; }
+  85% { opacity: 0.35; }
+  100% { transform: translateY(-70px) translateX(20px); opacity: 0; }
+}
+
+/* Subtle Peacock Feather Accent in Midground */
+.murugan-feather-accent {
+  position: absolute;
+  top: 16%;
+  right: clamp(14px, 4.5vw, 65px);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.55;
+  transform-origin: bottom center;
+  animation: featherGentleSway 8s ease-in-out infinite alternate;
+}
+
+@keyframes featherGentleSway {
+  0% { transform: rotate(-3deg) translateY(0); }
+  100% { transform: rotate(4deg) translateY(-10px); }
+}
+
+/* Layer 2: Main Devotional Text & Centerpiece */
+.murugan-scene-content {
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  max-width: min(92vw, 980px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.murugan-devotional-text {
+  margin-bottom: clamp(12px, 2.2vh, 22px);
+  width: 100%;
+  position: relative;
+}
+
+/* Sacred Tamil Shloka with Calligraphy Progressive Reveal */
+.tamil-shloka-container {
+  display: inline-block;
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.tamil-shloka {
+  font-family: var(--font-tamil), 'Noto Serif Tamil', Georgia, serif;
+  font-size: clamp(1rem, 2.3vw, 1.45rem);
+  font-weight: 600;
+  color: #fff2c4;
+  letter-spacing: 0.08em;
+  margin: 0;
+  text-shadow: 0 0 16px rgba(243, 224, 152, 0.45), 0 2px 8px rgba(0, 0, 0, 0.85);
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  will-change: clip-path, opacity;
+}
+
+/* Classical English Lead */
+.murugan-english-lead {
+  font-family: var(--font-serif), 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(0.74rem, 1.5vw, 0.98rem);
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  color: var(--gold-antique);
+  text-transform: uppercase;
+  margin-bottom: 3px;
+  text-shadow: 0 0 12px rgba(200, 164, 93, 0.35);
+  text-wrap: balance;
+  will-change: transform, opacity;
+}
+
+/* LORD MURUGAN Title with Letter-by-Letter Reveal */
+.murugan-title-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 4px 0 8px;
+  width: 100%;
+}
+
+.murugan-title-golden-aura {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(85vw, 460px);
+  height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 235, 170, 0.28) 0%,
+    rgba(212, 175, 55, 0.12) 50%,
+    transparent 75%
+  );
+  filter: blur(22px);
+  pointer-events: none;
+  z-index: 1;
+  will-change: transform, opacity;
+}
+
+.murugan-title {
+  display: block;
+  font-family: var(--font-display), 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2rem, 5.5vw, 3.8rem);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0;
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(115deg, #fff7dc 0%, #e6c87d 30%, #ffffff 50%, #c8a45d 70%, #fff2c4 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.7));
+  text-wrap: balance;
+  will-change: transform, opacity, filter;
+}
+
+/* Delicate Sacred Gold Divider */
+.murugan-divider-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 6px auto 10px;
+  width: 100%;
+  max-width: min(85vw, 360px);
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+.murugan-sacred-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(228, 196, 119, 0.65), transparent);
+}
+
+.murugan-center-motif {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--gold-bright);
+  font-size: 0.85rem;
+  filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.6));
+}
+
+.motif-lotus-svg {
+  display: inline-block;
+  vertical-align: middle;
+  filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.7));
+}
+
+/* Sacred Tamil Divine Blessing — FLOATING NATURALLY IN TEMPLE AMBIENCE (NO CARD BOX!) */
+.murugan-floating-blessing {
+  margin: clamp(8px, 1.6vh, 16px) auto 0;
+  width: 100%;
+  max-width: min(92vw, 680px);
+  padding: 0 clamp(8px, 2vw, 20px);
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  backdrop-filter: none;
+  box-shadow: none;
+  position: relative;
+  text-align: center;
+  will-change: transform, opacity;
+}
+
+.murugan-floating-blessing .kural-lines {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-family: var(--font-tamil), 'Noto Serif Tamil', Georgia, serif;
+  font-size: clamp(0.92rem, 2vw, 1.22rem);
+  font-weight: 500;
+  line-height: 1.8;
+  color: #fff4d2;
+  margin: 0 0 4px;
+  letter-spacing: 0.03em;
+  text-shadow: 0 0 16px rgba(243, 224, 152, 0.4), 0 2px 8px rgba(0, 0, 0, 0.9);
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+
+.murugan-floating-blessing .kural-line {
+  display: block;
+  will-change: transform, opacity;
+}
+
+.murugan-floating-blessing .kural-attribution {
+  display: inline-block;
+  font-family: var(--font-tamil), 'Noto Serif Tamil', Georgia, serif;
+  font-size: clamp(0.8rem, 1.4vw, 0.92rem);
+  font-style: italic;
+  color: var(--gold-bright);
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+}
+
+/* Layer 3: Central Lord Murugan Visual Stage & Living Lamps */
+.murugan-visual-stage {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(6px, 2.5vw, 24px);
+  margin-top: clamp(10px, 1.8vh, 20px);
+}
+
+/* Living Oil Lamps */
+.sanctum-lamp {
+  position: relative;
+  margin-bottom: 25px;
+  filter: drop-shadow(0 0 15px rgba(255, 200, 80, 0.5));
+  z-index: 4;
+  will-change: transform, opacity;
+}
+
+.lamp-glow-aura {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -10%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 190, 60, 0.45) 0%,
+    rgba(212, 175, 55, 0.18) 45%,
+    transparent 72%
+  );
+  filter: blur(7px);
+  pointer-events: none;
+}
+
+.sanctum-lamp-left .lamp-flame-anim {
+  transform-origin: 40px 24px;
+  animation: lampFlameFlickerLeft 2.6s ease-in-out infinite alternate;
+}
+
+.sanctum-lamp-right .lamp-flame-anim {
+  transform-origin: 40px 24px;
+  animation: lampFlameFlickerRight 3.3s ease-in-out infinite alternate;
+}
+
+@keyframes lampFlameFlickerLeft {
+  0% { transform: scale(1); filter: drop-shadow(0 0 6px rgba(255, 180, 50, 0.7)); }
+  45% { transform: scale(1.03, 1.07); filter: drop-shadow(0 0 10px rgba(255, 210, 70, 0.9)); }
+  100% { transform: scale(0.98, 0.96); filter: drop-shadow(0 0 5px rgba(255, 160, 40, 0.6)); }
+}
+
+@keyframes lampFlameFlickerRight {
+  0% { transform: scale(0.98, 0.96); filter: drop-shadow(0 0 5px rgba(255, 160, 40, 0.6)); }
+  55% { transform: scale(1.04, 1.08); filter: drop-shadow(0 0 11px rgba(255, 215, 80, 0.95)); }
+  100% { transform: scale(1); filter: drop-shadow(0 0 6px rgba(255, 180, 50, 0.75)); }
+}
+
+/* Central Murugan Artwork Container */
+.murugan-artwork-container {
+  position: relative;
+  width: clamp(240px, 68vw, 440px);
+  max-height: clamp(280px, 48vh, 520px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Soft Divine Golden Light behind Lord Murugan */
+.murugan-divine-aura {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(240px, 58vw, 440px);
+  height: clamp(240px, 58vw, 440px);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 225, 140, 0.28) 0%,
+    rgba(235, 185, 70, 0.16) 30%,
+    rgba(212, 175, 55, 0.08) 52%,
+    rgba(168, 61, 93, 0.02) 70%,
+    transparent 82%
+  );
+  filter: blur(34px);
+  pointer-events: none;
+  z-index: 1;
+  will-change: transform, opacity;
+}
+
+/* Celestial Divine Light Beam & Sunburst Flare for Lord Murugan Incoming Arrival */
+.murugan-celestial-light-flare {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(250px, 60vw, 440px);
+  height: clamp(250px, 60vw, 440px);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 248, 220, 0.85) 0%,
+    rgba(255, 225, 140, 0.65) 22%,
+    rgba(235, 185, 70, 0.35) 45%,
+    rgba(212, 175, 55, 0.12) 68%,
+    transparent 80%
+  );
+  filter: blur(24px);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* Sacred Celestial Divine Rays radiating from Sanctum Center */
+.murugan-celestial-rays {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(280px, 68vw, 480px);
+  height: clamp(280px, 68vw, 480px);
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(212, 175, 55, 0.16) 0deg 10deg,
+    transparent 10deg 28deg
+  );
+  filter: blur(14px);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.murugan-crown-halo {
+  position: absolute;
+  top: 8%;
+  left: 56%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 240, 180, 0.65) 0%,
+    rgba(212, 175, 55, 0.25) 50%,
+    transparent 75%
+  );
+  filter: blur(12px);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.vel-tip-sparkle {
+  position: absolute;
+  top: 15%;
+  left: 45%;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 25px 12px rgba(255, 240, 160, 0.95), 0 0 50px 25px rgba(212, 175, 55, 0.75);
+  pointer-events: none;
+  z-index: 4;
+  will-change: transform, opacity;
+}
+
+.murugan-hero-img {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  height: auto;
+  max-height: clamp(260px, 46vh, 490px);
+  object-fit: contain;
+  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 20px rgba(212, 175, 55, 0.35));
+  will-change: transform, opacity, filter;
+}
+
+/* Layer 4: Foreground Banana Leaves (Extreme Edges) */
+.murugan-fg-leaf {
+  position: absolute;
+  bottom: -20px;
+  pointer-events: none;
+  z-index: 5;
+  width: clamp(140px, 22vw, 320px);
+  max-width: 36vw;
+  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.9)) brightness(0.65) saturate(1.1);
+  will-change: transform;
+}
+
+.murugan-fg-leaf-left {
+  left: -20px;
+  transform-origin: bottom left;
+  transform: rotate(-3deg);
+}
+
+.murugan-fg-leaf-right {
+  right: -20px;
+  transform-origin: bottom right;
+  transform: rotate(3deg);
+}
+
+.murugan-leaf-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Responsive Refinements */
+@media (max-width: 768px) {
+  .murugan-fg-leaf {
+    width: clamp(120px, 24vw, 220px);
+    bottom: -15px;
+  }
+  .murugan-fg-leaf-left {
+    left: -25px;
+  }
+  .murugan-fg-leaf-right {
+    right: -25px;
+  }
+}
+
+@media (max-width: 600px) {
+  .sanctum-lamp {
+    transform: scale(0.68);
+    transform-origin: bottom center;
+    margin-bottom: 10px;
+  }
+
+  .murugan-artwork-container {
+    width: clamp(240px, 74vw, 360px);
+  }
+
+  .murugan-fg-leaf {
+    width: clamp(85px, 20vw, 130px);
+    opacity: 0.65;
+    bottom: -10px;
+  }
+  .murugan-fg-leaf-left {
+    left: -25px;
+  }
+  .murugan-fg-leaf-right {
+    right: -25px;
+  }
+}
+
+@media (max-width: 420px) {
+  .sanctum-lamp {
+    display: block;
+    transform: scale(0.55);
+    transform-origin: bottom center;
+    margin-bottom: 4px;
+  }
+
+  .murugan-visual-stage {
+    gap: 2px;
+  }
+
+  .murugan-artwork-container {
+    width: clamp(220px, 72vw, 300px);
+  }
+
+  .murugan-fg-leaf {
+    width: 75px;
+    opacity: 0.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .murugan-camera-stage,
+  .murugan-fg-leaf,
+  .murugan-title-char,
+  .sanctum-lamp,
+  .murugan-divine-aura,
+  .temple-ember,
+  .murugan-feather-accent {
+    animation: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* =========================================================
+   SCENE 3: COUPLE REVEAL & ROYAL PEACOCK
+========================================================= */
+.couple-reveal-section {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(45px, 6vh, 80px) var(--content-padding-inline);
+  background-color: var(--bg-deep);
+  overflow-x: clip;
+  overflow-y: visible;
+}
+
+@supports not (overflow-x: clip) {
+  .couple-reveal-section {
+    overflow-x: hidden;
+  }
+}
+
+.couple-temple-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.mandapam-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: brightness(0.35) saturate(1.25) contrast(1.1);
+  transform: scale(1.02);
+}
+
+.mandapam-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 45%, rgba(6, 38, 44, 0.35) 0%, rgba(3, 20, 24, 0.85) 65%, #031418 100%);
+}
+
+.mandapam-golden-glow {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(85vw, 680px);
+  height: min(85vw, 680px);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(228, 196, 119, 0.22) 0%, rgba(168, 61, 93, 0.12) 45%, transparent 75%);
+  filter: blur(55px);
+  pointer-events: none;
+}
+
+.temple-arch-frame {
+  position: absolute;
+  top: 40px;
+  left: 20px;
+  right: 20px;
+  bottom: 40px;
+  border-top: 1px solid rgba(200, 164, 93, 0.3);
+  pointer-events: none;
+}
+
+.arch-corner-ornament {
+  position: absolute;
+}
+
+.arch-corner-ornament:first-child {
+  top: -10px;
+  left: -10px;
+}
+
+.arch-corner-ornament:last-child {
+  top: -10px;
+  right: -10px;
+}
+
+.couple-reveal-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.section-pre-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: clamp(10px, 2vh, 18px);
+}
+
+.subtle-pre-title {
+  font-family: var(--font-display);
+  font-size: clamp(0.72rem, 1.4vw, 0.85rem);
+  letter-spacing: 0.28em;
+  color: var(--gold-light);
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+/* =========================================================
+   PEACOCK OPENING FEATHERS & COUPLE ARRIVAL STAGE
+========================================================= */
+.peacock-couple-stage {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-height: clamp(280px, 44vh, 460px);
+  max-height: 54vh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: clamp(10px, 2vh, 18px);
+  overflow: hidden;
+}
+
+.peacock-feather-burst-flare {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(120px, 24vw, 190px);
+  height: clamp(120px, 24vw, 190px);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 242, 196, 0.95) 0%, rgba(228, 196, 119, 0.6) 45%, transparent 75%);
+  filter: blur(12px);
+  z-index: 3;
+  pointer-events: none;
+}
+
+.peacock-feather-shimmer-ring {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(72vw, 500px);
+  height: min(72vw, 500px);
+  border-radius: 50%;
+  border: 2px dashed rgba(243, 224, 152, 0.6);
+  box-shadow: 0 0 35px rgba(228, 196, 119, 0.5);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.peacock-plumage-wrapper {
+  position: absolute;
+  left: 50%;
+  bottom: 0%;
+  transform: translateX(-50%);
+  width: clamp(280px, 72vw, 560px);
+  max-width: 100%;
+  max-height: 52vh;
+  z-index: 1;
+  pointer-events: none;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.peacock-hero-img-opening {
+  width: 100%;
+  height: auto;
+  max-height: 50vh;
+  object-fit: contain;
+  transform-origin: bottom center;
+}
+
+.couple-arrival-wrapper {
+  position: relative;
+  z-index: 4;
+  width: clamp(230px, 56vw, 420px);
+  max-width: 90vw;
+  max-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.couple-golden-aura-halo {
+  position: absolute;
+  inset: -8%;
+  background: radial-gradient(circle at center 35%, rgba(255, 238, 185, 0.45) 0%, rgba(200, 164, 93, 0.2) 50%, transparent 70%);
+  filter: blur(28px);
+  pointer-events: none;
+}
+
+.couple-arrival-img {
+  width: 100%;
+  height: auto;
+  max-height: 48vh;
+  object-fit: contain;
+}
+
+.replay-arrival-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(6, 38, 44, 0.75);
+  border: 1px solid var(--gold-antique);
+  border-radius: 20px;
+  padding: 5px 14px;
+  color: var(--gold-light);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-bottom: 12px;
+  transition: all 0.3s var(--ease-smooth);
+}
+
+.replay-arrival-btn:hover {
+  background: var(--bg-peacock-teal);
+  border-color: var(--gold-bright);
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(228, 196, 119, 0.4);
+}
+
+.couple-names-block {
+  margin-top: clamp(8px, 1.6vh, 16px);
+  width: 100%;
+  max-width: min(94vw, 980px);
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.names-aura-beam {
+  width: 100%;
+  max-width: 520px;
+  height: 2px;
+  margin: 0 auto clamp(6px, 1.2vh, 10px);
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 242, 194, 0.9) 50%, transparent 100%);
+  filter: blur(1px);
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+/* =========================================================
+   NAMES ROW — JAYAPRAKASH & SRIMATHI
+   Flanked by Royal Flourishes with Center Sunburst Medallion
+========================================================= */
+.names-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: clamp(8px, 1.8vw, 18px);
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 clamp(4px, 1.2vw, 12px);
+}
+
+.name-flourish-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: clamp(38px, 6.2vw, 90px);
+  height: 28px;
+  opacity: 0;
+}
+
+.name-flourish-svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(228, 196, 119, 0.45));
+}
+
+.couple-name-groom,
+.couple-name-bride {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3.2vw, 2.85rem);
+  font-weight: 700;
+  letter-spacing: 0.085em;
+  margin: 0;
+  background: linear-gradient(135deg, #FFFDF0 0%, #F5DE9C 25%, #DBB456 55%, #B88E28 85%, #8C6514 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 18px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 25px rgba(228, 196, 119, 0.42));
+  white-space: nowrap;
+  display: inline-block;
+  line-height: 1.15;
+  will-change: clip-path;
+}
+
+.ampersand-medallion-anchor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.couple-ampersand-medallion {
+  position: relative;
+  width: clamp(36px, 4.2vw, 48px);
+  height: clamp(36px, 4.2vw, 48px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 16px rgba(228, 196, 119, 0.5)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.85));
+}
+
+.medallion-ornament-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.ampersand-char {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2vw, 1.55rem);
+  font-weight: 600;
+  color: #FFF2C4;
+  line-height: 1;
+  text-shadow: 0 0 12px rgba(255, 242, 194, 0.75), 0 2px 6px rgba(0, 0, 0, 0.95);
+}
+
+/* Delicate Underline Frame directly below names */
+.names-frame-wrap {
+  width: 100%;
+  max-width: min(92vw, 760px);
+  margin: clamp(4px, 0.9vh, 8px) auto clamp(6px, 1.2vh, 12px);
+  display: flex;
+  justify-content: center;
+}
+
+.names-underline-frame {
+  width: 100%;
+  height: auto;
+}
+
+.names-frame-svg {
+  width: 100%;
+  height: clamp(18px, 2.4vw, 28px);
+  filter: drop-shadow(0 0 8px rgba(228, 196, 119, 0.4));
+}
+
+/* =========================================================
+   INVITATION MESSAGE & TAMIL BLESSINGS
+   Luxury Wedding Hierarchy: Script Lead + Serif Body + Tamil Quote
+========================================================= */
+.couple-invitation-message {
+  margin-top: clamp(8px, 1.4vh, 16px);
+  width: 100%;
+  max-width: min(92vw, 760px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: clamp(8px, 1.4vh, 14px);
+  padding: clamp(6px, 1.2vh, 12px) clamp(10px, 2.5vw, 20px);
+  background: transparent;
+}
+
+.invite-calligraphy-lead {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(1.85rem, 3.8vw, 2.75rem);
+  font-weight: 400;
+  line-height: 1.25;
+  color: #FFF8E7;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 24px rgba(245, 215, 127, 0.6), 0 2px 10px rgba(0, 0, 0, 0.95);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.invite-serif-body {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1rem, 1.7vw, 1.25rem);
+  font-weight: 500;
+  line-height: 1.68;
+  color: #EFE6D4;
+  letter-spacing: 0.025em;
+  text-wrap: balance;
+  max-width: min(92vw, 680px);
+  margin: 0 auto;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9), 0 0 15px rgba(228, 196, 119, 0.25);
+}
+
+.desktop-break {
+  display: inline;
+}
+
+/* Auspicious Golden Lotus Divider */
+.quote-lotus-divider {
+  margin: clamp(6px, 1.2vh, 12px) auto 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.golden-lotus-divider-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.golden-lotus-svg {
+  filter: drop-shadow(0 0 10px rgba(228, 196, 119, 0.5));
+}
+
+/* Sacred Tamil Wedding Blessing */
+.tamil-traditional-quote {
+  position: relative;
+  font-family: var(--font-tamil), 'Noto Serif Tamil', Georgia, serif;
+  font-size: clamp(0.92rem, 1.4vw, 1.12rem);
+  font-weight: 600;
+  line-height: 1.75;
+  color: #FFF0BD;
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-wrap: balance;
+  max-width: min(92vw, 680px);
+  margin: 0 auto;
+  padding: 4px 12px;
+  background: transparent;
+  text-shadow: 0 0 18px rgba(255, 242, 194, 0.65), 0 2px 10px rgba(0, 0, 0, 0.95);
+}
+
+.tamil-quote-mark {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.25em;
+  color: var(--gold-antique);
+  vertical-align: -2px;
+  margin: 0 3px;
+}
+
+@media (max-width: 768px) {
+  .peacock-couple-stage {
+    min-height: clamp(260px, 40vh, 360px);
+    max-height: 48vh;
+  }
+
+  .peacock-plumage-wrapper {
+    width: clamp(260px, 86vw, 420px);
+    max-height: 46vh;
+    transform: translateX(-50%);
+  }
+
+  .couple-arrival-wrapper {
+    width: clamp(210px, 72vw, 340px);
+    max-height: 44vh;
+  }
+
+  .names-title-row {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(6px, 1.6vw, 12px);
+  }
+}
+
+@media (max-width: 640px) {
+  .name-flourish-wrap {
+    display: none;
+  }
+
+  .names-title-row {
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(5px, 1.5vw, 10px);
+    width: 100%;
+  }
+
+  .couple-name-groom,
+  .couple-name-bride {
+    font-size: clamp(1.05rem, 3.8vw, 1.45rem);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  .couple-ampersand-medallion {
+    width: clamp(28px, 6.2vw, 34px);
+    height: clamp(28px, 6.2vw, 34px);
+    flex-shrink: 0;
+  }
+
+  .ampersand-char {
+    font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+  }
+
+  .names-frame-wrap {
+    margin: 4px auto 8px;
+    max-width: 94vw;
+  }
+
+  .names-frame-svg {
+    height: 14px;
+  }
+
+  .couple-invitation-message {
+    padding: 4px 8px;
+    gap: 8px;
+  }
+
+  .invite-calligraphy-lead {
+    font-size: clamp(1.5rem, 4.6vw, 1.95rem);
+    line-height: 1.25;
+  }
+
+  .invite-serif-body {
+    font-size: clamp(0.88rem, 2.8vw, 1.02rem);
+    line-height: 1.55;
+    max-width: 94vw;
+  }
+
+  .desktop-break {
+    display: none;
+  }
+
+  .quote-lotus-divider {
+    margin: 4px auto 0;
+  }
+
+  .golden-lotus-svg {
+    width: 26px;
+    height: 19px;
+  }
+
+  .tamil-traditional-quote {
+    font-size: clamp(0.82rem, 2.5vw, 0.94rem);
+    line-height: 1.6;
+    padding: 2px 4px;
+    max-width: 94vw;
+  }
+}
+
+/* =========================================================
+   SCENE 4: DATE REVEAL — 01 NOVEMBER 2026
+========================================================= */
+.date-reveal-section {
+  position: relative;
+  width: 100%;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  background: radial-gradient(circle at center, #083840 0%, #06262c 55%, #031418 100%);
+}
+
+.date-section-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(212, 175, 55, 0.12) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.date-reveal-card-frame {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  background: linear-gradient(145deg, rgba(8, 56, 64, 0.7) 0%, rgba(4, 28, 33, 0.85) 100%);
+  backdrop-filter: blur(14px);
+  border: 1.5px solid var(--gold-antique);
+  border-radius: 16px;
+  padding: 40px 30px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(200, 164, 93, 0.25);
+}
+
+.date-reveal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.date-auspicious-tag {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  color: var(--gold-light);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.grand-date-showcase {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+  margin-bottom: 20px;
+}
+
+.date-huge-day {
+  font-family: var(--font-display);
+  font-size: clamp(4.5rem, 14vw, 8rem);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.7));
+}
+
+.date-textual-column {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.date-month-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 5.5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  line-height: 1;
+  margin: 0;
+}
+
+.date-year-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+  color: var(--gold-light);
+  letter-spacing: 0.15em;
+  margin: 4px 0;
+  font-weight: 600;
+}
+
+.date-day-name {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  color: var(--cream-muted);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.date-description-note {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--cream);
+  max-width: 500px;
+  margin: 16px auto 26px;
+}
+
+.auspicious-countdown-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.countdown-dial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 72px;
+  padding: 12px 10px;
+  background: rgba(3, 20, 24, 0.75);
+  border: 1px solid rgba(200, 164, 93, 0.45);
+  border-radius: 8px;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.dial-value {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.dial-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  color: var(--cream-muted);
+  margin-top: 4px;
+}
+
+.countdown-colon {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--gold-antique);
+  font-weight: 700;
+}
+
+@media (max-width: 520px) {
+  .grand-date-showcase {
+    gap: 15px;
+  }
+
+  .countdown-dial {
+    min-width: 60px;
+    padding: 8px 6px;
+  }
+
+  .dial-value {
+    font-size: 1.4rem;
+  }
+}
+
+/* =========================================================
+   SCENE 5: TWO SACRED CEREMONIES (TIMELINE)
+========================================================= */
+.events-timeline-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  padding: 90px 20px 80px;
+  background: radial-gradient(circle at 50% 50%, #062a31 0%, #041c21 60%, #031418 100%);
+  overflow: hidden;
+}
+
+.events-section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.events-subtitle-lead {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 0.28em;
+  color: var(--gold-light);
+  text-transform: uppercase;
+}
+
+.events-main-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin: 8px 0;
+}
+
+.events-date-sub {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  letter-spacing: 0.18em;
+  color: var(--cream);
+  margin-bottom: 12px;
+}
+
+.events-timeline-container {
+  position: relative;
+  width: 100%;
+  max-width: 950px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 40px;
+}
+
+.timeline-golden-thread {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, transparent, var(--gold-antique), var(--gold-light), var(--gold-antique), transparent);
+}
+
+.timeline-center-lamp-node {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  background: var(--bg-peacock);
+  border: 1px solid var(--gold-antique);
+  border-radius: 50%;
+  padding: 10px;
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
+}
+
+.event-ceremony-card {
+  position: relative;
+  flex: 1;
+  background: linear-gradient(145deg, rgba(8, 56, 64, 0.8) 0%, rgba(4, 26, 30, 0.9) 100%);
+  border: 1.5px solid var(--gold-antique);
+  border-radius: 14px;
+  padding: 32px 24px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+}
+
+.ceremony-time-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  padding: 6px 14px;
+  background: rgba(200, 164, 93, 0.15);
+  border: 1px solid var(--gold-antique);
+  border-radius: 20px;
+  margin-bottom: 18px;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--gold-bright);
+}
+
+.ceremony-header {
+  margin-bottom: 16px;
+}
+
+.ceremony-icon-symbol {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.ceremony-name {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+
+.ceremony-tamil {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  color: var(--gold-light);
+  margin-top: 4px;
+}
+
+.ceremony-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: var(--cream);
+  line-height: 1.6;
+}
+
+.ceremony-date-line {
+  color: var(--gold-bright);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ceremony-timing-placeholder {
+  background: rgba(3, 20, 24, 0.5);
+  border-left: 2px solid var(--gold-antique);
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  color: var(--gold-light);
+}
+
+.ceremony-description {
+  margin-top: 8px;
+  font-size: 0.88rem;
+  color: var(--cream-muted);
+}
+
+@media (max-width: 768px) {
+  .events-timeline-container {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .timeline-golden-thread {
+    left: 20px;
+    transform: none;
+  }
+
+  .timeline-center-lamp-node {
+    display: none;
+  }
+
+  .event-ceremony-card {
+    margin-left: 20px;
+  }
+}
+
+/* =========================================================
+   SCENE 5: STORY SECTION & JOURNEY
+========================================================= */
+.story-section-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+  height: auto;
+  padding: clamp(50px, 7vh, 85px) var(--content-padding-inline);
+  background: radial-gradient(circle at center, #083840 0%, #06262c 50%, #031418 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: clip;
+}
+
+@supports not (overflow-x: clip) {
+  .story-section-wrapper {
+    overflow-x: hidden;
+  }
+}
+
+.story-section-header {
+  text-align: center;
+  margin-bottom: clamp(24px, 4vh, 45px);
+}
+
+.story-lead-tag {
+  font-family: var(--font-display);
+  font-size: clamp(0.72rem, 1.3vw, 0.82rem);
+  letter-spacing: 0.28em;
+  color: var(--gold-light);
+  text-transform: uppercase;
+}
+
+.story-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4.8vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin: 8px 0;
+  text-wrap: balance;
+}
+
+.story-content-grid {
+  width: 100%;
+  max-width: min(92vw, 1020px);
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: clamp(24px, 4vw, 50px);
+  align-items: center;
+}
+
+.portrait-outer-frame {
+  position: relative;
+  width: 100%;
+  max-width: clamp(260px, 40vw, 360px);
+  margin: 0 auto;
+  background: linear-gradient(145deg, #093c44 0%, #041e23 100%);
+  border: 2px solid var(--gold-antique);
+  border-radius: 16px;
+  padding: clamp(10px, 2vw, 16px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(200, 164, 93, 0.25);
+}
+
+.portrait-matting {
+  border: 1px dashed rgba(243, 224, 152, 0.4);
+  border-radius: 10px;
+  padding: clamp(10px, 2vw, 14px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.story-couple-img {
+  width: 100%;
+  max-width: clamp(220px, 36vw, 300px);
+  height: auto;
+  max-height: clamp(260px, 42vh, 400px);
+  object-fit: contain;
+  filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.6));
+}
+
+.portrait-gold-plaque {
+  margin-top: 14px;
+  background: rgba(3, 20, 24, 0.8);
+  border: 1px solid var(--gold-antique);
+  border-radius: 6px;
+  padding: 8px 16px;
+  text-align: center;
+}
+
+.plaque-names {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  display: block;
+}
+
+.plaque-date {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: var(--gold-light);
+}
+
+.story-narrative-text {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 2vh, 18px);
+  width: 100%;
+  max-width: 560px;
+}
+
+.story-quote-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.1rem, 2.2vw, 1.55rem);
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--gold-bright);
+  text-wrap: balance;
+}
+
+.story-verse {
+  font-size: clamp(0.85rem, 1.6vw, 0.95rem);
+  line-height: 1.7;
+  color: var(--cream);
+  text-wrap: pretty;
+}
+
+.story-highlights-box {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1.5vh, 14px);
+  margin-top: 6px;
+}
+
+.highlight-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: rgba(6, 38, 44, 0.5);
+  border-left: 2px solid var(--gold-antique);
+  padding: clamp(10px, 1.8vh, 14px) clamp(12px, 2vw, 16px);
+  border-radius: 0 8px 8px 0;
+}
+
+.highlight-gem {
+  color: var(--gold-light);
+  font-size: 1.1rem;
+}
+
+.highlight-item strong {
+  font-family: var(--font-display);
+  font-size: clamp(0.82rem, 1.5vw, 0.9rem);
+  letter-spacing: 0.08em;
+  color: var(--gold-light);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.highlight-item p {
+  font-size: clamp(0.78rem, 1.4vw, 0.84rem);
+  color: var(--cream-muted);
+  line-height: 1.4;
+  margin: 0;
+}
+
+@media (max-width: 820px) {
+  .story-content-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    justify-items: center;
+  }
+}
+
+/* =========================================================
+   SCENE 5: THE AUSPICIOUS VENUE — FULL-SCREEN CINEMATIC ARRIVAL
+========================================================= */
+.venue-cinematic-scene {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+  height: auto;
+  overflow: hidden;
+  clip-path: inset(0);
+  contain: paint;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bg-deep);
+}
+
+/* Layer 1: Background Canvas & Authentic VR Mahal Environment */
+.venue-bg-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+  clip-path: inset(0);
+  contain: paint;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.venue-bg-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 36%;
+  transform-origin: center center;
+  opacity: 1;
+  filter: none;
+  transform: scale(1);
+  will-change: transform, opacity, filter;
+}
+
+/* Golden Divine Radiance Aura behind the Palace Facade */
+.venue-facade-divine-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(88vw, 700px);
+  height: min(88vw, 700px);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 235, 160, 0.45) 0%,
+    rgba(255, 195, 75, 0.26) 32%,
+    rgba(212, 175, 55, 0.12) 55%,
+    transparent 76%
+  );
+  filter: blur(42px);
+  pointer-events: none;
+  z-index: 2;
+  mix-blend-mode: screen;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* Layer 2: Atmospheric Dark Teal Vignette & Warm Golden Temple Illumination */
+.venue-cinematic-overlay-teal-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+      ellipse at 50% 50%,
+      transparent 36%,
+      rgba(0, 43, 43, 0.35) 68%,
+      rgba(3, 20, 24, 0.92) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(3, 20, 24, 0.5) 0%,
+      transparent 28%,
+      transparent 72%,
+      rgba(3, 20, 24, 0.7) 100%
+    );
+  z-index: 2;
+  pointer-events: none;
+}
+
+.venue-gold-atmosphere-bloom {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 52%,
+    rgba(255, 195, 65, 0.22) 0%,
+    rgba(212, 175, 55, 0.08) 42%,
+    transparent 70%
+  );
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.3;
+  mix-blend-mode: screen;
+  will-change: opacity;
+}
+
+/* Seamless Edge Transition Gradients — Flow from Scene 4 to Scene 6 */
+.venue-blend-gradient-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: clamp(100px, 16vh, 180px);
+  background: linear-gradient(
+    to bottom,
+    var(--bg-deep) 0%,
+    rgba(3, 20, 24, 0.85) 35%,
+    rgba(3, 20, 24, 0.25) 75%,
+    transparent 100%
+  );
+  z-index: 3;
+  pointer-events: none;
+}
+
+.venue-blend-gradient-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: clamp(140px, 22vh, 260px);
+  background: linear-gradient(
+    to top,
+    var(--bg-deep) 0%,
+    rgba(3, 20, 24, 0.95) 35%,
+    rgba(3, 20, 24, 0.35) 75%,
+    transparent 100%
+  );
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Layer 3: Brass Lamp Pulse Glows (Kuthu Vilakku Warmth) */
+.venue-lamp-pulse-glow {
+  position: absolute;
+  bottom: 8%;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 185, 60, 0.35) 0%,
+    rgba(212, 175, 55, 0.12) 48%,
+    transparent 75%
+  );
+  filter: blur(16px);
+  z-index: 4;
+  pointer-events: none;
+  animation: lampFlicker 3.4s ease-in-out infinite alternate;
+}
+
+.venue-lamp-left {
+  left: 3%;
+}
+
+.venue-lamp-right {
+  right: 3%;
+  animation-delay: 1.7s;
+}
+
+@keyframes lampFlicker {
+  0% {
+    opacity: 0.65;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+  100% {
+    opacity: 0.75;
+    transform: scale(0.98);
+  }
+}
+
+/* Layer 4: Sparse Floating Gold Dust & Auspicious Petals */
+.venue-floating-particles-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.venue-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff7dc 0%, #d4af37 80%);
+  box-shadow: 0 0 10px rgba(255, 230, 150, 0.8);
+  pointer-events: none;
+  animation: venueParticleDrift 8s ease-in-out infinite alternate;
+}
+
+.venue-particle.p1 {
+  top: 22%;
+  left: 16%;
+  width: 4px;
+  height: 4px;
+  animation-duration: 9s;
+}
+.venue-particle.p2 {
+  top: 38%;
+  left: 82%;
+  width: 5px;
+  height: 5px;
+  animation-duration: 11s;
+  animation-delay: -3s;
+}
+.venue-particle.p3 {
+  top: 62%;
+  left: 24%;
+  width: 3px;
+  height: 3px;
+  animation-duration: 7s;
+  animation-delay: -5s;
+}
+.venue-particle.p4 {
+  top: 78%;
+  left: 74%;
+  width: 4px;
+  height: 4px;
+  animation-duration: 10s;
+  animation-delay: -2s;
+}
+.venue-particle.p5 {
+  top: 15%;
+  left: 68%;
+  width: 3px;
+  height: 3px;
+  animation-duration: 8.5s;
+  animation-delay: -4s;
+}
+.venue-particle.p6 {
+  top: 85%;
+  left: 42%;
+  width: 4px;
+  height: 4px;
+  animation-duration: 9.5s;
+  animation-delay: -1s;
+}
+
+@keyframes venueParticleDrift {
+  0% {
+    transform: translateY(0px) translateX(0px);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-16px) translateX(12px);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(-30px) translateX(-8px);
+    opacity: 0.4;
+  }
+}
+
+.venue-petal {
+  position: absolute;
+  width: 14px;
+  height: 10px;
+  background: radial-gradient(ellipse at 40% 40%, #ff8da6 0%, #c43862 85%);
+  border-radius: 60% 40% 70% 30% / 60% 30% 70% 40%;
+  opacity: 0.7;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.4));
+  animation: venuePetalFloat 12s ease-in-out infinite;
+}
+
+.venue-petal.pet1 {
+  top: 18%;
+  left: 12%;
+  animation-duration: 14s;
+}
+.venue-petal.pet2 {
+  top: 28%;
+  right: 14%;
+  animation-duration: 16s;
+  animation-delay: -6s;
+}
+.venue-petal.pet3 {
+  bottom: 24%;
+  left: 18%;
+  animation-duration: 13s;
+  animation-delay: -3s;
+}
+
+@keyframes venuePetalFloat {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.75;
+  }
+  85% {
+    opacity: 0.75;
+  }
+  100% {
+    transform: translate(45px, 90px) rotate(140deg);
+    opacity: 0;
+  }
+}
+
+/* Layer 5: Foreground Photorealistic Banana Leaves for 2.5D Parallax */
+.venue-foreground-framing-leaves {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  overflow: hidden;
+  clip-path: inset(0);
+}
+
+.venue-foreground-leaf {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.78;
+  filter: blur(1.2px) drop-shadow(0 15px 25px rgba(0, 0, 0, 0.85));
+  will-change: transform;
+}
+
+.venue-leaf-top-left {
+  top: -20px;
+  left: -20px;
+  width: clamp(120px, 20vw, 280px);
+  height: auto;
+  max-height: 38vh;
+  object-fit: contain;
+}
+
+.venue-leaf-top-right {
+  top: -20px;
+  right: -20px;
+  width: clamp(120px, 20vw, 280px);
+  height: auto;
+  max-height: 38vh;
+  object-fit: contain;
+}
+
+/* Layer 6: Content Wrapper & HTML Typography (Directly on Scene, No Card) */
+.venue-scene-content-wrapper {
+  position: relative;
+  z-index: 6;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: clamp(52px, 7.5vh, 72px) var(--content-padding-inline) clamp(22px, 3.5vh, 38px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  pointer-events: auto;
+}
+
+/* Upper Zone: Scene Header */
+.venue-scene-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  will-change: transform, opacity;
+}
+
+.venue-eyebrow {
+  font-family: var(--font-display);
+  font-size: clamp(0.72rem, 1.2vw, 0.86rem);
+  letter-spacing: 0.32em;
+  color: var(--gold-light);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 6px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95), 0 0 16px rgba(212, 175, 55, 0.35);
+}
+
+.venue-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin: 0;
+  background: linear-gradient(180deg, #ffffff 0%, #fff7dc 35%, #e6c87d 70%, #c8a45d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 18px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 25px rgba(212, 175, 55, 0.4));
+  text-wrap: balance;
+}
+
+.venue-divider-icon {
+  font-size: clamp(0.75rem, 1.2vw, 0.95rem);
+  color: var(--gold-bright);
+  text-shadow: 0 0 12px rgba(255, 230, 150, 0.8);
+  margin-top: 8px;
+  display: block;
+}
+
+/* Lower Zone: Details Block (NO CARD, Seamless Scene Integration) */
+.venue-scene-details-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: min(92vw, 860px);
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  will-change: transform, opacity;
+}
+
+.venue-name-hero {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 4.4vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: #fff4d0;
+  margin: 0 0 clamp(4px, 1vh, 8px) 0;
+  background: linear-gradient(180deg, #ffffff 0%, #fff4d0 30%, #f0d588 70%, #d4af37 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 3px 14px rgba(0, 0, 0, 0.98)) drop-shadow(0 0 25px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 35px rgba(212, 175, 55, 0.5));
+  text-wrap: balance;
+}
+
+.venue-address-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  margin-bottom: clamp(6px, 1.2vh, 12px);
+}
+
+.venue-location-lead {
+  font-family: var(--font-body);
+  font-size: clamp(0.92rem, 1.7vw, 1.16rem);
+  color: var(--cream);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  margin: 0;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.98), 0 0 20px rgba(0, 0, 0, 0.95);
+  text-wrap: pretty;
+}
+
+.venue-location-sub {
+  font-family: var(--font-display);
+  font-size: clamp(0.74rem, 1.2vw, 0.84rem);
+  letter-spacing: 0.22em;
+  color: var(--gold-light);
+  font-weight: 600;
+  margin: 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.98), 0 0 16px rgba(0, 0, 0, 0.9);
+}
+
+/* Date & Time Highlights */
+.venue-datetime-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  margin-bottom: clamp(8px, 1.5vh, 14px);
+}
+
+.venue-date-highlight {
+  font-family: var(--font-display);
+  font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #fff7dc;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.98), 0 0 18px rgba(0, 0, 0, 0.9);
+}
+
+.venue-time-highlight {
+  font-family: var(--font-display);
+  font-size: clamp(0.8rem, 1.3vw, 0.92rem);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--gold-light);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.98), 0 0 16px rgba(0, 0, 0, 0.9);
+}
+
+/* Ornamental Divider Line */
+.venue-ornamental-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 340px;
+  margin: 0 0 clamp(10px, 1.8vh, 16px) 0;
+}
+
+.venue-ornamental-line .line-half {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.65), transparent);
+}
+
+.venue-ornamental-line .line-diamond {
+  font-size: 0.6rem;
+  color: var(--gold-bright);
+  text-shadow: 0 0 8px rgba(255, 242, 196, 0.8);
+}
+
+/* Refined Cinematic Action Buttons */
+.venue-cinematic-actions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(14px, 2.5vw, 24px);
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+
+.venue-btn-cinematic {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: rgba(3, 20, 24, 0.82);
+  border: 1.5px solid rgba(212, 175, 55, 0.75);
+  border-radius: 999px;
+  padding: 10px 26px;
+  min-height: 44px;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 242, 196, 0.3);
+  text-decoration: none;
+}
+
+.venue-btn-cinematic:hover {
+  background: rgba(212, 175, 55, 0.22);
+  border-color: #fff4d0;
+  box-shadow: 0 0 24px rgba(212, 175, 55, 0.5), 0 6px 20px rgba(0, 0, 0, 0.85);
+  transform: translateY(-2px);
+}
+
+.venue-btn-cinematic:active {
+  transform: translateY(0);
+}
+
+.venue-btn-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.venue-btn-text {
+  font-family: var(--font-display);
+  font-size: clamp(0.78rem, 1.2vw, 0.88rem);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #fff9e6;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+}
+
+.venue-btn-arrow {
+  font-size: 0.95rem;
+  color: var(--gold-bright);
+  transition: transform 0.3s ease;
+}
+
+.venue-btn-cinematic:hover .venue-btn-arrow {
+  transform: translateX(4px);
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+  .venue-cinematic-scene {
+    height: auto;
+    min-height: 100svh;
+    min-height: 100dvh;
+  }
+
+  .venue-bg-hero-img {
+    object-position: center 38%;
+  }
+
+  .venue-scene-content-wrapper {
+    padding: clamp(68px, 9.5vh, 88px) var(--content-padding-inline) clamp(22px, 3.5vh, 36px);
+    gap: clamp(14px, 2vh, 24px);
+  }
+
+  .venue-scene-details-block {
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+  }
+
+  .venue-scene-header {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .venue-eyebrow {
+    font-size: 0.66rem;
+    letter-spacing: 0.22em;
+    margin-bottom: 4px;
+  }
+
+  .venue-title {
+    font-size: clamp(1.22rem, 4.6vw, 1.52rem);
+    letter-spacing: 0.08em;
+  }
+
+  .venue-name-hero {
+    font-size: clamp(1.6rem, 6vw, 2.2rem);
+  }
+
+  .venue-location-lead {
+    font-size: clamp(0.85rem, 3.4vw, 1.02rem);
+  }
+
+  .venue-leaf-top-left {
+    width: clamp(80px, 22vw, 130px);
+    max-height: 25vh;
+    left: -10px;
+    top: -10px;
+  }
+
+  .venue-leaf-top-right {
+    width: clamp(80px, 22vw, 130px);
+    max-height: 25vh;
+    right: -10px;
+    top: -10px;
+  }
+
+  .venue-cinematic-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .venue-btn-cinematic {
+    width: 100%;
+    max-width: 270px;
+    padding: 11px 20px;
+  }
+}
+
+/* =========================================================
+   SCENE 7: FINAL INVITATION & BLESSINGS
+========================================================= */
+.final-invitation-section {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+  height: auto;
+  padding: clamp(60px, 8vh, 95px) var(--content-padding-inline) clamp(40px, 6vh, 65px);
+  background: radial-gradient(ellipse at 50% 60%, #083840 0%, #06262c 50%, #031418 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-x: clip;
+}
+
+@supports not (overflow-x: clip) {
+  .final-invitation-section {
+    overflow-x: hidden;
+  }
+}
+
+.final-sanctum-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(200, 164, 93, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.final-invitation-card {
+  position: relative;
+  width: 100%;
+  max-width: min(92vw, 680px);
+  background: linear-gradient(145deg, rgba(8, 56, 64, 0.8) 0%, rgba(4, 26, 30, 0.95) 100%);
+  border: 2px solid var(--gold-antique);
+  border-radius: clamp(14px, 2.5vw, 18px);
+  padding: clamp(26px, 4.5vh, 40px) clamp(16px, 3.5vw, 25px);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(200, 164, 93, 0.25);
+}
+
+.final-card-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.final-vel-icon {
+  margin-bottom: 8px;
+  filter: drop-shadow(0 0 12px rgba(255, 235, 170, 0.6));
+}
+
+.final-blessing-tamil {
+  font-family: var(--font-serif);
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  color: var(--gold-light);
+  letter-spacing: 0.15em;
+  margin-bottom: 4px;
+  text-wrap: balance;
+}
+
+.final-blessing-sub {
+  font-family: var(--font-display);
+  font-size: clamp(0.68rem, 1.3vw, 0.78rem);
+  letter-spacing: 0.22em;
+  color: var(--cream-muted);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.final-names-group {
+  margin: 14px 0;
+}
+
+.final-groom,
+.final-bride {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 5vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.final-ampersand {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+  color: var(--gold-light);
+  display: block;
+  margin: 2px 0;
+}
+
+.final-date-badge {
+  margin: 14px 0 8px;
+  padding: 6px 18px;
+  background: rgba(3, 20, 24, 0.7);
+  border: 1px solid var(--gold-antique);
+  border-radius: 20px;
+}
+
+.final-date-str {
+  font-family: var(--font-display);
+  font-size: clamp(0.85rem, 1.6vw, 0.95rem);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--gold-bright);
+}
+
+.final-two-events-bar {
+  font-size: clamp(0.72rem, 1.3vw, 0.8rem);
+  letter-spacing: 0.15em;
+  color: var(--gold-light);
+  margin-bottom: clamp(16px, 3vh, 24px);
+  text-wrap: balance;
+}
+
+.bar-separator {
+  margin: 0 10px;
+  color: var(--gold-antique);
+}
+
+.final-emotional-callout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0 25px;
+}
+
+.final-callout-heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 2.4vw, 1.45rem);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--gold-bright);
+  text-wrap: balance;
+}
+
+.final-callout-body {
+  font-size: clamp(0.85rem, 1.6vw, 0.92rem);
+  line-height: 1.6;
+  color: var(--cream);
+  max-width: min(90vw, 480px);
+  text-wrap: pretty;
+}
+
+.final-actions-row {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 2vw, 14px);
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: clamp(18px, 3vh, 28px);
+}
+
+.final-share-whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #25d366;
+  color: #ffffff;
+  padding: 12px clamp(18px, 3vw, 24px);
+  border-radius: 30px;
+  border: none;
+  font-family: var(--font-body);
+  font-size: clamp(0.82rem, 1.5vw, 0.88rem);
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+  transition: transform 0.3s var(--ease-smooth);
+}
+
+.final-share-whatsapp-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.6);
+}
+
+.final-scroll-top-btn {
+  background: transparent;
+  border: 1px solid var(--gold-antique);
+  color: var(--gold-light);
+  padding: 12px clamp(16px, 2.5vw, 20px);
+  border-radius: 30px;
+  font-family: var(--font-body);
+  font-size: clamp(0.78rem, 1.4vw, 0.82rem);
+  cursor: pointer;
+  transition: all 0.3s var(--ease-smooth);
+}
+
+.final-scroll-top-btn:hover {
+  background: rgba(200, 164, 93, 0.2);
+  border-color: var(--gold-bright);
+}
+
+.final-family-signoff {
+  border-top: 1px solid rgba(200, 164, 93, 0.3);
+  padding-top: 18px;
+  width: 100%;
+}
+
+.tamil-sign {
+  font-family: var(--font-serif);
+  font-size: clamp(0.92rem, 1.8vw, 1.05rem);
+  color: var(--gold-light);
+  margin-bottom: 6px;
+}
+
+.subham-sign {
+  font-family: var(--font-serif);
+  font-size: clamp(0.85rem, 1.6vw, 0.95rem);
+  font-style: italic;
+  color: var(--cream-muted);
+  letter-spacing: 0.1em;
+}
+
+/* =========================================================
+   SCENE 04: WEDDING INFORMATION / INVITATION DETAILS
+   Temple Sanctuary Corridor, 2.5D Scroll Parallax, Patrika Details
+========================================================= */
+.scene04-info-section {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+  height: auto;
+  padding: clamp(35px, 5vh, 65px) 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #031418;
+  overflow: hidden;
+  clip-path: inset(0);
+  contain: paint;
+  user-select: none;
+}
+
+/* Widescreen Ambient Extended Temple Sanctuary */
+.scene04-info-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/assets/backgrounds/scene4-temple-corridor.jpg');
+  background-size: cover;
+  background-position: center 35%;
+  filter: blur(50px) brightness(0.25) saturate(1.3);
+  transform: scale(1.02);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.scene04-camera-stage {
+  position: relative;
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  min-height: 100%;
+  height: auto;
+  overflow: hidden;
+  contain: paint;
+  perspective: 1200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.scene04-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+/* =========================================================
+   SCENE 04 — LAYER 1: BACKGROUND (Temple Corridor)
+========================================================= */
+.scene04-bg-layer {
+  z-index: 1;
+  pointer-events: none;
+}
+
+.scene04-corridor-frame {
+  position: relative;
+  width: 100%;
+  max-width: min(92vw, 560px);
+  height: auto;
+  min-height: min(90svh, 840px);
+  overflow: hidden;
+  border-radius: 14px;
+  box-shadow: 0 35px 90px rgba(0, 0, 0, 0.95);
+}
+
+.scene04-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  filter: brightness(0.88) contrast(1.1);
+}
+
+/* Volumetric Sunbeams streaming from top-left */
+.scene04-sunbeam-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255, 238, 175, 0.22) 0%, rgba(212, 175, 55, 0.08) 32%, transparent 60%);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+/* Central Sanctum Breathing Golden Ambient Light */
+.scene04-sanctum-glow {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  width: 320px;
+  height: 320px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 235, 160, 0.38) 0%, rgba(200, 164, 93, 0.18) 45%, transparent 75%);
+  filter: blur(28px);
+  pointer-events: none;
+  z-index: 2;
+  will-change: opacity, transform;
+}
+
+/* Realistic Small Lamp Flame Flickers */
+.scene04-flame-glow {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 15%, #ffd452 45%, #ff5500 80%, transparent 100%);
+  filter: drop-shadow(0 0 10px rgba(255, 200, 50, 0.95)) drop-shadow(0 0 18px rgba(255, 100, 0, 0.7));
+  animation: lampFlamePulse 2.4s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.flame-arch-top {
+  top: 9%;
+  left: 49.6%;
+  animation-delay: 0.1s;
+}
+
+.flame-arch-left {
+  top: 17.2%;
+  left: 21%;
+  animation-delay: 0.6s;
+}
+
+.flame-arch-right {
+  top: 26.5%;
+  left: 81.2%;
+  animation-delay: 0.3s;
+}
+
+.flame-step-lamp-l {
+  top: 70%;
+  left: 26%;
+  animation-delay: 0.8s;
+}
+
+.flame-step-lamp-r {
+  top: 70%;
+  left: 74%;
+  animation-delay: 0.4s;
+}
+
+.flame-fg-left-pot {
+  top: 89%;
+  left: 10.5%;
+  width: 20px;
+  height: 20px;
+  animation-delay: 0.5s;
+}
+
+/* =========================================================
+   SCENE 04 — LAYER 2: MIDDLEGROUND (Information Typography)
+========================================================= */
+.scene04-mid-layer {
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.scene04-content-container {
+  position: relative;
+  width: 100%;
+  max-width: min(92vw, 520px);
+  padding: clamp(20px, 3vh, 32px) clamp(12px, 3vw, 22px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 5;
+}
+
+/* STEP 3: Title Group */
+.scene04-title-group {
+  margin-bottom: 4px;
+}
+
+.scene04-tamil-header-motto {
+  display: block;
+  font-family: var(--font-tamil), serif;
+  font-size: clamp(0.75rem, 1.8vh, 0.92rem);
+  color: var(--gold-light);
+  letter-spacing: 0.14em;
+  margin-bottom: 4px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95);
+}
+
+.scene04-main-tamil-title {
+  font-family: var(--font-tamil), serif;
+  font-size: clamp(1.3rem, 3.4vh, 2.1rem);
+  font-weight: 700;
+  color: #fff2c4;
+  letter-spacing: 0.06em;
+  margin: 2px 0 4px;
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.95), 0 0 20px rgba(212, 175, 55, 0.65);
+  text-wrap: balance;
+}
+
+.scene04-english-sub-lead {
+  font-family: var(--font-display);
+  font-size: clamp(0.55rem, 1.2vh, 0.68rem);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: #e6c87d;
+  text-transform: uppercase;
+  margin: 0;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+}
+
+/* Gold Divider */
+.scene04-gold-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 75%;
+  margin: 8px 0;
+  transform-origin: center center;
+  opacity: 0.85;
+}
+
+.scene04-gold-divider .divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #d4af37 50%, transparent);
+}
+
+.scene04-gold-divider .divider-motif {
+  font-size: 0.72rem;
+  color: #fff2c4;
+  text-shadow: 0 0 8px #ffe599;
+}
+
+/* STEP 4: Date Block */
+.scene04-date-block {
+  margin: 4px 0 6px;
+}
+
+.scene04-date-pre {
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  color: #d4af37;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.scene04-date-display {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 3.4vh, 2rem);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  background: linear-gradient(135deg, #ffffff 0%, #fff4d2 30%, #e6c87d 60%, #fff7de 85%, #c8a45d 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.95));
+  margin: 0;
+}
+
+/* STEP 5: Time Block */
+.scene04-time-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 4px 0 6px;
+}
+
+.scene04-time-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(3, 20, 24, 0.85);
+  border: 1.2px solid rgba(212, 175, 55, 0.65);
+  border-radius: 24px;
+  padding: 5px 18px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), inset 0 0 10px rgba(212, 175, 55, 0.15);
+  margin-bottom: 4px;
+}
+
+.scene04-time-pill .time-clock-icon {
+  font-size: 0.85rem;
+}
+
+.scene04-time-pill .time-hours-text {
+  font-family: var(--font-display);
+  font-size: clamp(0.78rem, 1.8vh, 0.95rem);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #fff2c4;
+}
+
+.scene04-day-text {
+  font-family: var(--font-tamil), var(--font-display);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  color: #e6c87d;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* STEP 6: Venue Block */
+.scene04-venue-block {
+  margin: 6px 0 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.scene04-venue-badge {
+  font-family: var(--font-tamil), var(--font-display);
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  color: #d4af37;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+
+.scene04-venue-name {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2.8vh, 1.65rem);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #fff2c4;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95), 0 0 15px rgba(212, 175, 55, 0.5);
+  margin: 2px 0 4px;
+  text-wrap: balance;
+}
+
+.scene04-venue-locality {
+  font-family: var(--font-display);
+  font-size: clamp(0.76rem, 1.8vh, 0.92rem);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: #ffffff;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.9);
+  margin: 0 0 2px;
+}
+
+.scene04-venue-road {
+  font-family: var(--font-display);
+  font-size: clamp(0.64rem, 1.4vh, 0.76rem);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: #e6c87d;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+  margin: 0;
+}
+
+/* STEP 7: Sacred Thirukkural Blessing Quote */
+.scene04-kural-container {
+  position: relative;
+  margin-top: 12px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  background: rgba(3, 20, 24, 0.72);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  max-width: 440px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+}
+
+.kural-glow-aura {
+  position: absolute;
+  inset: -4px;
+  border-radius: 14px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.kural-symbol {
+  font-size: 0.9rem;
+  color: #d4af37;
+  margin-bottom: 4px;
+}
+
+.kural-verses-text {
+  font-family: var(--font-tamil), serif;
+  font-size: clamp(0.82rem, 1.9vh, 1.02rem);
+  font-weight: 600;
+  line-height: 1.6;
+  color: #fff3ce;
+  letter-spacing: 0.05em;
+  margin: 0 0 6px;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.95);
+  text-wrap: balance;
+}
+
+.kural-author-cite {
+  font-family: var(--font-tamil), serif;
+  font-size: 0.78rem;
+  font-style: italic;
+  color: #e6c87d;
+  letter-spacing: 0.1em;
+  display: block;
+}
+
+/* =========================================================
+   SCENE 04 — LAYER 3: FOREGROUND (Leaves, Feathers, Petals)
+========================================================= */
+.scene04-fg-layer {
+  z-index: 20;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Subtle 3D Swaying Banana Leaves at edges */
+.scene04-edge-leaf {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.leaf-pos-left {
+  top: 25%;
+  left: 0;
+  width: clamp(65px, 20vw, 150px);
+  height: 35%;
+  transform-origin: 10% 85%;
+  animation: bananaLeafSlowSwayLeft 6.8s ease-in-out infinite;
+}
+
+.leaf-pos-right {
+  top: 25%;
+  right: 0;
+  width: clamp(65px, 20vw, 150px);
+  height: 35%;
+  transform-origin: 90% 85%;
+  animation: bananaLeafSlowSwayRight 7.2s ease-in-out infinite;
+}
+
+.edge-leaf-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Peacock Feathers at bottom edges */
+.scene04-feather-edge {
+  position: absolute;
+  bottom: 6%;
+  width: clamp(75px, 14vw, 130px);
+  height: clamp(100px, 18vw, 170px);
+  z-index: 3;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.feather-pos-left {
+  left: 0;
+  transform-origin: bottom left;
+}
+
+.feather-pos-right {
+  right: 0;
+  transform-origin: bottom right;
+}
+
+.edge-feather-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.75));
+}
+
+.edge-feather-img.flipped {
+  transform: scaleX(-1);
+}
+
+/* Floating Petals across Scene 04 */
+.petal-s4-1 {
+  top: 18%;
+  left: 12%;
+  animation: petalDriftSlow 10s cubic-bezier(0.4, 0, 0.6, 1) infinite 0.8s;
+}
+
+.petal-s4-2 {
+  top: 42%;
+  right: 14%;
+  animation: petalDriftReverse 11.5s cubic-bezier(0.4, 0, 0.6, 1) infinite 2.5s;
+}
+
+.petal-s4-3 {
+  top: 68%;
+  left: 18%;
+  animation: petalDriftSlow 9.2s cubic-bezier(0.4, 0, 0.6, 1) infinite 4.2s;
+}
+
+.petal-s4-4 {
+  top: 30%;
+  left: 50%;
+  animation: petalDriftReverse 12s cubic-bezier(0.4, 0, 0.6, 1) infinite 1.5s;
+}
+
+.scene04-floating-petal {
+  position: absolute;
+  width: 14px;
+  height: 18px;
+  background: radial-gradient(ellipse at 40% 30%, #ffb6c1 0%, #ff69b4 50%, #c71585 100%);
+  border-radius: 50% 50% 50% 0;
+  opacity: 0;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.45));
+  will-change: transform, opacity;
+}
+
+/* Sparkles */
+.scene04-sparkle {
+  position: absolute;
+  color: #fff2c4;
+  font-size: 0.8rem;
+  filter: drop-shadow(0 0 6px #ffe699);
+  animation: sparkleTwinkle 3.5s ease-in-out infinite alternate;
+}
+
+.sp1 {
+  top: 28%;
+  left: 24%;
+  animation-delay: 0.5s;
+}
+
+.sp2 {
+  top: 55%;
+  right: 22%;
+  animation-delay: 1.8s;
+}
+
+.sp3 {
+  top: 75%;
+  left: 48%;
+  animation-delay: 2.8s;
+}
+
+/* Mobile Responsiveness for Scene 04 */
+@media (max-width: 480px) {
+  .scene04-corridor-frame {
+    max-width: 100%;
+    min-height: auto;
+    height: auto;
+  }
+
+  .scene04-content-container {
+    padding: clamp(16px, 2.5vh, 24px) 12px;
+    max-width: 100%;
+  }
+
+  .scene04-main-tamil-title {
+    font-size: clamp(1.2rem, 3vh, 1.6rem);
+  }
+
+  .scene04-date-display {
+    font-size: clamp(1.15rem, 2.8vh, 1.55rem);
+  }
+
+  .scene04-venue-name {
+    font-size: clamp(1.05rem, 2.6vh, 1.4rem);
+  }
+
+  .scene04-kural-container {
+    padding: 10px 12px;
+  }
+
+  .kural-verses-text {
+    font-size: clamp(0.78rem, 1.8vh, 0.92rem);
+  }
+
+  .scene04-feather-edge {
+    width: 70px;
+    height: 100px;
+    bottom: 2%;
+  }
+}
+
+/* =========================================================
+   CINEMATIC SECTION: FAMILY BLESSINGS & WELCOME
+   Emotional Closing Chapter — Pure Scene Integration (NO Card Box)
+========================================================= */
+.family-blessings-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(50px, 9vh, 90px) clamp(16px, 4vw, 36px);
+  background: radial-gradient(circle at 50% 38%, #083840 0%, #06262c 50%, #031418 100%);
+  color: var(--cream);
+  overflow-x: clip;
+  z-index: 10;
+}
+
+@supports not (overflow-x: clip) {
+  .family-blessings-section {
+    overflow-x: hidden;
+  }
+}
+
+/* Atmospheric 2.5D Background & Golden Glow */
+.family-atmosphere-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.family-golden-radiance {
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  width: min(90vw, 850px);
+  height: min(75vh, 650px);
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(228, 196, 119, 0.28) 0%, rgba(200, 164, 93, 0.12) 45%, transparent 75%);
+  filter: blur(40px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.family-mandapam-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 35%, rgba(3, 20, 24, 0.75) 85%, #031418 100%);
+  pointer-events: none;
+}
+
+/* 2.5D Framing Banana Leaves at Viewport Edges */
+.family-framing-leaves {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 6;
+  overflow: hidden;
+}
+
+.family-leaf-sway {
+  position: absolute;
+  width: clamp(140px, 22vw, 290px);
+  height: auto;
+  opacity: 0.85;
+  filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.85));
+  pointer-events: none;
+  will-change: transform;
+}
+
+.family-leaf-sway.leaf-left {
+  top: clamp(20px, 8vh, 80px);
+  left: -20px;
+  transform-origin: top left;
+}
+
+.family-leaf-sway.leaf-right {
+  top: clamp(20px, 8vh, 80px);
+  right: -20px;
+  transform-origin: top right;
+}
+
+/* Flanking Corner Brass Kuthu Vilakku Lamps */
+.family-corner-lamp {
+  position: absolute;
+  bottom: clamp(20px, 6vh, 60px);
+  z-index: 6;
+  pointer-events: none;
+  filter: drop-shadow(0 0 20px rgba(228, 196, 119, 0.5)) drop-shadow(0 10px 25px rgba(0, 0, 0, 0.9));
+  will-change: transform, opacity;
+}
+
+.family-corner-lamp.lamp-pos-left {
+  left: clamp(12px, 3.5vw, 45px);
+}
+
+.family-corner-lamp.lamp-pos-right {
+  right: clamp(12px, 3.5vw, 45px);
+}
+
+/* Floating Golden Dust Particles & Sacred Flower Petals */
+.family-floating-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.fam-particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #FFF2C4;
+  box-shadow: 0 0 8px #E5C77A;
+  animation: famParticleFloat 8s ease-in-out infinite;
+}
+
+.fam-particle.fp1 { top: 25%; left: 22%; animation-duration: 9s; animation-delay: 0s; }
+.fam-particle.fp2 { top: 60%; right: 26%; animation-duration: 11s; animation-delay: 2s; }
+.fam-particle.fp3 { top: 78%; left: 32%; animation-duration: 8.5s; animation-delay: 4s; }
+
+.fam-petal {
+  position: absolute;
+  width: 14px;
+  height: 18px;
+  border-radius: 50% 50% 50% 0;
+  background: linear-gradient(135deg, rgba(230, 80, 115, 0.75) 0%, rgba(180, 40, 75, 0.6) 100%);
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+  animation: famPetalDrift 14s ease-in-out infinite;
+}
+
+.fam-petal.fpet1 { top: 18%; left: 16%; animation-duration: 13s; animation-delay: 1s; }
+.fam-petal.fpet2 { top: 48%; right: 18%; animation-duration: 15s; animation-delay: 3.5s; }
+.fam-petal.fpet3 { top: 82%; right: 30%; animation-duration: 12s; animation-delay: 6s; }
+
+@keyframes famParticleFloat {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.3; }
+  50% { transform: translateY(-24px) scale(1.4); opacity: 0.9; }
+}
+
+@keyframes famPetalDrift {
+  0% { transform: translateY(-10px) rotate(0deg); opacity: 0; }
+  15% { opacity: 0.8; }
+  85% { opacity: 0.8; }
+  100% { transform: translateY(120px) rotate(45deg); opacity: 0; }
+}
+
+/* =========================================================
+   PURE SCENE INTEGRATED CONTENT WRAPPER (NO Card Box)
+========================================================= */
+.family-content-wrapper {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  max-width: min(94vw, 880px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: clamp(10px, 1.8vh, 18px);
+}
+
+/* Upper Zone: Traditional Lotus Crown & Royal Title */
+.family-header-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(4px, 0.9vh, 8px);
+  width: 100%;
+}
+
+.family-top-lotus-crown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2px;
+  filter: drop-shadow(0 0 16px rgba(228, 196, 119, 0.6)) drop-shadow(0 4px 10px rgba(0, 0, 0, 0.85));
+}
+
+.top-lotus-svg {
+  width: clamp(52px, 6vw, 68px);
+  height: auto;
+}
+
+.family-eyebrow {
+  font-family: var(--font-display);
+  font-size: clamp(0.72rem, 1.3vw, 0.9rem);
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  color: var(--gold-light);
+  text-transform: uppercase;
+  margin: 0;
+  text-shadow: 0 0 12px rgba(243, 224, 152, 0.45), 0 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+.family-main-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.85rem, 4.2vw, 3.3rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin: 0;
+  background: linear-gradient(135deg, #FFFDF0 0%, #FCE09B 25%, #E5BE57 55%, #C49A32 80%, #8C6716 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 18px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 25px rgba(228, 196, 119, 0.42));
+  line-height: 1.18;
+  white-space: nowrap;
+}
+
+/* Traditional Gold Divider: ─── ❖ ─── */
+.family-gold-divider-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: clamp(4px, 0.9vh, 9px) auto;
+  filter: drop-shadow(0 0 10px rgba(228, 196, 119, 0.45));
+}
+
+.trad-gold-divider-svg {
+  width: clamp(140px, 20vw, 190px);
+  height: auto;
+  display: block;
+}
+
+/* Center Zone: HERO MOMENT — Family Gathering Illustration */
+.family-hero-stage {
+  position: relative;
+  width: 100%;
+  max-width: min(94vw, 700px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: clamp(6px, 1.2vh, 14px) auto;
+}
+
+.family-stage-aura {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 92%;
+  height: 88%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse at center, rgba(228, 196, 119, 0.32) 0%, rgba(14, 76, 87, 0.22) 50%, transparent 75%);
+  filter: blur(28px);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.family-image-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.family-hero-image {
+  width: 100%;
+  max-width: 682px;
+  height: auto;
+  max-height: clamp(230px, 44vh, 420px);
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 35px rgba(228, 196, 119, 0.35));
+  will-change: transform, opacity, filter;
+}
+
+/* Lower Zone: Calligraphy Welcome & Wedding Blessings */
+.family-invitation-words {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: clamp(5px, 1.1vh, 10px);
+}
+
+/* Main Calligraphy Line: With hearts full of joy, */
+.family-calligraphy-joy {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(2.05rem, 4.6vw, 3.3rem);
+  font-weight: 400;
+  line-height: 1.25;
+  margin: 0;
+  padding: 0 clamp(8px, 2vw, 16px);
+  color: #FFF2C4;
+  text-shadow: 0 0 25px rgba(245, 215, 127, 0.65), 0 2px 10px rgba(0, 0, 0, 0.95);
+  text-wrap: balance;
+  display: inline-block;
+  overflow: visible;
+  will-change: clip-path;
+}
+
+/* Sub Welcome Block: our families welcome you... */
+.family-welcome-sub-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  max-width: min(92vw, 680px);
+  margin: 0 auto;
+}
+
+.welcome-sub-line {
+  font-family: var(--font-serif);
+  font-size: clamp(0.95rem, 1.8vw, 1.25rem);
+  font-weight: 400;
+  line-height: 1.5;
+  color: #EFE6D4;
+  letter-spacing: 0.02em;
+  margin: 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9), 0 0 15px rgba(228, 196, 119, 0.25);
+  text-wrap: balance;
+}
+
+/* Supporting Blessing Paragraph */
+.family-blessing-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  max-width: min(92vw, 680px);
+  margin: 0 auto;
+}
+
+.blessing-line {
+  font-family: var(--font-serif);
+  font-size: clamp(0.86rem, 1.5vw, 1.08rem);
+  font-weight: 400;
+  line-height: 1.6;
+  color: #E0D4BE;
+  letter-spacing: 0.02em;
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+  text-wrap: balance;
+}
+
+/* Sacred Tamil Closing Lines */
+.family-tamil-closing-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  max-width: min(92vw, 680px);
+  margin: 0 auto;
+}
+
+.tamil-closing-line {
+  font-family: var(--font-tamil), 'Noto Serif Tamil', Georgia, serif;
+  text-align: center;
+  text-wrap: balance;
+  margin: 0;
+}
+
+.tamil-closing-line.lead {
+  font-size: clamp(0.92rem, 1.4vw, 1.12rem);
+  font-weight: 600;
+  line-height: 1.7;
+  color: #FFF0BD;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 16px rgba(243, 224, 152, 0.55), 0 2px 8px rgba(0, 0, 0, 0.95);
+}
+
+.tamil-closing-line.sub {
+  font-size: clamp(0.85rem, 1.3vw, 1.02rem);
+  font-weight: 600;
+  line-height: 1.7;
+  color: #F8E2A0;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 14px rgba(243, 224, 152, 0.45), 0 2px 8px rgba(0, 0, 0, 0.95);
+}
+
+/* Bottom Delicate Floral Accent */
+.family-bottom-floral-accent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: clamp(4px, 1vh, 10px);
+  filter: drop-shadow(0 0 12px rgba(228, 196, 119, 0.5));
+}
+
+.bottom-lotus-svg {
+  width: clamp(32px, 4vw, 42px);
+  height: auto;
+}
+
+/* =========================================================
+   RESPONSIVE DESIGN: TABLETS & MOBILE (360px - 768px)
+========================================================= */
+@media (max-width: 768px) {
+  .family-blessings-section {
+    padding: clamp(35px, 6vh, 60px) 14px clamp(60px, 10vh, 95px);
+    min-height: auto;
+  }
+
+  .family-leaf-sway {
+    width: clamp(110px, 20vw, 180px);
+    opacity: 0.65;
+  }
+
+  .family-leaf-sway.leaf-left {
+    left: -35px;
+    top: 10px;
+  }
+
+  .family-leaf-sway.leaf-right {
+    right: -35px;
+    top: 10px;
+  }
+
+  .family-corner-lamp {
+    bottom: 12px;
+    opacity: 0.5;
+    transform: scale(0.8);
+  }
+
+  .family-corner-lamp.lamp-pos-left {
+    left: 4px;
+    transform-origin: bottom left;
+  }
+
+  .family-corner-lamp.lamp-pos-right {
+    right: 4px;
+    transform-origin: bottom right;
+  }
+
+  .family-tamil-closing-block {
+    max-width: min(86vw, 480px);
+    margin: 0 auto;
+    padding: 0 12px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .family-main-title {
+    font-size: clamp(1.6rem, 5.5vw, 2.2rem);
+  }
+
+  .family-hero-stage {
+    margin: 8px auto;
+  }
+
+  .family-hero-image {
+    max-height: clamp(210px, 36vh, 320px);
+  }
+
+  .family-calligraphy-joy {
+    font-size: clamp(1.95rem, 6.2vw, 2.7rem);
+  }
+
+  .welcome-sub-line {
+    font-size: clamp(0.88rem, 2.8vw, 1.05rem);
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 480px) {
+  .family-blessings-section {
+    padding: 30px 10px clamp(55px, 8vh, 80px);
+  }
+
+  .family-content-wrapper {
+    gap: 8px;
+  }
+
+  .family-eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+  }
+
+  .family-main-title {
+    font-size: clamp(1.45rem, 5.8vw, 1.85rem);
+  }
+
+  .family-calligraphy-joy {
+    font-size: clamp(1.8rem, 6.8vw, 2.4rem);
+  }
+
+  .welcome-sub-line {
+    font-size: clamp(0.84rem, 2.9vw, 0.98rem);
+    line-height: 1.5;
+  }
+
+  .blessing-line {
+    font-size: clamp(0.8rem, 2.7vw, 0.92rem);
+    line-height: 1.55;
+  }
+
+  .tamil-closing-line.lead {
+    font-size: clamp(0.82rem, 2.8vw, 0.94rem);
+    line-height: 1.6;
+  }
+
+  .tamil-closing-line.sub {
+    font-size: clamp(0.76rem, 2.6vw, 0.88rem);
+    line-height: 1.6;
+  }
+}
+
+/* =========================================================
+   DATE REVEAL SECTION — INTERACTIVE CEREMONIAL SCRATCH CARD
+   Full-Bleed Temple Sanctum & Sacred Wedding Date Plaque
+   (Matches MuruganScene & CoupleReveal 100% in Ratio & Theme)
+========================================================= */
+.date-reveal-scratch-section {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(40px, 6vh, 75px) var(--content-padding-inline);
+  background-color: var(--bg-deep, #031418);
+  overflow-x: clip;
+  overflow-y: visible;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+@supports not (overflow-x: clip) {
+  .date-reveal-scratch-section {
+    overflow-x: hidden;
+  }
+}
+
+/* Layer 1: Full-Bleed Temple Sanctum Background Layer */
+.date-sanctum-bg-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.date-sanctum-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 32%;
+  filter: brightness(0.24) saturate(1.22) contrast(1.15);
+  transform: scale(1.02);
+}
+
+.date-sanctum-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 45%,
+    rgba(6, 38, 44, 0.22) 0%,
+    rgba(3, 20, 24, 0.85) 62%,
+    #031418 100%
+  );
+}
+
+.date-ambient-glow {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(85vw, 680px);
+  height: min(85vw, 680px);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(228, 196, 119, 0.18) 0%,
+    rgba(168, 61, 93, 0.08) 45%,
+    transparent 72%
+  );
+  filter: blur(55px);
+  pointer-events: none;
+}
+
+/* Layer 2: Main Devotional Content Stage (Seamless, Same Ratio as Other Scenes) */
+.date-reveal-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: min(92vw, 860px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: clamp(16px, 2.8vh, 32px);
+}
+
+/* Header Block: Lotus Motif & Calligraphy */
+.date-header-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.date-header-lotus {
+  opacity: 0.95;
+  filter: drop-shadow(0 0 10px rgba(252, 224, 155, 0.5));
+  animation: lotusBreath 4s ease-in-out infinite alternate;
+}
+
+@keyframes lotusBreath {
+  0% { transform: scale(1); filter: drop-shadow(0 0 8px rgba(252, 224, 155, 0.4)); }
+  100% { transform: scale(1.06); filter: drop-shadow(0 0 14px rgba(252, 224, 155, 0.7)); }
+}
+
+.date-destiny-calligraphy {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(1.45rem, 4.2vw, 2.35rem);
+  font-weight: 500;
+  color: var(--gold-bright, #FCE09B);
+  letter-spacing: 0.04em;
+  text-shadow: 0 2px 14px rgba(212, 175, 55, 0.4), 0 0 24px rgba(0, 0, 0, 0.85);
+  margin: 0;
+}
+
+.date-destiny-flourish {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: min(65vw, 200px);
+  margin-top: 2px;
+}
+
+.destiny-line {
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.7), transparent);
+}
+
+.destiny-diamond {
+  font-size: 7px;
+  color: #D4AF37;
+}
+
+/* Central Stage: Scratch Card flanked by Brass Oil Lamps */
+.date-central-stage {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(16px, 4vw, 48px);
+}
+
+.date-flank-lamp {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.95;
+  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.7));
+}
+
+.date-lamp-flame-aura {
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 215, 60, 0.6) 0%, rgba(255, 100, 0, 0.25) 55%, transparent 100%);
+  filter: blur(6px);
+  animation: lampFlamePulse 2.3s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@media (max-width: 580px) {
+  .date-flank-lamp {
+    display: none; /* Keep full focus on scratch plaque on small mobile viewports */
+  }
+}
+
+/* Scratch Card Plaque Container */
+.scratch-card-wrapper {
+  position: relative;
+  width: min(92vw, 440px);
+  height: clamp(170px, 24vh, 220px);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+/* Divine Golden Sunburst Entrance Flare (Peacock-style Entrance Radiance) */
+.date-card-entrance-flare {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(90vw, 480px);
+  height: min(90vw, 480px);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 235, 160, 0.95) 0%,
+    rgba(255, 200, 70, 0.75) 26%,
+    rgba(212, 175, 55, 0.45) 48%,
+    rgba(168, 61, 93, 0.18) 68%,
+    transparent 82%
+  );
+  filter: blur(28px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Auspicious Golden Shockwave Ring on Scratch Reveal */
+.date-reveal-shockwave {
+  position: absolute;
+  inset: -6%;
+  border-radius: 36px;
+  border: 2px solid rgba(255, 235, 160, 0.9);
+  box-shadow: 0 0 35px rgba(255, 215, 60, 0.85), inset 0 0 20px rgba(255, 215, 60, 0.5);
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+}
+
+/* Golden Divine Aura Glow behind Revealed Date */
+.date-revealed-aura-glow {
+  position: absolute;
+  inset: -12%;
+  border-radius: 36px;
+  background: radial-gradient(circle, rgba(255, 235, 150, 0.75) 0%, rgba(212, 175, 55, 0.35) 45%, transparent 75%);
+  filter: blur(16px);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* UNDERLAYER: Sacred Revealed Wedding Date */
+.date-revealed-underlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 50%, #072a31 0%, #031519 72%, #020c0f 100%);
+  border: 1.5px solid rgba(212, 175, 55, 0.88);
+  border-radius: 28px;
+  box-shadow: inset 0 0 24px rgba(212, 175, 55, 0.25), inset 0 0 38px rgba(0, 0, 0, 0.9), 0 8px 32px rgba(0, 0, 0, 0.85);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px 16px;
+  z-index: 2;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.revealed-filigree-frame {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.revealed-filigree-frame .frame-corner {
+  position: absolute;
+  color: var(--gold-bright, #FCE09B);
+  font-size: 10px;
+  opacity: 0.85;
+  line-height: 1;
+}
+
+.corner-tl { top: 8px; left: 16px; }
+.corner-tr { top: 8px; right: 16px; }
+.corner-bl { bottom: 8px; left: 16px; }
+.corner-br { bottom: 8px; right: 16px; }
+
+.revealed-date-core {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 1px;
+}
+
+.revealed-auspicious-tag {
+  font-family: var(--font-primary, 'Cinzel', serif);
+  font-size: clamp(0.52rem, 1.5vw, 0.65rem);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-bright, #FCE09B);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 2px;
+}
+
+.tag-sparkle {
+  font-size: 8px;
+  opacity: 0.85;
+}
+
+.revealed-huge-date {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: clamp(2.3rem, 6.5vw, 3.2rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFF3C4 28%, #D4AF37 68%, #9E7418 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 14px rgba(212, 175, 55, 0.45));
+  margin: 1px 0;
+}
+
+.revealed-month-year {
+  font-family: var(--font-primary, 'Cinzel', serif);
+  font-size: clamp(0.72rem, 2.1vw, 0.92rem);
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: #F8E7B2;
+  margin-top: 1px;
+}
+
+.revealed-gold-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 65%;
+  margin: 4px 0 3px;
+}
+
+.revealed-gold-divider .divider-line {
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.75), transparent);
+}
+
+.revealed-gold-divider .divider-diamond {
+  font-size: 6px;
+  color: #D4AF37;
+}
+
+.revealed-day-tamil {
+  font-family: 'Cormorant Garamond', 'Noto Serif Tamil', serif;
+  font-size: clamp(0.7rem, 1.9vw, 0.84rem);
+  font-style: italic;
+  color: rgba(245, 235, 215, 0.95);
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.revealed-day-tamil .day-name {
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.revealed-day-tamil .day-bullet {
+  color: #D4AF37;
+  font-style: normal;
+  font-size: 8px;
+}
+
+.revealed-day-tamil .tamil-day {
+  font-family: 'Noto Serif Tamil', serif;
+  font-style: normal;
+  font-size: clamp(0.64rem, 1.8vw, 0.78rem);
+  color: #F0DC9E;
+}
+
+/* OVERLAYER: Interactive Scratch Canvas */
+.date-scratch-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 28px;
+  z-index: 5;
+  touch-action: none;
+  cursor: grab;
+  transition: opacity 0.5s ease;
+}
+
+.date-scratch-canvas:active {
+  cursor: grabbing;
+}
+
+.date-scratch-canvas.scratched-out {
+  pointer-events: none;
+}
+
+/* Antique Gold Foil Light Sheen Sweep Overlay */
+.card-shimmer-sweep {
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+  background: linear-gradient(
+    115deg,
+    transparent 15%,
+    rgba(255, 245, 200, 0.08) 32%,
+    rgba(255, 255, 255, 0.45) 50%,
+    rgba(255, 225, 140, 0.28) 58%,
+    transparent 72%
+  );
+  background-size: 260% 100%;
+  animation: goldPlaqueSheen 3.8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 6;
+  mix-blend-mode: overlay;
+}
+
+@keyframes goldPlaqueSheen {
+  0% {
+    background-position: 150% 0;
+  }
+  60%, 100% {
+    background-position: -150% 0;
+  }
+}
+
+/* Subtle Hint Pill below Card */
+.scratch-hint-pill {
+  position: absolute;
+  bottom: -36px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(4, 25, 30, 0.94);
+  border: 1.2px solid rgba(212, 175, 55, 0.7);
+  border-radius: 20px;
+  padding: 5px 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body, 'Montserrat', sans-serif);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--gold-light, #FCE09B);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.8), 0 0 10px rgba(212, 175, 55, 0.25);
+  animation: hintPulse 2.4s infinite ease-in-out;
+  cursor: pointer;
+  z-index: 12;
+  transition: all 0.3s ease;
+}
+
+.scratch-hint-pill:hover {
+  background: rgba(6, 38, 44, 0.98);
+  border-color: var(--gold-bright, #fff2c4);
+  transform: translateX(-50%) translateY(-2px);
+}
+
+@keyframes hintPulse {
+  0%, 100% {
+    transform: translateX(-50%) scale(1);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.8);
+  }
+  50% {
+    transform: translateX(-50%) scale(1.04);
+    box-shadow: 0 6px 24px rgba(212, 175, 55, 0.4);
+  }
+}
+
+/* Guidance Button to Proceed to Couple Section */
+.scroll-to-couple-prompt {
+  margin-top: clamp(12px, 2.5vh, 24px);
+  display: flex;
+  justify-content: center;
+  z-index: 20;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+
+.scroll-to-couple-prompt.prompt-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.scroll-couple-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, rgba(8, 42, 49, 0.96) 0%, rgba(4, 22, 26, 0.96) 100%);
+  border: 1.5px solid var(--gold-antique, #d4af37);
+  border-radius: 28px;
+  padding: 10px 22px;
+  color: var(--gold-bright, #fff2c4);
+  font-family: var(--font-primary, 'Cinzel', serif);
+  font-size: clamp(0.72rem, 1.8vw, 0.84rem);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.75), 0 0 18px rgba(212, 175, 55, 0.35);
+  animation: promptFloat 2.8s ease-in-out infinite alternate;
+  transition: all 0.3s ease;
+}
+
+.scroll-couple-action-btn:hover {
+  background: rgba(14, 58, 67, 0.98);
+  border-color: #fff2c4;
+  transform: scale(1.04);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.85), 0 0 24px rgba(255, 235, 150, 0.5);
+}
+
+.btn-lotus-accent {
+  font-size: 0.95rem;
+}
+
+.btn-down-arrow {
+  font-size: 0.95rem;
+  animation: arrowBounce 1.4s ease-in-out infinite;
+}
+
+@keyframes promptFloat {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-5px); }
+}
+
+@keyframes arrowBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(3px); }
+}
+
+/* Dynamic Golden Sparkles */
+.date-particles-host {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 15;
+  overflow: hidden;
+}
+
+.scratch-gold-sparkle {
+  position: absolute;
+  color: #FFE896;
+  font-size: 15px;
+  filter: drop-shadow(0 0 6px #FCE09B);
+  pointer-events: none;
+}
+
+.scratch-drag-sparkle {
+  position: absolute;
+  color: #FFE896;
+  font-size: 12px;
+  filter: drop-shadow(0 0 4px #FCE09B);
+  pointer-events: none;
+}
+
+/* Auspicious South Indian Wedding Flower Petal Shower (Rose, Marigold, Jasmine) */
+.celebration-petal {
+  position: absolute;
+  pointer-events: none;
+  z-index: 18;
+  backface-visibility: visible;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+
+/* Radiant Golden Glitter & Stardust Sparkles */
+.celebration-sparkle {
+  position: absolute;
+  pointer-events: none;
+  z-index: 19;
+  color: #FFF2B2;
+  filter: drop-shadow(0 0 8px #FFD700);
+  line-height: 1;
+  will-change: transform, opacity;
+}
+
+/* =========================================================
+   SCENE 02: WEDDING INVITATION INTRO — CEREMONIAL CURTAIN OPENING
+   Theme: Dark Teal Velvet • Antique Gold Embroidery • Sacred Temple Depth
+========================================================= */
+
+.intro-cinematic-scene {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+  height: auto;
+  background-color: var(--bg-deep);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: clamp(24px, 4vh, 50px) 0;
+}
+
+/* Deep Ambient Edge Blends to completely eliminate hard horizontal cut lines */
+.intro-top-blend {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: clamp(100px, 18vh, 200px);
+  background: linear-gradient(180deg, var(--bg-deep) 0%, rgba(3, 20, 24, 0.92) 40%, rgba(3, 20, 24, 0.6) 70%, transparent 100%);
+  z-index: 18;
+  pointer-events: none;
+}
+
+.intro-bottom-blend {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: clamp(100px, 18vh, 200px);
+  background: linear-gradient(0deg, var(--bg-deep) 0%, rgba(3, 20, 24, 0.92) 40%, rgba(3, 20, 24, 0.6) 70%, transparent 100%);
+  z-index: 18;
+  pointer-events: none;
+}
+
+.intro-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: clamp(540px, 86vh, 880px);
+  max-width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------------------------------------------------------
+   1. Temple Sanctum Background & Depth Atmosphere
+--------------------------------------------------------- */
+.intro-sanctum-bg-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.intro-sanctum-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 36%;
+  will-change: transform, filter;
+  transform: scale(1.0);
+}
+
+/* Vignette Gradients for Flawless Scene Transitions */
+.intro-vignette-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: clamp(100px, 20vh, 220px);
+  background: linear-gradient(180deg, var(--bg-deep) 0%, rgba(3, 20, 24, 0.8) 45%, transparent 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.intro-vignette-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: clamp(100px, 20vh, 220px);
+  background: linear-gradient(0deg, var(--bg-deep) 0%, rgba(3, 20, 24, 0.8) 45%, transparent 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.intro-vignette-sides {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(3, 20, 24, 0.55) 75%, rgba(3, 20, 24, 0.94) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Central Volumetric Golden Light Bloom */
+.intro-central-light-bloom {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(92vw, 540px);
+  height: min(72vh, 460px);
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(255, 238, 178, 0.45) 0%, rgba(212, 175, 55, 0.22) 42%, rgba(8, 56, 64, 0.08) 72%, transparent 88%);
+  filter: blur(36px);
+  z-index: 3;
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+/* Living Flame Auras over Background Lamps */
+.intro-lamp-flame {
+  position: absolute;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 205, 90, 0.75) 0%, rgba(255, 120, 30, 0.35) 45%, transparent 75%);
+  filter: blur(5px);
+  z-index: 4;
+  pointer-events: none;
+  animation: introFlamePulse 2.8s ease-in-out infinite alternate;
+}
+
+.intro-flame-left {
+  left: 17%;
+  top: 52%;
+}
+
+.intro-flame-right {
+  right: 17%;
+  top: 52%;
+}
+
+@keyframes introFlamePulse {
+  0% { transform: scale(0.92); opacity: 0.75; }
+  100% { transform: scale(1.12); opacity: 1; }
+}
+
+/* Banana Leaves Hints at Edges */
+.intro-edge-leaf {
+  position: absolute;
+  bottom: -15px;
+  width: clamp(90px, 18vw, 180px);
+  z-index: 4;
+  pointer-events: none;
+}
+
+.intro-leaf-left {
+  left: -15px;
+}
+
+.intro-leaf-right {
+  right: -15px;
+}
+
+.intro-leaf-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.6));
+}
+
+/* Sparse Ambient Golden Sparkles */
+.intro-particles-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.intro-sparkle {
+  position: absolute;
+  color: var(--gold-bright);
+  font-size: 14px;
+  line-height: 1;
+  filter: drop-shadow(0 0 6px rgba(255, 242, 196, 0.8));
+  opacity: 0.65;
+  animation: introSparkleFloat 5s ease-in-out infinite alternate;
+}
+
+.intro-sp-1 { top: 22%; left: 24%; animation-delay: 0.2s; font-size: 11px; }
+.intro-sp-2 { top: 32%; right: 26%; animation-delay: 1.5s; font-size: 13px; }
+.intro-sp-3 { bottom: 26%; left: 30%; animation-delay: 2.8s; font-size: 10px; }
+.intro-sp-4 { bottom: 20%; right: 28%; animation-delay: 3.9s; font-size: 12px; }
+
+@keyframes introSparkleFloat {
+  0% { transform: translateY(0px) rotate(0deg); opacity: 0.45; }
+  50% { transform: translateY(-8px) rotate(15deg); opacity: 0.85; }
+  100% { transform: translateY(3px) rotate(-10deg); opacity: 0.55; }
+}
+
+/* ---------------------------------------------------------
+   2. Typography Content Layer (100% HTML/CSS)
+--------------------------------------------------------- */
+.intro-content-container {
+  position: relative;
+  z-index: 8;
+  width: 100%;
+  max-width: 660px;
+  margin: 0 auto;
+  padding: clamp(14px, 3.5vw, 32px) clamp(24px, 7vw, 44px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-sizing: border-box;
+  pointer-events: auto;
+}
+
+.intro-content-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* 1. Gold Lotus Motif */
+.intro-lotus-wrap {
+  margin-bottom: clamp(10px, 2.2vh, 18px);
+  display: flex;
+  justify-content: center;
+}
+
+.intro-lotus-svg {
+  width: clamp(38px, 6.5vw, 52px);
+  height: auto;
+  filter: drop-shadow(0 2px 12px rgba(212, 175, 55, 0.5));
+}
+
+/* 2. Small Spaced Serif Heading */
+.intro-sub-families {
+  font-family: var(--font-display);
+  font-size: clamp(0.70rem, 2.2vw, 0.92rem);
+  font-weight: 600;
+  letter-spacing: clamp(0.12em, 0.4vw, 0.22em);
+  text-transform: uppercase;
+  color: var(--gold-light);
+  margin-bottom: clamp(10px, 2.2vh, 18px);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85), 0 0 16px rgba(212, 175, 55, 0.25);
+  line-height: 1.4;
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* 3. Refined Serif Lead Lines */
+.intro-invite-lead-block {
+  margin-bottom: clamp(12px, 2.6vh, 22px);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.intro-invite-lead-line {
+  font-family: var(--font-serif);
+  font-size: clamp(0.86rem, 2.7vw, 1.15rem);
+  font-weight: 600;
+  letter-spacing: clamp(0.12em, 0.35vw, 0.17em);
+  text-transform: uppercase;
+  color: var(--cream);
+  line-height: 1.45;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+}
+
+/* 4. Main Calligraphic Script Heading: Wedding Celebration */
+.intro-wedding-title-wrap {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: clamp(2px, 0.8vh, 8px) 0 clamp(10px, 2.4vh, 20px);
+}
+
+.intro-wedding-title-glow {
+  position: absolute;
+  inset: -22px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(255, 238, 178, 0.55) 0%, rgba(212, 175, 55, 0.22) 50%, transparent 80%);
+  filter: blur(26px);
+  pointer-events: none;
+  z-index: -1;
+  will-change: opacity, transform;
+}
+
+.intro-wedding-title {
+  font-family: 'Great Vibes', 'Allura', 'Pinyon Script', 'Cinzel Decorative', 'Brush Script MT', 'Lucida Calligraphy', cursive, serif;
+  font-size: clamp(2.85rem, 9.2vw, 5.6rem);
+  font-weight: 400;
+  line-height: 1.14;
+  color: #fff4cf;
+  background: linear-gradient(135deg, #ffffff 0%, #fff7dc 20%, #f4da89 45%, #c8a45d 72%, #fce39f 88%, #a07a2d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 18px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 26px rgba(212, 175, 55, 0.45));
+  will-change: clip-path, opacity, transform;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+
+/* 5. Delicate Gold Divider */
+.intro-gold-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: min(80%, 280px);
+  margin: 0 auto clamp(12px, 2.4vh, 20px);
+}
+
+.intro-gold-divider .divider-arm {
+  flex: 1;
+  height: 1px;
+}
+
+.intro-gold-divider .divider-arm-left {
+  background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.7) 50%, #fff3cd 100%);
+}
+
+.intro-gold-divider .divider-arm-right {
+  background: linear-gradient(90deg, #fff3cd 0%, rgba(212, 175, 55, 0.7) 50%, transparent 100%);
+}
+
+.intro-gold-divider .divider-center-motif {
+  color: var(--gold-bright);
+  font-size: 0.85rem;
+  filter: drop-shadow(0 0 6px rgba(255, 242, 196, 0.8));
+}
+
+/* 6. Emotional Invitation Line */
+.intro-quote-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(4px, 1.1vh, 8px);
+  margin-bottom: clamp(10px, 2vh, 18px);
+  width: 100%;
+  max-width: 680px;
+}
+
+.intro-quote-line {
+  font-family: 'Allura', 'Pinyon Script', 'Great Vibes', 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: clamp(1.26rem, 4.1vw, 1.76rem);
+  color: var(--cream);
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9), 0 0 14px rgba(246, 238, 219, 0.2);
+  white-space: normal;
+  text-wrap: balance;
+}
+
+.intro-quote-accent {
+  color: var(--gold-light);
+}
+
+/* 7. Subtle End Flourish */
+.intro-end-flourish {
+  display: flex;
+  justify-content: center;
+}
+
+.intro-flourish-char {
+  color: var(--gold-antique);
+  font-size: clamp(0.95rem, 2.6vw, 1.25rem);
+  filter: drop-shadow(0 0 8px rgba(200, 164, 93, 0.45));
+}
+
+/* ---------------------------------------------------------
+   3. Primary Foreground: Ceremonial Dark-Teal Curtains
+--------------------------------------------------------- */
+.intro-curtains-stage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 15;
+  overflow: hidden;
+}
+
+.intro-curtain-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50.5%;
+  height: 100%;
+  overflow: hidden;
+  will-change: transform;
+}
+
+.intro-curtain-left {
+  left: 0;
+  transform-origin: top left;
+  filter: drop-shadow(8px 0 24px rgba(0, 0, 0, 0.88));
+}
+
+.intro-curtain-right {
+  right: 0;
+  transform-origin: top right;
+  filter: drop-shadow(-8px 0 24px rgba(0, 0, 0, 0.88));
+}
+
+.intro-curtain-img-viewport {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.intro-curtain-left .intro-curtain-img-viewport {
+  left: 0;
+}
+
+.intro-curtain-right .intro-curtain-img-viewport {
+  right: 0;
+}
+
+.intro-curtain-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  pointer-events: none;
+}
+
+/* Antique Gold Embroidered Border & Seam Trim */
+.intro-curtain-trim {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, #fff7dc 0%, #e6c87d 25%, #c8a45d 50%, #f4da89 75%, #8c6d23 100%);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+  z-index: 3;
+}
+
+.intro-trim-left {
+  right: 0;
+}
+
+.intro-trim-right {
+  left: 0;
+}
+
+.intro-curtain-shadow-edge {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 28px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.intro-shadow-left {
+  right: 0;
+  background: linear-gradient(270deg, rgba(0, 0, 0, 0.6) 0%, transparent 100%);
+}
+
+.intro-shadow-right {
+  left: 0;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.6) 0%, transparent 100%);
+}
+
+/* Center Seam Parting Light Slit */
+.intro-curtains-seam-glow {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  background: radial-gradient(ellipse at center, rgba(255, 245, 205, 0.85) 0%, rgba(212, 175, 55, 0.4) 45%, transparent 75%);
+  filter: blur(5px);
+  pointer-events: none;
+  z-index: 16;
+  will-change: opacity, transform;
+}
+
+/* Ceremonial Inauguration Golden Glitter Sprinkle */
+.intro-ceremonial-glitter-stage {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 100%;
+  pointer-events: none;
+  z-index: 17;
+  overflow: visible;
+}
+
+.intro-glitter-particle {
+  position: absolute;
+  left: 0;
+  transform: translate(-50%, -50%);
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+.intro-glitter-star {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(10px, 2.0vw, 15px);
+  line-height: 1;
+  color: #fff9db;
+  text-shadow:
+    0 0 4px #ffffff,
+    0 0 8px rgba(255, 230, 130, 0.95),
+    0 0 16px rgba(212, 175, 55, 0.75);
+  filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.8));
+  user-select: none;
+}
+
+.intro-glitter-speck {
+  width: clamp(4px, 0.9vw, 6px);
+  height: clamp(4px, 0.9vw, 6px);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #fff2b2 40%, #e0b44a 80%, #997321 100%);
+  box-shadow:
+    0 0 5px #fff5c0,
+    0 0 10px rgba(255, 215, 0, 0.85),
+    0 0 16px rgba(212, 175, 55, 0.55);
+}
+
+/* ---------------------------------------------------------
+   4. Mobile-First Responsiveness (360px - 430px)
+--------------------------------------------------------- */
+@media (max-width: 480px) {
+  .intro-stage {
+    min-height: clamp(520px, 84vh, 760px);
+  }
+
+  .intro-wedding-title {
+    font-size: clamp(2.3rem, 7.8vw, 3.2rem);
+    white-space: nowrap;
+  }
+
+  .intro-content-container {
+    padding: clamp(12px, 2.5vh, 24px) clamp(22px, 6vw, 38px);
+    max-width: 96%;
+  }
+
+  .intro-sub-families {
+    letter-spacing: 0.14em;
+    font-size: clamp(0.66rem, 2.0vw, 0.78rem);
+    max-width: 88%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .intro-invite-lead-line {
+    letter-spacing: 0.12em;
+    font-size: clamp(0.82rem, 2.5vw, 0.95rem);
+  }
+
+  .intro-quote-line {
+    font-size: clamp(1.15rem, 3.8vw, 1.45rem);
+    line-height: 1.4;
+  }
+
+  .intro-flame-left {
+    left: 12%;
+  }
+
+  .intro-flame-right {
+    right: 12%;
+  }
+}
+
+@media (max-width: 375px) {
+  .intro-wedding-title {
+    font-size: clamp(2.05rem, 7.2vw, 2.65rem);
+  }
+
+  .intro-sub-families {
+    letter-spacing: 0.11em;
+    font-size: 0.65rem;
+    max-width: 86%;
+  }
+
+  .intro-invite-lead-line {
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+  }
+
+  .intro-quote-line {
+    font-size: 1.1rem;
+  }
+}
