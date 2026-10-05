@@ -1609,13 +1609,13 @@
   position: relative;
   width: 100%;
   max-width: 100%;
-  min-height: clamp(280px, 44vh, 460px);
-  max-height: 54vh;
+  min-height: clamp(340px, 52vh, 520px);
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  margin-bottom: clamp(10px, 2vh, 18px);
-  overflow: hidden;
+  padding-top: clamp(18px, 3.5vh, 36px);
+  margin-bottom: clamp(12px, 2vh, 22px);
+  overflow: visible;
 }
 
 .peacock-feather-burst-flare {
@@ -1653,31 +1653,32 @@
   transform: translateX(-50%);
   width: clamp(280px, 72vw, 560px);
   max-width: 100%;
-  max-height: 52vh;
   z-index: 1;
   pointer-events: none;
   display: flex;
   align-items: flex-end;
   justify-content: center;
+  overflow: visible;
 }
 
 .peacock-hero-img-opening {
   width: 100%;
   height: auto;
-  max-height: 50vh;
+  max-height: clamp(340px, 52vh, 560px);
   object-fit: contain;
+  object-position: bottom center;
   transform-origin: bottom center;
 }
 
 .couple-arrival-wrapper {
   position: relative;
   z-index: 4;
-  width: clamp(230px, 56vw, 420px);
+  width: clamp(220px, 58vw, 420px);
   max-width: 90vw;
-  max-height: 50vh;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
+  overflow: visible;
 }
 
 .couple-golden-aura-halo {
@@ -1691,8 +1692,10 @@
 .couple-arrival-img {
   width: 100%;
   height: auto;
-  max-height: 48vh;
+  max-height: clamp(330px, 52vh, 540px);
   object-fit: contain;
+  object-position: bottom center;
+  display: block;
 }
 
 .replay-arrival-btn {
@@ -1940,19 +1943,24 @@
 
 @media (max-width: 768px) {
   .peacock-couple-stage {
-    min-height: clamp(260px, 40vh, 360px);
-    max-height: 48vh;
+    min-height: clamp(300px, 48vh, 460px);
+    max-height: none;
+    overflow: visible;
+    padding-top: clamp(14px, 3vh, 24px);
+    margin-bottom: 16px;
   }
 
   .peacock-plumage-wrapper {
     width: clamp(260px, 86vw, 420px);
-    max-height: 46vh;
+    max-height: none;
     transform: translateX(-50%);
+    overflow: visible;
   }
 
   .couple-arrival-wrapper {
     width: clamp(210px, 72vw, 340px);
-    max-height: 44vh;
+    max-height: none;
+    overflow: visible;
   }
 
   .names-title-row {
