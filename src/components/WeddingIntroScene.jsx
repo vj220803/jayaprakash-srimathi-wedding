@@ -199,11 +199,11 @@ export const WeddingIntroScene = ({ isOpened }) => {
           },
         });
 
-        // Step 1: Curtains smoothly and majestically glide open automatically (1.8s)
+        // Step 1: Gentle pause so user views closed curtains, then slow, majestic parting (2.6s)
         tl.to(
           seamGlowRef.current,
-          { opacity: 0, scaleX: 3.5, duration: 0.6, ease: "power2.out" },
-          0
+          { opacity: 0, scaleX: 3.5, duration: 0.9, ease: "power2.out" },
+          0.35
         )
         .to(
           curtainLeftRef.current,
@@ -211,10 +211,10 @@ export const WeddingIntroScene = ({ isOpened }) => {
             xPercent: -82,
             scaleX: 0.88,
             skewY: -1.2,
-            duration: 1.8,
+            duration: 2.6,
             ease: "power2.inOut",
           },
-          0
+          0.35
         )
         .to(
           curtainRightRef.current,
@@ -222,26 +222,26 @@ export const WeddingIntroScene = ({ isOpened }) => {
             xPercent: 82,
             scaleX: 0.88,
             skewY: 1.2,
-            duration: 1.8,
+            duration: 2.6,
             ease: "power2.inOut",
           },
-          0
+          0.35
         )
         .to(
           [curtainLeftRef.current, curtainRightRef.current],
           {
             skewY: 0,
-            duration: 0.5,
+            duration: 0.8,
             ease: "sine.out",
           },
-          1.7
+          2.7
         );
 
         // Step 2: Auspicious Inauguration Golden Glitter Sprinkle
         GLITTER_PARTICLES.forEach((p, idx) => {
           const el = glitterItemsRef.current[idx];
           if (!el) return;
-          const startSec = 0.1 + p.delay * 0.04;
+          const startSec = 0.5 + p.delay * 0.05;
           tl.to(
             el,
             {
@@ -250,7 +250,7 @@ export const WeddingIntroScene = ({ isOpened }) => {
               scale: p.scale,
               rotation: p.rot,
               opacity: 1,
-              duration: 0.75,
+              duration: 0.95,
               ease: "power2.out",
             },
             startSec
@@ -261,38 +261,38 @@ export const WeddingIntroScene = ({ isOpened }) => {
               y: p.targetY + 20,
               scale: p.scale * 0.3,
               opacity: 0,
-              duration: 0.5,
+              duration: 0.7,
               ease: "power1.in",
             },
-            startSec + 0.65
+            startSec + 0.85
           );
         });
 
         // Step 3: Central Sanctum Light Bloom awakens behind parting curtains
         tl.to(
           centralBloomRef.current,
-          { opacity: 0.92, scale: 1.18, duration: 1.4, ease: "power2.out" },
-          0.2
+          { opacity: 0.92, scale: 1.18, duration: 1.8, ease: "power2.out" },
+          0.5
         )
         .to(
           bgImgRef.current,
           {
             scale: 1.04,
             filter: "brightness(0.55) saturate(1.25)",
-            duration: 1.6,
+            duration: 2.0,
             ease: "sine.out",
           },
-          0.1
+          0.4
         )
         .to(
           [lampLeftRef.current, lampRightRef.current],
-          { opacity: 0.95, duration: 0.9 },
-          0.3
+          { opacity: 0.95, duration: 1.2 },
+          0.6
         )
         .to(
           [leafLeftRef.current, leafRightRef.current],
-          { opacity: 0.85, y: 0, duration: 0.9 },
-          0.3
+          { opacity: 0.85, y: 0, duration: 1.2 },
+          0.6
         );
 
         // Step 4: Sacred Gold Lotus Motif descends into view
@@ -303,10 +303,10 @@ export const WeddingIntroScene = ({ isOpened }) => {
             scale: 1,
             y: 0,
             filter: "blur(0px)",
-            duration: 0.65,
+            duration: 0.8,
             ease: "back.out(1.4)",
           },
-          0.5
+          0.9
         );
 
         // Step 5: "TOGETHER WITH OUR BELOVED FAMILIES" reveals
@@ -316,10 +316,10 @@ export const WeddingIntroScene = ({ isOpened }) => {
             opacity: 1,
             y: 0,
             filter: "blur(0px)",
-            duration: 0.6,
+            duration: 0.75,
             ease: "power2.out",
           },
-          0.8
+          1.4
         );
 
         // Step 6: "WE CORDIALLY INVITE YOU / TO BE A PART OF OUR" emerges
@@ -329,10 +329,10 @@ export const WeddingIntroScene = ({ isOpened }) => {
             opacity: 1,
             y: 0,
             filter: "blur(0px)",
-            duration: 0.5,
+            duration: 0.65,
             ease: "power2.out",
           },
-          1.1
+          1.8
         )
         .to(
           inviteLeadLine2Ref.current,
@@ -340,10 +340,10 @@ export const WeddingIntroScene = ({ isOpened }) => {
             opacity: 1,
             y: 0,
             filter: "blur(0px)",
-            duration: 0.5,
+            duration: 0.65,
             ease: "power2.out",
           },
-          1.25
+          2.0
         );
 
         // Step 7: "Wedding Celebration" sweeps open in rich gold
@@ -354,20 +354,20 @@ export const WeddingIntroScene = ({ isOpened }) => {
             scale: 1,
             clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
             filter: "blur(0px)",
-            duration: 0.85,
+            duration: 1.1,
             ease: "power2.out",
           },
-          1.5
+          2.4
         )
         .to(
           titleGlowRef.current,
           {
             opacity: 0.75,
             scale: 1.12,
-            duration: 0.85,
+            duration: 1.1,
             ease: "power2.out",
           },
-          1.55
+          2.45
         );
 
         // Step 8: Auspicious Gold Divider draws outward
@@ -376,10 +376,10 @@ export const WeddingIntroScene = ({ isOpened }) => {
           {
             opacity: 1,
             scaleX: 1,
-            duration: 0.55,
+            duration: 0.7,
             ease: "power2.inOut",
           },
-          1.9
+          3.0
         );
 
         // Step 9: Emotional Invitation Lines reveal one-by-one automatically
@@ -389,10 +389,10 @@ export const WeddingIntroScene = ({ isOpened }) => {
             opacity: 0.95,
             y: 0,
             filter: "blur(0px)",
-            duration: 0.45,
+            duration: 0.55,
             ease: "power2.out",
           },
-          2.1
+          3.3
         )
         .to(
           quoteLine2Ref.current,
@@ -400,10 +400,10 @@ export const WeddingIntroScene = ({ isOpened }) => {
             opacity: 0.95,
             y: 0,
             filter: "blur(0px)",
-            duration: 0.45,
+            duration: 0.55,
             ease: "power2.out",
           },
-          2.3
+          3.6
         )
         .to(
           quoteLine3Ref.current,
@@ -411,10 +411,10 @@ export const WeddingIntroScene = ({ isOpened }) => {
             opacity: 1,
             y: 0,
             filter: "blur(0px)",
-            duration: 0.45,
+            duration: 0.55,
             ease: "power2.out",
           },
-          2.5
+          3.9
         );
 
         // Step 10: Delicate End Flourish settles in
@@ -423,19 +423,19 @@ export const WeddingIntroScene = ({ isOpened }) => {
           {
             opacity: 0.85,
             scale: 1,
-            duration: 0.45,
+            duration: 0.55,
             ease: "power2.out",
           },
-          2.7
+          4.2
         );
       };
 
       playCurtainsOpeningRef.current = playCurtainsOpening;
 
-      // Automatically trigger opening when the curtains scene scrolls into view
+      // Automatically trigger opening ONLY when the curtains page has arrived >90% into mobile view
       ScrollTrigger.create({
         trigger: sectionRef.current,
-        start: "top 75%",
+        start: "top 12%",
         onEnter: () => {
           playCurtainsOpening();
         },
@@ -456,7 +456,8 @@ export const WeddingIntroScene = ({ isOpened }) => {
       const timer = setTimeout(() => {
         ScrollTrigger.refresh();
         const rect = sectionRef.current?.getBoundingClientRect();
-        if (rect && rect.top < window.innerHeight * 0.75 && !hasOpenedRef.current) {
+        // Only trigger if curtains are >90% in view (top edge at or above top 15% of viewport)
+        if (rect && rect.top <= window.innerHeight * 0.15 && !hasOpenedRef.current) {
           playCurtainsOpeningRef.current?.();
         }
       }, 300);
