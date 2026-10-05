@@ -359,10 +359,10 @@ export const CoupleReveal = () => {
         delay: 2.5,
       });
 
-      // 1. Trigger peacock reveal when scrolling into top of section
+      // 1. Trigger peacock reveal when scrolling into the peacock stage
       ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: "top 65%",
+        trigger: ".peacock-couple-stage",
+        start: "top 80%",
         once: true,
         onEnter: () => {
           playPeacockCoupleReveal();

@@ -179,14 +179,19 @@ export const DateReveal = ({ isOpened }) => {
       });
       gsap.set(hintPillRef.current, { opacity: 0, y: 16, scale: 0.85 });
 
-      // 2. Entrance timeline triggered as user scrolls into Date Reveal section
+      // 2. Entrance timeline triggered as user scrolls to the Date Reveal card
       const entranceTl = gsap.timeline({
         scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 72%",
+          trigger: cardWrapperRef.current,
+          start: "top 82%",
           once: true,
           onEnter: () => {
             if (!hasTriggeredReveal.current) {
+              setupCanvas();
+            }
+          },
+          onRefresh: (self) => {
+            if (self.progress > 0 && !hasTriggeredReveal.current) {
               setupCanvas();
             }
           },
@@ -201,7 +206,7 @@ export const DateReveal = ({ isOpened }) => {
           {
             scale: 1.02,
             filter: "brightness(0.24) saturate(1.22) contrast(1.15)",
-            duration: 2.2,
+            duration: 1.8,
             ease: "sine.out",
           },
           0
@@ -214,10 +219,10 @@ export const DateReveal = ({ isOpened }) => {
             y: 0,
             scale: 1,
             rotation: 0,
-            duration: 1.05,
+            duration: 0.75,
             ease: "back.out(2)",
           },
-          0.15
+          0
         )
         // Step 3: Calligraphy title "A date written by destiny…" glides up smoothly, de-blurring into crisp gold
         .to(
@@ -226,10 +231,10 @@ export const DateReveal = ({ isOpened }) => {
             opacity: 1,
             y: 0,
             filter: "blur(0px)",
-            duration: 1.15,
+            duration: 0.8,
             ease: "power3.out",
           },
-          0.38
+          0.15
         )
         // Step 4: Golden diamond flourish expands outward
         .to(
@@ -237,10 +242,10 @@ export const DateReveal = ({ isOpened }) => {
           {
             opacity: 1,
             scaleX: 1,
-            duration: 0.75,
+            duration: 0.6,
             ease: "power2.out",
           },
-          0.68
+          0.35
         )
         // Step 5: Radiant golden sunburst flare bursts from behind the card (peacock-style entrance drama)
         .to(
@@ -248,20 +253,20 @@ export const DateReveal = ({ isOpened }) => {
           {
             opacity: 0.95,
             scale: 2.5,
-            duration: 0.7,
+            duration: 0.65,
             ease: "power2.out",
           },
-          0.82
+          0.4
         )
         .to(
           cardEntranceFlareRef.current,
           {
             opacity: 0.35,
             scale: 1.35,
-            duration: 0.85,
+            duration: 0.7,
             ease: "power2.inOut",
           },
-          1.38
+          0.85
         )
         // Step 6: Antique Gold Scratch Plaque glides up into center with majestic 3D presence
         .to(
@@ -272,10 +277,10 @@ export const DateReveal = ({ isOpened }) => {
             scale: 1,
             rotationX: 0,
             filter: "brightness(1) blur(0px)",
-            duration: 1.35,
+            duration: 1.1,
             ease: "power3.out",
           },
-          0.86
+          0.45
         )
         // Step 7: Flanking Kuthu Vilakku brass lamps illuminate from sides
         .to(
@@ -284,11 +289,11 @@ export const DateReveal = ({ isOpened }) => {
             opacity: 1,
             y: 0,
             scale: 1,
-            duration: 1.05,
-            stagger: 0.16,
+            duration: 0.8,
+            stagger: 0.12,
             ease: "power2.out",
           },
-          1.18
+          0.7
         )
         // Step 8: "Swipe or Tap to Reveal" hint floats into position
         .to(
@@ -297,10 +302,10 @@ export const DateReveal = ({ isOpened }) => {
             opacity: 1,
             y: 0,
             scale: 1,
-            duration: 0.75,
+            duration: 0.65,
             ease: "back.out(1.6)",
           },
-          1.45
+          0.95
         );
     }, containerRef);
 
