@@ -1043,7 +1043,7 @@
 }
 
 .murugan-devotional-text {
-  padding-top: clamp(48px, 7.5vh, 75px);
+  padding-top: clamp(62px, 9vh, 92px);
   margin-bottom: clamp(10px, 1.8vh, 18px);
   width: 100%;
   position: relative;
@@ -1395,16 +1395,17 @@
   filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.85));
   will-change: transform, opacity;
   transform-origin: top center;
-  animation: toranamGentleSway 8.5s ease-in-out infinite alternate;
 }
 
 .sanctum-toranam-img {
   width: 100%;
   height: auto;
-  max-height: clamp(34px, 5vh, 52px);
+  max-height: clamp(38px, 6vh, 58px);
   object-fit: cover;
   object-position: top center;
   display: block;
+  transform-origin: top center;
+  animation: toranamGentleSway 8.5s ease-in-out infinite alternate;
 }
 
 @keyframes toranamGentleSway {
@@ -1419,115 +1420,117 @@
   }
 }
 
-/* Layer 4: Auspicious South Indian Wedding Banana Trees Framing Sanctum (Uncut, Full & Elegant) */
+/* Layer 4: Auspicious South Indian 3D Banana Leaves Framing Sanctum Sides (Wing Fronds) */
 .sanctum-lush-banana {
   position: absolute;
-  bottom: 0;
+  top: 48%;
+  transform: translateY(-50%);
   pointer-events: none;
-  z-index: 2; /* Stands behind Lord Murugan and peacock */
-  width: clamp(150px, 19vw, 290px);
-  max-width: 30vw;
-  filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.8)) brightness(0.92) saturate(1.1);
+  z-index: 2; /* Stands behind Lord Murugan in midground */
+  width: clamp(110px, 14vw, 185px);
+  max-width: 20vw;
+  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.8)) brightness(0.95) saturate(1.08);
   will-change: transform, opacity;
-  transform-style: preserve-3d;
   overflow: visible;
 }
 
 .sanctum-lush-banana-left {
-  left: clamp(-10px, 0.5vw, 15px);
-  transform-origin: bottom center;
-  animation: sanctumBananaSwayLeft 6.6s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+  left: 0;
 }
 
 .sanctum-lush-banana-right {
-  right: clamp(-10px, 0.5vw, 15px);
-  transform-origin: bottom center;
-  animation: sanctumBananaSwayRight 7.4s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
-  animation-delay: -2.8s;
+  right: 0;
 }
 
-.sanctum-banana-img {
+.sanctum-lush-banana-left .sanctum-banana-img {
   width: 100%;
   height: auto;
   display: block;
   object-fit: contain;
-  object-position: bottom center;
+  object-position: left center;
+  transform-origin: left 35%;
+  animation: sanctumBananaSwayLeft 7s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
 }
 
-/* 3D Living Wind Animations on Banana Trees */
+.sanctum-lush-banana-right .sanctum-banana-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  object-position: right center;
+  transform-origin: right 35%;
+  animation: sanctumBananaSwayRight 7.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+  animation-delay: -3s;
+}
+
+/* 3D Living Wind Animations on Banana Leaves */
 @keyframes sanctumBananaSwayLeft {
   0% {
-    transform: perspective(850px) rotateY(0deg) rotateZ(0deg) skewX(0deg);
+    transform: perspective(650px) rotateY(0deg) rotateZ(0deg) scale(1);
   }
   30% {
-    transform: perspective(850px) rotateY(5.5deg) rotateZ(1.8deg) skewX(0.7deg) scaleY(1.006);
+    transform: perspective(650px) rotateY(6.5deg) rotateZ(1.8deg) scale(1.015);
   }
   65% {
-    transform: perspective(850px) rotateY(1.2deg) rotateZ(0.3deg) skewX(0.1deg);
+    transform: perspective(650px) rotateY(1.5deg) rotateZ(0.4deg) scale(1.005);
   }
   85% {
-    transform: perspective(850px) rotateY(-4.5deg) rotateZ(-1.5deg) skewX(-0.5deg) scaleY(0.996);
+    transform: perspective(650px) rotateY(-4.5deg) rotateZ(-1.4deg) scale(0.99);
   }
   100% {
-    transform: perspective(850px) rotateY(0deg) rotateZ(0deg) skewX(0deg);
+    transform: perspective(650px) rotateY(0deg) rotateZ(0deg) scale(1);
   }
 }
 
 @keyframes sanctumBananaSwayRight {
   0% {
-    transform: perspective(850px) rotateY(0deg) rotateZ(0deg) skewX(0deg);
+    transform: perspective(650px) rotateY(0deg) rotateZ(0deg) scale(1);
   }
   32% {
-    transform: perspective(850px) rotateY(-6deg) rotateZ(-1.9deg) skewX(-0.7deg) scaleY(1.008);
+    transform: perspective(650px) rotateY(-6.5deg) rotateZ(-1.8deg) scale(1.015);
   }
   65% {
-    transform: perspective(850px) rotateY(-1.4deg) rotateZ(-0.4deg) skewX(-0.1deg);
+    transform: perspective(650px) rotateY(-1.5deg) rotateZ(-0.4deg) scale(1.005);
   }
   85% {
-    transform: perspective(850px) rotateY(4.8deg) rotateZ(1.5deg) skewX(0.5deg) scaleY(0.995);
+    transform: perspective(650px) rotateY(4.5deg) rotateZ(1.4deg) scale(0.99);
   }
   100% {
-    transform: perspective(850px) rotateY(0deg) rotateZ(0deg) skewX(0deg);
+    transform: perspective(650px) rotateY(0deg) rotateZ(0deg) scale(1);
   }
 }
 
 /* Responsive Refinements */
 @media (max-width: 768px) {
   .murugan-devotional-text {
-    padding-top: clamp(44px, 7vh, 65px);
+    padding-top: clamp(56px, 8.5vh, 78px);
   }
 
   .sanctum-top-toranam {
-    max-height: 48px;
+    max-height: 46px;
   }
 
   .sanctum-toranam-img {
-    max-height: 48px;
+    max-height: 46px;
   }
 
   .sanctum-lush-banana {
-    width: clamp(130px, 22vw, 190px);
-    bottom: 0px;
-  }
-  .sanctum-lush-banana-left {
-    left: -5px;
-  }
-  .sanctum-lush-banana-right {
-    right: -5px;
+    width: clamp(95px, 16vw, 140px);
+    max-width: 20vw;
   }
 }
 
 @media (max-width: 600px) {
   .murugan-devotional-text {
-    padding-top: clamp(40px, 6.5vh, 58px);
+    padding-top: clamp(52px, 8vh, 70px);
   }
 
   .sanctum-top-toranam {
-    max-height: 42px;
+    max-height: 40px;
   }
 
   .sanctum-toranam-img {
-    max-height: 42px;
+    max-height: 40px;
   }
 
   .murugan-artwork-container {
@@ -1535,29 +1538,23 @@
   }
 
   .sanctum-lush-banana {
-    width: clamp(105px, 26vw, 140px);
-    bottom: 0px;
-    filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.75)) brightness(0.92);
-  }
-  .sanctum-lush-banana-left {
-    left: -8px;
-  }
-  .sanctum-lush-banana-right {
-    right: -8px;
+    width: clamp(80px, 18vw, 115px);
+    max-width: 22vw;
+    filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.75)) brightness(0.94);
   }
 }
 
 @media (max-width: 420px) {
   .murugan-devotional-text {
-    padding-top: clamp(36px, 6vh, 48px);
+    padding-top: clamp(48px, 7.5vh, 64px);
   }
 
   .sanctum-top-toranam {
-    max-height: 36px;
+    max-height: 34px;
   }
 
   .sanctum-toranam-img {
-    max-height: 36px;
+    max-height: 34px;
   }
 
   .murugan-visual-stage {
@@ -1569,14 +1566,8 @@
   }
 
   .sanctum-lush-banana {
-    width: clamp(92px, 24vw, 120px);
-    bottom: 0px;
-  }
-  .sanctum-lush-banana-left {
-    left: -6px;
-  }
-  .sanctum-lush-banana-right {
-    right: -6px;
+    width: clamp(65px, 18vw, 90px);
+    max-width: 22vw;
   }
 }
 

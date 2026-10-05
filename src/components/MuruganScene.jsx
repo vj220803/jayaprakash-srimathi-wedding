@@ -55,10 +55,8 @@ export const MuruganScene = ({ isOpened }) => {
     gsap.set(cameraRef.current, { scale: 1.02 });
     gsap.set(bgLayerRef.current, { opacity: 0 });
     gsap.set(toranamRef.current, { opacity: 0, y: -12 });
-    gsap.set([leafLeftRef.current, leafRightRef.current], {
-      opacity: 0,
-      y: 18,
-    });
+    gsap.set(leafLeftRef.current, { opacity: 0, x: -22 });
+    gsap.set(leafRightRef.current, { opacity: 0, x: 22 });
     gsap.set(shlokaRef.current, {
       opacity: 0,
       y: 14,
@@ -127,17 +125,26 @@ export const MuruganScene = ({ isOpened }) => {
         },
         0.2
       )
-      // Auspicious banana trees frame edges with gentle sway
+      // Auspicious banana leaves frame edges with gentle inward slide
       .to(
-        [leafLeftRef.current, leafRightRef.current],
+        leafLeftRef.current,
         {
           opacity: 1,
-          y: 0,
-          duration: 1.6,
+          x: 0,
+          duration: 1.5,
           ease: "power2.out",
-          stagger: 0.2,
         },
         0.3
+      )
+      .to(
+        leafRightRef.current,
+        {
+          opacity: 1,
+          x: 0,
+          duration: 1.5,
+          ease: "power2.out",
+        },
+        0.4
       )
 
       // STEP 2 — TAMIL BLESSING (Reveals First) (~0.6s)
@@ -388,9 +395,9 @@ export const MuruganScene = ({ isOpened }) => {
         },
       });
 
-      // Foreground auspicious wedding banana trees move gently with camera parallax
+      // Foreground auspicious wedding banana leaves move gently with subtle camera parallax
       gsap.to(leafLeftRef.current, {
-        yPercent: -10,
+        yPercent: -5,
         ease: "none",
         scrollTrigger: {
           trigger: sceneRef.current,
@@ -401,7 +408,7 @@ export const MuruganScene = ({ isOpened }) => {
       });
 
       gsap.to(leafRightRef.current, {
-        yPercent: -12,
+        yPercent: -6,
         ease: "none",
         scrollTrigger: {
           trigger: sceneRef.current,
@@ -567,11 +574,11 @@ export const MuruganScene = ({ isOpened }) => {
           </div>
         </div>
 
-        {/* Layer 4: Auspicious South Indian Wedding Banana Trees Framing Sanctum */}
+        {/* Layer 4: Auspicious South Indian 3D Banana Leaves Framing Sanctum Sides */}
         <div ref={leafLeftRef} className="sanctum-lush-banana sanctum-lush-banana-left" aria-hidden="true">
           <img
             src="/assets/decorations/sanctum-banana-left.png"
-            alt="Auspicious Wedding Banana Tree"
+            alt="Auspicious Wedding Banana Leaves"
             className="sanctum-banana-img"
             loading="eager"
           />
@@ -580,7 +587,7 @@ export const MuruganScene = ({ isOpened }) => {
         <div ref={leafRightRef} className="sanctum-lush-banana sanctum-lush-banana-right" aria-hidden="true">
           <img
             src="/assets/decorations/sanctum-banana-right.png"
-            alt="Auspicious Wedding Banana Tree"
+            alt="Auspicious Wedding Banana Leaves"
             className="sanctum-banana-img"
             loading="eager"
           />
