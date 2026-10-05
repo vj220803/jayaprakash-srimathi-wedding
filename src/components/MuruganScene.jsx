@@ -23,12 +23,9 @@ export const MuruganScene = ({ isOpened }) => {
   const celestialFlareRef = useRef(null);
   const celestialRaysRef = useRef(null);
   const crownHaloRef = useRef(null);
-  const lampLeftRef = useRef(null);
-  const lampRightRef = useRef(null);
   const leafLeftRef = useRef(null);
   const leafRightRef = useRef(null);
   const toranamRef = useRef(null);
-  const floorRef = useRef(null);
   const hasPlayedRef = useRef(false);
 
   // Cinematic incoming animation sequence
@@ -57,8 +54,7 @@ export const MuruganScene = ({ isOpened }) => {
     // Initial state setup: screen starts in dark, calm temple sanctum
     gsap.set(cameraRef.current, { scale: 1.02 });
     gsap.set(bgLayerRef.current, { opacity: 0 });
-    gsap.set(toranamRef.current, { opacity: 0, y: -16 });
-    gsap.set(floorRef.current, { opacity: 0 });
+    gsap.set(toranamRef.current, { opacity: 0, y: -12 });
     gsap.set([leafLeftRef.current, leafRightRef.current], {
       opacity: 0,
       y: 18,
@@ -97,11 +93,6 @@ export const MuruganScene = ({ isOpened }) => {
       filter: "blur(22px) brightness(2.6) saturate(1.3)",
       transformOrigin: "center 65%",
     });
-    gsap.set([lampLeftRef.current, lampRightRef.current], {
-      opacity: 0,
-      scale: 0.88,
-      y: 16,
-    });
 
     tl
       // STEP 1 — INITIAL ATMOSPHERE (0s - 1.8s)
@@ -125,18 +116,18 @@ export const MuruganScene = ({ isOpened }) => {
         },
         0.1
       )
-      // Reveal top festive wedding toranam & sanctum floor
+      // Reveal top festive wedding toranam
       .to(
-        [toranamRef.current, floorRef.current],
+        toranamRef.current,
         {
           opacity: 1,
           y: 0,
-          duration: 1.5,
+          duration: 1.4,
           ease: "power2.out",
         },
         0.2
       )
-      // Banana leaves frame edges with very gentle natural sway
+      // Auspicious banana trees frame edges with gentle sway
       .to(
         [leafLeftRef.current, leafRightRef.current],
         {
@@ -356,19 +347,6 @@ export const MuruganScene = ({ isOpened }) => {
           ease: "sine.inOut",
         },
         4.6
-      )
-      // STEP 7 — FLANKING LAMPS (Warm brass lamps illuminate with living flame auras)
-      .to(
-        [lampLeftRef.current, lampRightRef.current],
-        {
-          opacity: 1,
-          scale: 1,
-          y: 0,
-          duration: 1.1,
-          ease: "power2.out",
-          stagger: 0.15,
-        },
-        4.7
       );
 
     hasPlayedRef.current = true;
@@ -562,14 +540,8 @@ export const MuruganScene = ({ isOpened }) => {
             </div>
           </div>
 
-          {/* Layer 3: Lord Murugan Central Visual Stage with Living Lamps */}
+          {/* Layer 3: Lord Murugan Central Visual Stage */}
           <div className="murugan-visual-stage">
-            {/* Left Kuthu Vilakku with Living Flame Glow */}
-            <div ref={lampLeftRef} className="sanctum-lamp sanctum-lamp-left">
-              <div className="lamp-glow-aura" />
-              <KuthuVilakku size={56} />
-            </div>
-
             {/* Central Murugan Artwork Container */}
             <div className="murugan-artwork-container">
               {/* Sacred Celestial Rotating Rays */}
@@ -592,20 +564,14 @@ export const MuruganScene = ({ isOpened }) => {
                 loading="eager"
               />
             </div>
-
-            {/* Right Kuthu Vilakku with Living Flame Glow */}
-            <div ref={lampRightRef} className="sanctum-lamp sanctum-lamp-right">
-              <div className="lamp-glow-aura" />
-              <KuthuVilakku size={56} />
-            </div>
           </div>
         </div>
 
-        {/* Layer 4: Traditional Auspicious Wedding Banana Leaves Framing Sanctum */}
+        {/* Layer 4: Auspicious South Indian Wedding Banana Trees Framing Sanctum */}
         <div ref={leafLeftRef} className="sanctum-lush-banana sanctum-lush-banana-left" aria-hidden="true">
           <img
             src="/assets/decorations/sanctum-banana-left.png"
-            alt=""
+            alt="Auspicious Wedding Banana Tree"
             className="sanctum-banana-img"
             loading="eager"
           />
@@ -614,21 +580,10 @@ export const MuruganScene = ({ isOpened }) => {
         <div ref={leafRightRef} className="sanctum-lush-banana sanctum-lush-banana-right" aria-hidden="true">
           <img
             src="/assets/decorations/sanctum-banana-right.png"
-            alt=""
+            alt="Auspicious Wedding Banana Tree"
             className="sanctum-banana-img"
             loading="eager"
           />
-        </div>
-
-        {/* Layer 5: Polished Sanctum Floor Reflection & Scattered Petals */}
-        <div ref={floorRef} className="sanctum-floor-stage" aria-hidden="true">
-          <img
-            src="/assets/decorations/sanctum-floor-reflection.png"
-            alt=""
-            className="sanctum-floor-img"
-            loading="eager"
-          />
-          <div className="sanctum-floor-gradient-overlay" />
         </div>
       </div>
     </section>

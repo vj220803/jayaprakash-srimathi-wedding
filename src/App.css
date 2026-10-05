@@ -1043,7 +1043,8 @@
 }
 
 .murugan-devotional-text {
-  margin-bottom: clamp(12px, 2.2vh, 22px);
+  padding-top: clamp(48px, 7.5vh, 75px);
+  margin-bottom: clamp(10px, 1.8vh, 18px);
   width: 100%;
   position: relative;
 }
@@ -1383,7 +1384,7 @@
   will-change: transform, opacity, filter;
 }
 
-/* Auspicious Festive Wedding Toranam (Top Floral Garland) */
+/* Auspicious Festive Wedding Toranam (Top Floral Garland) — Slim & High at Ceiling Border */
 .sanctum-top-toranam {
   position: absolute;
   top: 0;
@@ -1391,7 +1392,7 @@
   width: 100%;
   pointer-events: none;
   z-index: 8;
-  filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.85));
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.85));
   will-change: transform, opacity;
   transform-origin: top center;
   animation: toranamGentleSway 8.5s ease-in-out infinite alternate;
@@ -1400,7 +1401,7 @@
 .sanctum-toranam-img {
   width: 100%;
   height: auto;
-  max-height: clamp(65px, 12vh, 120px);
+  max-height: clamp(34px, 5vh, 52px);
   object-fit: cover;
   object-position: top center;
   display: block;
@@ -1418,29 +1419,31 @@
   }
 }
 
-/* Layer 4: Lush Framing Tropical Banana Leaves (Left & Right) */
+/* Layer 4: Auspicious South Indian Wedding Banana Trees Framing Sanctum (Uncut, Full & Elegant) */
 .sanctum-lush-banana {
   position: absolute;
   bottom: 0;
   pointer-events: none;
-  z-index: 2; /* Stands BEHIND the golden Kuthu Vilakku (z-index: 4) and Murugan centerpiece (z-index: 3) */
-  width: clamp(170px, 22vw, 340px);
-  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 18px rgba(255, 190, 60, 0.18)) brightness(0.9) saturate(1.1);
+  z-index: 2; /* Stands behind Lord Murugan and peacock */
+  width: clamp(150px, 19vw, 290px);
+  max-width: 30vw;
+  filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.8)) brightness(0.92) saturate(1.1);
   will-change: transform, opacity;
   transform-style: preserve-3d;
+  overflow: visible;
 }
 
 .sanctum-lush-banana-left {
-  left: clamp(-20px, -1vw, 5px);
-  transform-origin: bottom left;
-  animation: sanctumBananaSwayLeft 6.4s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+  left: clamp(-10px, 0.5vw, 15px);
+  transform-origin: bottom center;
+  animation: sanctumBananaSwayLeft 6.6s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
 }
 
 .sanctum-lush-banana-right {
-  right: clamp(-20px, -1vw, 5px);
-  transform-origin: bottom right;
-  animation: sanctumBananaSwayRight 7.2s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
-  animation-delay: -2.5s;
+  right: clamp(-10px, 0.5vw, 15px);
+  transform-origin: bottom center;
+  animation: sanctumBananaSwayRight 7.4s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+  animation-delay: -2.8s;
 }
 
 .sanctum-banana-img {
@@ -1448,21 +1451,22 @@
   height: auto;
   display: block;
   object-fit: contain;
+  object-position: bottom center;
 }
 
-/* 3D Living Wind Animations on Lush Banana Leaves */
+/* 3D Living Wind Animations on Banana Trees */
 @keyframes sanctumBananaSwayLeft {
   0% {
     transform: perspective(850px) rotateY(0deg) rotateZ(0deg) skewX(0deg);
   }
   30% {
-    transform: perspective(850px) rotateY(6.5deg) rotateZ(2deg) skewX(0.8deg) scaleY(1.008);
+    transform: perspective(850px) rotateY(5.5deg) rotateZ(1.8deg) skewX(0.7deg) scaleY(1.006);
   }
   65% {
-    transform: perspective(850px) rotateY(1.5deg) rotateZ(0.4deg) skewX(0.2deg);
+    transform: perspective(850px) rotateY(1.2deg) rotateZ(0.3deg) skewX(0.1deg);
   }
   85% {
-    transform: perspective(850px) rotateY(-5deg) rotateZ(-1.8deg) skewX(-0.6deg) scaleY(0.995);
+    transform: perspective(850px) rotateY(-4.5deg) rotateZ(-1.5deg) skewX(-0.5deg) scaleY(0.996);
   }
   100% {
     transform: perspective(850px) rotateY(0deg) rotateZ(0deg) skewX(0deg);
@@ -1474,153 +1478,105 @@
     transform: perspective(850px) rotateY(0deg) rotateZ(0deg) skewX(0deg);
   }
   32% {
-    transform: perspective(850px) rotateY(-7deg) rotateZ(-2.2deg) skewX(-0.8deg) scaleY(1.01);
+    transform: perspective(850px) rotateY(-6deg) rotateZ(-1.9deg) skewX(-0.7deg) scaleY(1.008);
   }
   65% {
-    transform: perspective(850px) rotateY(-1.8deg) rotateZ(-0.5deg) skewX(-0.2deg);
+    transform: perspective(850px) rotateY(-1.4deg) rotateZ(-0.4deg) skewX(-0.1deg);
   }
   85% {
-    transform: perspective(850px) rotateY(5.5deg) rotateZ(1.8deg) skewX(0.7deg) scaleY(0.994);
+    transform: perspective(850px) rotateY(4.8deg) rotateZ(1.5deg) skewX(0.5deg) scaleY(0.995);
   }
   100% {
     transform: perspective(850px) rotateY(0deg) rotateZ(0deg) skewX(0deg);
   }
 }
 
-/* Layer 5: Polished Temple Sanctum Floor with Golden Reflections & Scattered Petals */
-.sanctum-floor-stage {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: clamp(80px, 13vh, 160px);
-  pointer-events: none;
-  z-index: 2;
-  overflow: hidden;
-  will-change: opacity;
-}
-
-.sanctum-floor-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center bottom;
-  opacity: 0.88;
-  filter: contrast(1.15) brightness(0.92);
-  display: block;
-}
-
-.sanctum-floor-gradient-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(3, 10, 14, 0.45) 0%,
-    rgba(3, 10, 14, 0.15) 50%,
-    transparent 100%
-  );
-  pointer-events: none;
-}
-
 /* Responsive Refinements */
 @media (max-width: 768px) {
+  .murugan-devotional-text {
+    padding-top: clamp(44px, 7vh, 65px);
+  }
+
   .sanctum-top-toranam {
-    max-height: 80px;
+    max-height: 48px;
   }
 
   .sanctum-toranam-img {
-    max-height: 80px;
+    max-height: 48px;
   }
 
   .sanctum-lush-banana {
-    width: clamp(140px, 25vw, 220px);
-    bottom: -5px;
+    width: clamp(130px, 22vw, 190px);
+    bottom: 0px;
   }
   .sanctum-lush-banana-left {
-    left: -15px;
+    left: -5px;
   }
   .sanctum-lush-banana-right {
-    right: -15px;
-  }
-
-  .sanctum-floor-stage {
-    height: clamp(70px, 12vh, 120px);
+    right: -5px;
   }
 }
 
 @media (max-width: 600px) {
+  .murugan-devotional-text {
+    padding-top: clamp(40px, 6.5vh, 58px);
+  }
+
   .sanctum-top-toranam {
-    max-height: 68px;
+    max-height: 42px;
   }
 
   .sanctum-toranam-img {
-    max-height: 68px;
-  }
-
-  .sanctum-lamp {
-    transform: scale(0.68);
-    transform-origin: bottom center;
-    margin-bottom: 10px;
+    max-height: 42px;
   }
 
   .murugan-artwork-container {
-    width: clamp(240px, 74vw, 360px);
+    width: clamp(240px, 78vw, 360px);
   }
 
   .sanctum-lush-banana {
-    width: clamp(120px, 32vw, 175px);
-    bottom: -5px;
-    filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 12px rgba(255, 190, 60, 0.2)) brightness(0.85);
+    width: clamp(105px, 26vw, 140px);
+    bottom: 0px;
+    filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.75)) brightness(0.92);
   }
   .sanctum-lush-banana-left {
-    left: -20px;
+    left: -8px;
   }
   .sanctum-lush-banana-right {
-    right: -20px;
-  }
-
-  .sanctum-floor-stage {
-    height: clamp(65px, 11vh, 105px);
+    right: -8px;
   }
 }
 
 @media (max-width: 420px) {
+  .murugan-devotional-text {
+    padding-top: clamp(36px, 6vh, 48px);
+  }
+
   .sanctum-top-toranam {
-    max-height: 56px;
+    max-height: 36px;
   }
 
   .sanctum-toranam-img {
-    max-height: 56px;
-  }
-
-  .sanctum-lamp {
-    display: block;
-    transform: scale(0.55);
-    transform-origin: bottom center;
-    margin-bottom: 4px;
+    max-height: 36px;
   }
 
   .murugan-visual-stage {
-    gap: 2px;
+    gap: 0;
   }
 
   .murugan-artwork-container {
-    width: clamp(220px, 72vw, 300px);
+    width: clamp(220px, 76vw, 300px);
   }
 
   .sanctum-lush-banana {
-    width: clamp(110px, 30vw, 150px);
+    width: clamp(92px, 24vw, 120px);
     bottom: 0px;
   }
   .sanctum-lush-banana-left {
-    left: -18px;
+    left: -6px;
   }
   .sanctum-lush-banana-right {
-    right: -18px;
-  }
-
-  .sanctum-floor-stage {
-    height: 80px;
+    right: -6px;
   }
 }
 
@@ -1629,7 +1585,6 @@
   .sanctum-top-toranam,
   .sanctum-lush-banana,
   .murugan-title-char,
-  .sanctum-lamp,
   .murugan-divine-aura,
   .temple-ember,
   .murugan-feather-accent {
