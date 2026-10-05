@@ -1383,47 +1383,126 @@
   will-change: transform, opacity, filter;
 }
 
-/* Layer 4: Foreground Banana Leaves (Extreme Edges) */
-.murugan-fg-leaf {
+/* Layer 4: Sacred South Indian Wedding Banana Trees (Vazhai Maram) */
+.sanctum-vazhai-tree {
   position: absolute;
-  bottom: -20px;
+  bottom: 0;
   pointer-events: none;
-  z-index: 5;
-  width: clamp(140px, 22vw, 320px);
-  max-width: 36vw;
-  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.9)) brightness(0.65) saturate(1.1);
-  will-change: transform;
+  z-index: 2; /* Stands BEHIND the golden Kuthu Vilakku (z-index: 4) and Murugan centerpiece (z-index: 3) */
+  width: clamp(170px, 20vw, 310px);
+  aspect-ratio: 711 / 1169;
+  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 20px rgba(255, 190, 60, 0.2)) brightness(0.88) saturate(1.08);
+  will-change: transform, opacity;
+  transform-style: preserve-3d;
 }
 
-.murugan-fg-leaf-left {
-  left: -20px;
-  transform-origin: bottom left;
-  transform: rotate(-3deg);
+.sanctum-vazhai-left {
+  left: clamp(-15px, 0.5vw, 15px);
+  transform-origin: bottom center;
 }
 
-.murugan-fg-leaf-right {
-  right: -20px;
-  transform-origin: bottom right;
-  transform: rotate(3deg);
+.sanctum-vazhai-right {
+  right: clamp(-15px, 0.5vw, 15px);
+  transform-origin: bottom center;
+  transform: scaleX(-1); /* Flips naturally so leaves and fruit curve gracefully inwards */
 }
 
-.murugan-leaf-img {
+/* Layered 3D Motion Components */
+.vazhai-trunk-layer {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: auto;
+  height: 100%;
+  transform-origin: bottom center;
+  animation: vazhaiTrunkBreeze 7.6s ease-in-out infinite alternate;
+}
+
+.vazhai-canopy-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 64%; /* Branching node where leaves spread */
+  transform-style: preserve-3d;
+  perspective: 900px;
+}
+
+.vazhai-part-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   display: block;
+}
+
+/* 3D Living Wind Animations */
+@keyframes vazhaiTrunkBreeze {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(0.6deg);
+  }
+  100% {
+    transform: rotate(-0.5deg);
+  }
+}
+
+@keyframes vazhaiCanopyBreezeLeft {
+  0% {
+    transform: perspective(850px) rotateY(0deg) rotateZ(0deg) skewX(0deg);
+  }
+  25% {
+    transform: perspective(850px) rotateY(7deg) rotateZ(2.2deg) skewX(0.9deg) scaleY(1.008);
+  }
+  50% {
+    transform: perspective(850px) rotateY(2deg) rotateZ(0.6deg) skewX(0.2deg);
+  }
+  75% {
+    transform: perspective(850px) rotateY(-5.5deg) rotateZ(-1.8deg) skewX(-0.7deg) scaleY(0.994);
+  }
+  100% {
+    transform: perspective(850px) rotateY(0deg) rotateZ(0deg) skewX(0deg);
+  }
+}
+
+@keyframes vazhaiCanopyBreezeRight {
+  0% {
+    transform: perspective(850px) rotateY(0deg) rotateZ(0deg) skewX(0deg);
+  }
+  28% {
+    transform: perspective(850px) rotateY(-8deg) rotateZ(-2.5deg) skewX(-1deg) scaleY(1.01);
+  }
+  55% {
+    transform: perspective(850px) rotateY(-1.5deg) rotateZ(-0.5deg) skewX(-0.2deg);
+  }
+  80% {
+    transform: perspective(850px) rotateY(5.5deg) rotateZ(1.8deg) skewX(0.8deg) scaleY(0.993);
+  }
+  100% {
+    transform: perspective(850px) rotateY(0deg) rotateZ(0deg) skewX(0deg);
+  }
+}
+
+.vazhai-canopy-anim-left {
+  animation: vazhaiCanopyBreezeLeft 5.8s cubic-bezier(0.42, 0.05, 0.58, 0.95) infinite;
+}
+
+.vazhai-canopy-anim-right {
+  animation: vazhaiCanopyBreezeRight 6.5s cubic-bezier(0.42, 0.05, 0.58, 0.95) infinite;
+  animation-delay: -2.1s;
 }
 
 /* Responsive Refinements */
 @media (max-width: 768px) {
-  .murugan-fg-leaf {
-    width: clamp(120px, 24vw, 220px);
-    bottom: -15px;
+  .sanctum-vazhai-tree {
+    width: clamp(140px, 25vw, 220px);
+    bottom: -5px;
   }
-  .murugan-fg-leaf-left {
-    left: -25px;
+  .sanctum-vazhai-left {
+    left: -15px;
   }
-  .murugan-fg-leaf-right {
-    right: -25px;
+  .sanctum-vazhai-right {
+    right: -15px;
   }
 }
 
@@ -1438,16 +1517,16 @@
     width: clamp(240px, 74vw, 360px);
   }
 
-  .murugan-fg-leaf {
-    width: clamp(85px, 20vw, 130px);
-    opacity: 0.65;
-    bottom: -10px;
+  .sanctum-vazhai-tree {
+    width: clamp(120px, 32vw, 175px);
+    bottom: -5px;
+    filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 12px rgba(255, 190, 60, 0.2)) brightness(0.85);
   }
-  .murugan-fg-leaf-left {
-    left: -25px;
+  .sanctum-vazhai-left {
+    left: -20px;
   }
-  .murugan-fg-leaf-right {
-    right: -25px;
+  .sanctum-vazhai-right {
+    right: -20px;
   }
 }
 
@@ -1467,15 +1546,23 @@
     width: clamp(220px, 72vw, 300px);
   }
 
-  .murugan-fg-leaf {
-    width: 75px;
-    opacity: 0.5;
+  .sanctum-vazhai-tree {
+    width: clamp(110px, 30vw, 150px);
+    bottom: 0px;
+  }
+  .sanctum-vazhai-left {
+    left: -18px;
+  }
+  .sanctum-vazhai-right {
+    right: -18px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .murugan-camera-stage,
-  .murugan-fg-leaf,
+  .sanctum-vazhai-tree,
+  .vazhai-trunk-layer,
+  .vazhai-canopy-layer,
   .murugan-title-char,
   .sanctum-lamp,
   .murugan-divine-aura,

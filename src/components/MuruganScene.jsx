@@ -395,10 +395,9 @@ export const MuruganScene = ({ isOpened }) => {
         },
       });
 
-      // Foreground banana leaves move with camera parallax
+      // Foreground auspicious wedding banana trees move gently with camera parallax
       gsap.to(leafLeftRef.current, {
-        yPercent: -15,
-        rotate: -5,
+        yPercent: -10,
         ease: "none",
         scrollTrigger: {
           trigger: sceneRef.current,
@@ -409,8 +408,7 @@ export const MuruganScene = ({ isOpened }) => {
       });
 
       gsap.to(leafRightRef.current, {
-        yPercent: -22,
-        rotate: 5,
+        yPercent: -12,
         ease: "none",
         scrollTrigger: {
           trigger: sceneRef.current,
@@ -578,23 +576,43 @@ export const MuruganScene = ({ isOpened }) => {
           </div>
         </div>
 
-        {/* Layer 4: Foreground Banana Leaves Framing Camera Viewport (Extreme Edges) */}
-        <div ref={leafLeftRef} className="murugan-fg-leaf murugan-fg-leaf-left" aria-hidden="true">
-          <img
-            src="/assets/doors/banana-leaves-left.png"
-            alt=""
-            className="murugan-leaf-img"
-            loading="eager"
-          />
+        {/* Layer 4: Traditional Auspicious Wedding Banana Trees (Vazhai Maram) Framing the Sanctum */}
+        <div ref={leafLeftRef} className="sanctum-vazhai-tree sanctum-vazhai-left" aria-hidden="true">
+          <div className="vazhai-trunk-layer">
+            <img
+              src="/assets/decorations/banana-tree-trunk.png"
+              alt=""
+              className="vazhai-part-img"
+              loading="eager"
+            />
+          </div>
+          <div className="vazhai-canopy-layer vazhai-canopy-anim-left">
+            <img
+              src="/assets/decorations/banana-tree-canopy.png"
+              alt=""
+              className="vazhai-part-img"
+              loading="eager"
+            />
+          </div>
         </div>
 
-        <div ref={leafRightRef} className="murugan-fg-leaf murugan-fg-leaf-right" aria-hidden="true">
-          <img
-            src="/assets/doors/banana-leaves-right.png"
-            alt=""
-            className="murugan-leaf-img"
-            loading="eager"
-          />
+        <div ref={leafRightRef} className="sanctum-vazhai-tree sanctum-vazhai-right" aria-hidden="true">
+          <div className="vazhai-trunk-layer">
+            <img
+              src="/assets/decorations/banana-tree-trunk.png"
+              alt=""
+              className="vazhai-part-img"
+              loading="eager"
+            />
+          </div>
+          <div className="vazhai-canopy-layer vazhai-canopy-anim-right">
+            <img
+              src="/assets/decorations/banana-tree-canopy.png"
+              alt=""
+              className="vazhai-part-img"
+              loading="eager"
+            />
+          </div>
         </div>
       </div>
     </section>
