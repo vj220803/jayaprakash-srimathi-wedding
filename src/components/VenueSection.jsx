@@ -284,7 +284,7 @@ export const VenueSection = () => {
   const handleGetDirections = () => {
     // Opens Google Maps to V.R. Mahal Kottalur
     window.open(
-      "https://maps.google.com/?q=VR+Mahal+Kottalur+Pennagaram+Mettur+Main+Road",
+      "https://maps.app.goo.gl/3rqpNQTgvSsA5hLv6?g_st=aw",
       "_blank"
     );
   };
