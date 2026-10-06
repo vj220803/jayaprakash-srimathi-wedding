@@ -382,7 +382,7 @@ export const CoupleReveal = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Initial hidden states: everything stays invisible until the user has scrolled >40% into the section
+      // Initial hidden states: everything stays invisible until the user has scrolled 65-70% into the section
       if (sectionPreHeaderRef.current) {
         gsap.set(sectionPreHeaderRef.current, {
           opacity: 0,
@@ -405,10 +405,10 @@ export const CoupleReveal = () => {
       gsap.set(centerFlareRef.current, { scale: 0, opacity: 0 });
       gsap.set(featherShimmerRef.current, { opacity: 0, scale: 0.6 });
 
-      // 1. Trigger peacock & couple reveal ONLY when the couple section has been scrolled >40% into view
+      // 1. Trigger peacock & couple reveal ONLY when the couple section has been scrolled 65-70% into view
       ScrollTrigger.create({
         trigger: containerRef.current,
-        start: "top 40%",
+        start: "top 20%",
         once: true,
         onEnter: () => {
           playPeacockCoupleReveal();
