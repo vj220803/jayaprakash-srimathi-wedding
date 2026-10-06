@@ -20,6 +20,35 @@ export const toggleDivineAudio = (onStateChange) => {
 
 export const startDivineAudio = () => {
   try {
+    // 1. Check if external wedding audio track exists and can be played
+    const audioEl = document.getElementById("wedding-bg-audio");
+    if (audioEl) {
+      audioEl.volume = 0.75;
+      const playPromise = audioEl.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            isPlaying = true;
+            stopOscillators();
+          })
+          .catch(() => {
+            // If audio file is missing (404) or blocked, fallback to synthesized temple drone
+            playSynthDrone();
+          });
+        return;
+      }
+    }
+
+    // Fallback if no audio element found
+    playSynthDrone();
+  } catch (err) {
+    console.warn("Audio initialisation note:", err);
+    playSynthDrone();
+  }
+};
+
+const playSynthDrone = () => {
+  try {
     const AudioContextClass = window.AudioContext || window.webkitAudioContext;
     if (!AudioContextClass) return;
 
@@ -31,15 +60,6 @@ export const startDivineAudio = () => {
       audioCtx.resume();
     }
 
-    // Check if an external audio track exists
-    const audioEl = document.getElementById("wedding-bg-audio");
-    if (audioEl && audioEl.src && !audioEl.error) {
-      audioEl.play().catch(() => {});
-      isPlaying = true;
-      return;
-    }
-
-    // Stop existing nodes
     stopOscillators();
 
     masterGain = audioCtx.createGain();
@@ -48,18 +68,15 @@ export const startDivineAudio = () => {
     masterGain.connect(audioCtx.destination);
 
     // Sacred Tanpura chord frequencies (Pa - Sa - Sa - Sa in C#3)
-    // C#3 = 138.59Hz, G#2 = 103.83Hz, C#4 = 277.18Hz
     const freqs = [103.83, 138.59, 138.59 * 1.002, 277.18, 415.3];
 
     oscillators = freqs.map((freq, idx) => {
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
 
-      // Sawtooth with low-pass filter gives a rich, stringed tanpura timbre
       osc.type = idx % 2 === 0 ? "triangle" : "sine";
       osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
 
-      // Gentle detune modulation
       const lfo = audioCtx.createOscillator();
       const lfoGain = audioCtx.createGain();
       lfo.frequency.setValueAtTime(0.2 + idx * 0.05, audioCtx.currentTime);
@@ -77,7 +94,7 @@ export const startDivineAudio = () => {
 
     isPlaying = true;
   } catch (err) {
-    console.warn("Audio context initialisation note:", err);
+    console.warn("Synth drone note:", err);
   }
 };
 
