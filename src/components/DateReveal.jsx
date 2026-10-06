@@ -136,19 +136,26 @@ export const DateReveal = ({ isOpened }) => {
       ctx.fill();
     };
 
-    // Load authentic cropped gold plaque artwork
+    // 1. Immediately draw the opaque metallic gold plaque synchronously so the canvas is NEVER transparent
+    drawFallbackPlaque();
+
+    // 2. Load authentic cropped gold plaque artwork and paint once decoded
     const img = new Image();
     img.src = "/assets/decorations/plaque_crop.png";
-    img.onload = () => {
-      if (hasTriggeredReveal.current || hasStartedScratching.current) return;
-      ctx.setTransform(1, 0, 0, 1, 0, 0);
-      ctx.globalCompositeOperation = "source-over";
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    };
-    img.onerror = () => {
-      if (hasTriggeredReveal.current || hasStartedScratching.current) return;
-      drawFallbackPlaque();
-    };
+    if (img.complete && img.naturalWidth !== 0) {
+      if (!hasTriggeredReveal.current && !hasStartedScratching.current) {
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.globalCompositeOperation = "source-over";
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      }
+    } else {
+      img.onload = () => {
+        if (hasTriggeredReveal.current || hasStartedScratching.current) return;
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.globalCompositeOperation = "source-over";
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      };
+    }
   }, []);
 
   // Set up canvas on mount and window resize
@@ -196,12 +203,6 @@ export const DateReveal = ({ isOpened }) => {
           once: true,
         },
         defaults: { ease: "power2.out" },
-        onComplete: () => {
-          // Once entrance finishes and card is at scale 1, ensure canvas is crisp if not scratched yet
-          if (!hasTriggeredReveal.current && !hasStartedScratching.current) {
-            setupCanvas();
-          }
-        },
       });
 
       entranceTl
