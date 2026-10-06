@@ -34,6 +34,8 @@ export const CoupleReveal = () => {
   const tamilQuoteRef = useRef(null);
 
   const [hasAnimated, setHasAnimated] = useState(false);
+  const hasAnimatedRef = useRef(false);
+  const sectionPreHeaderRef = useRef(null);
   const namesTimelineRef = useRef(null);
   const namesRevealedRef = useRef(false);
 
@@ -231,10 +233,20 @@ export const CoupleReveal = () => {
   };
 
   // 1. Peacock feathers opening & couple arrival animation
-  const playPeacockCoupleReveal = () => {
+  const playPeacockCoupleReveal = (force = false) => {
+    if (hasAnimatedRef.current && !force) return;
+    hasAnimatedRef.current = true;
+    setHasAnimated(true);
+
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-    // Step 0: Initial states for peacock and couple
+    // Step 0: Initial states for pre-header, peacock and couple
+    if (sectionPreHeaderRef.current) {
+      gsap.set(sectionPreHeaderRef.current, {
+        opacity: 0,
+        y: 18,
+      });
+    }
     gsap.set(peacockImgRef.current, {
       scale: 0.65,
       scaleY: 0.7,
@@ -257,15 +269,33 @@ export const CoupleReveal = () => {
       scale: 0.6,
     });
 
+    // Step 0.5: Pre-header "TWO SOULS • ONE SACRED DESTINY" glides in gracefully
+    if (sectionPreHeaderRef.current) {
+      tl.to(
+        sectionPreHeaderRef.current,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.85,
+          ease: "power2.out",
+        },
+        0
+      );
+    }
+
     // Step 1: Peacock enters and feathers expand open in a glorious fan arc
-    tl.to(peacockImgRef.current, {
-      opacity: 1,
-      scale: 1.05,
-      scaleY: 1.02,
-      filter: "brightness(1.2) blur(0px) drop-shadow(0 0 35px rgba(228, 196, 119, 0.75))",
-      duration: 1.6,
-      ease: "power2.out",
-    })
+    tl.to(
+      peacockImgRef.current,
+      {
+        opacity: 1,
+        scale: 1.05,
+        scaleY: 1.02,
+        filter: "brightness(1.2) blur(0px) drop-shadow(0 0 35px rgba(228, 196, 119, 0.75))",
+        duration: 1.6,
+        ease: "power2.out",
+      },
+      0.15
+    )
       // Feather shimmering wave travels across
       .to(
         featherShimmerRef.current,
@@ -348,13 +378,17 @@ export const CoupleReveal = () => {
         ease: "sine.inOut",
       });
     });
-
-    setHasAnimated(true);
   };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Initial hidden states
+      // Initial hidden states: everything stays invisible until the user has scrolled >40% into the section
+      if (sectionPreHeaderRef.current) {
+        gsap.set(sectionPreHeaderRef.current, {
+          opacity: 0,
+          y: 18,
+        });
+      }
       gsap.set(peacockImgRef.current, {
         scale: 0.65,
         scaleY: 0.7,
@@ -371,10 +405,10 @@ export const CoupleReveal = () => {
       gsap.set(centerFlareRef.current, { scale: 0, opacity: 0 });
       gsap.set(featherShimmerRef.current, { opacity: 0, scale: 0.6 });
 
-      // 1. Trigger peacock reveal when scrolling into the peacock stage
+      // 1. Trigger peacock & couple reveal ONLY when the couple section has been scrolled >40% into view
       ScrollTrigger.create({
-        trigger: ".peacock-couple-stage",
-        start: "top 78%",
+        trigger: containerRef.current,
+        start: "top 40%",
         once: true,
         onEnter: () => {
           playPeacockCoupleReveal();
@@ -414,7 +448,7 @@ export const CoupleReveal = () => {
 
       <div className="couple-reveal-inner">
         {/* Section Pre-Header */}
-        <div className="section-pre-header">
+        <div ref={sectionPreHeaderRef} className="section-pre-header">
           <span className="subtle-pre-title">TWO SOULS • ONE SACRED DESTINY</span>
           <LotusMotif size={28} />
         </div>
@@ -455,8 +489,9 @@ export const CoupleReveal = () => {
         {hasAnimated && (
           <button
             onClick={() => {
+              hasAnimatedRef.current = false;
               namesRevealedRef.current = false;
-              playPeacockCoupleReveal();
+              playPeacockCoupleReveal(true);
             }}
             className="replay-arrival-btn"
             title="Replay Peacock Feather Opening & Couple Arrival"
