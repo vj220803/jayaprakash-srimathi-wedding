@@ -30,6 +30,7 @@ export const DateReveal = ({ isOpened }) => {
   const [isRevealed, setIsRevealed] = useState(false);
   const [scratchPercent, setScratchPercent] = useState(0);
   const isDrawing = useRef(false);
+  const hasStartedScratching = useRef(false);
   const lastPos = useRef(null);
   const moveThrottle = useRef(0);
   const hasTriggeredReveal = useRef(false);
@@ -37,23 +38,26 @@ export const DateReveal = ({ isOpened }) => {
   // Initialize and draw the antique gold foil plaque on the canvas
   const setupCanvas = useCallback(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || hasTriggeredReveal.current || hasStartedScratching.current) return;
 
-    const rect = canvas.getBoundingClientRect();
-    if (rect.width === 0 || rect.height === 0) return;
+    // Use layout dimensions to avoid being affected by 3D scale transforms
+    const width = canvas.offsetWidth || canvas.clientWidth || 380;
+    const height = canvas.offsetHeight || canvas.clientHeight || 190;
+    if (width === 0 || height === 0) return;
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
-    canvas.width = Math.round(rect.width * dpr);
-    canvas.height = Math.round(rect.height * dpr);
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
 
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
-    ctx.scale(dpr, dpr);
+    // Reset transform to identity — all operations operate in crisp canvas bitmap pixels
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
 
     // Fallback metallic gold gradient drawing function
     const drawFallbackPlaque = () => {
       ctx.globalCompositeOperation = "source-over";
-      const w = rect.width;
-      const h = rect.height;
+      const w = canvas.width;
+      const h = canvas.height;
 
       // Rich metallic antique gold radial/linear gradient
       const grad = ctx.createLinearGradient(0, 0, w, h);
@@ -68,65 +72,67 @@ export const DateReveal = ({ isOpened }) => {
       ctx.fillRect(0, 0, w, h);
 
       // Ornate inner frame border
+      const inset = Math.round(10 * dpr);
       ctx.strokeStyle = "rgba(255, 235, 170, 0.85)";
-      ctx.lineWidth = 2;
-      ctx.strokeRect(10, 10, w - 20, h - 20);
+      ctx.lineWidth = Math.round(2 * dpr);
+      ctx.strokeRect(inset, inset, w - inset * 2, h - inset * 2);
 
       // Subtle distress speckles
       ctx.fillStyle = "rgba(100, 60, 10, 0.15)";
       for (let i = 0; i < 60; i++) {
         const sx = Math.random() * w;
         const sy = Math.random() * h;
-        ctx.fillRect(sx, sy, 2, 2);
+        ctx.fillRect(sx, sy, Math.round(2 * dpr), Math.round(2 * dpr));
       }
 
       // Center Icon: Finger tap/scratch icon
       ctx.fillStyle = "#3D2405";
       ctx.strokeStyle = "#3D2405";
-      ctx.lineWidth = 1.8;
+      ctx.lineWidth = Math.round(2 * dpr);
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
 
       const cx = w / 2;
-      const cy = h / 2 - 14;
+      const cy = h / 2 - Math.round(14 * dpr);
 
       // Touch ripple arches
       ctx.beginPath();
-      ctx.arc(cx, cy - 14, 6, Math.PI * 1.1, Math.PI * 1.9);
+      ctx.arc(cx, cy - Math.round(14 * dpr), Math.round(6 * dpr), Math.PI * 1.1, Math.PI * 1.9);
       ctx.stroke();
 
       ctx.beginPath();
-      ctx.arc(cx, cy - 14, 10, Math.PI * 1.15, Math.PI * 1.85);
+      ctx.arc(cx, cy - Math.round(14 * dpr), Math.round(10 * dpr), Math.PI * 1.15, Math.PI * 1.85);
       ctx.stroke();
 
       // Hand icon pointing up
+      const s = dpr;
       ctx.beginPath();
-      ctx.moveTo(cx - 3, cy + 14);
-      ctx.lineTo(cx - 3, cy - 8);
-      ctx.arc(cx, cy - 8, 3, Math.PI, 0);
-      ctx.lineTo(cx + 3, cy + 2);
-      ctx.lineTo(cx + 8, cy + 6);
-      ctx.lineTo(cx + 7, cy + 14);
+      ctx.moveTo(cx - 3 * s, cy + 14 * s);
+      ctx.lineTo(cx - 3 * s, cy - 8 * s);
+      ctx.arc(cx, cy - 8 * s, 3 * s, Math.PI, 0);
+      ctx.lineTo(cx + 3 * s, cy + 2 * s);
+      ctx.lineTo(cx + 8 * s, cy + 6 * s);
+      ctx.lineTo(cx + 7 * s, cy + 14 * s);
       ctx.closePath();
       ctx.stroke();
 
       // SCRATCH TO REVEAL text
-      ctx.font = "bold 13px 'Cinzel', serif";
+      ctx.font = `bold ${Math.round(13 * dpr)}px 'Cinzel', serif`;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.letterSpacing = "0.22em";
-      ctx.fillText("SCRATCH TO REVEAL", cx, cy + 28);
+      ctx.fillText("SCRATCH TO REVEAL", cx, cy + Math.round(28 * dpr));
 
       // Divider below text
       ctx.beginPath();
-      ctx.moveTo(cx - 45, cy + 42);
-      ctx.lineTo(cx - 8, cy + 42);
-      ctx.moveTo(cx + 8, cy + 42);
-      ctx.lineTo(cx + 45, cy + 42);
+      ctx.moveTo(cx - 45 * s, cy + 42 * s);
+      ctx.lineTo(cx - 8 * s, cy + 42 * s);
+      ctx.moveTo(cx + 8 * s, cy + 42 * s);
+      ctx.lineTo(cx + 45 * s, cy + 42 * s);
       ctx.stroke();
 
       ctx.beginPath();
-      ctx.arc(cx, cy + 42, 2.5, 0, Math.PI * 2);
+      ctx.arc(cx, cy + 42 * s, 2.5 * s, 0, Math.PI * 2);
       ctx.fill();
     };
 
@@ -134,10 +140,13 @@ export const DateReveal = ({ isOpened }) => {
     const img = new Image();
     img.src = "/assets/decorations/plaque_crop.png";
     img.onload = () => {
+      if (hasTriggeredReveal.current || hasStartedScratching.current) return;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.globalCompositeOperation = "source-over";
-      ctx.drawImage(img, 0, 0, rect.width, rect.height);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     };
     img.onerror = () => {
+      if (hasTriggeredReveal.current || hasStartedScratching.current) return;
       drawFallbackPlaque();
     };
   }, []);
@@ -147,7 +156,7 @@ export const DateReveal = ({ isOpened }) => {
     setupCanvas();
 
     const handleResize = () => {
-      if (!hasTriggeredReveal.current) {
+      if (!hasTriggeredReveal.current && !hasStartedScratching.current) {
         setupCanvas();
       }
     };
@@ -185,18 +194,14 @@ export const DateReveal = ({ isOpened }) => {
           trigger: cardWrapperRef.current,
           start: "top 82%",
           once: true,
-          onEnter: () => {
-            if (!hasTriggeredReveal.current) {
-              setupCanvas();
-            }
-          },
-          onRefresh: (self) => {
-            if (self.progress > 0 && !hasTriggeredReveal.current) {
-              setupCanvas();
-            }
-          },
         },
         defaults: { ease: "power2.out" },
+        onComplete: () => {
+          // Once entrance finishes and card is at scale 1, ensure canvas is crisp if not scratched yet
+          if (!hasTriggeredReveal.current && !hasStartedScratching.current) {
+            setupCanvas();
+          }
+        },
       });
 
       entranceTl
@@ -486,6 +491,26 @@ export const DateReveal = ({ isOpened }) => {
     }
   }, []);
 
+  // Native non-passive touch prevention so mobile browsers never scroll or cancel scratch gesture
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const preventTouch = (e) => {
+      if (e.cancelable) {
+        e.preventDefault();
+      }
+    };
+
+    canvas.addEventListener("touchstart", preventTouch, { passive: false });
+    canvas.addEventListener("touchmove", preventTouch, { passive: false });
+
+    return () => {
+      canvas.removeEventListener("touchstart", preventTouch);
+      canvas.removeEventListener("touchmove", preventTouch);
+    };
+  }, []);
+
   // Sample cleared pixels to calculate percentage
   const checkScratchPercentage = useCallback(() => {
     const canvas = canvasRef.current;
@@ -495,10 +520,13 @@ export const DateReveal = ({ isOpened }) => {
       const ctx = canvas.getContext("2d", { willReadFrequently: true });
       const w = canvas.width;
       const h = canvas.height;
+      if (!w || !h) return;
 
-      // Sample a 10x10 grid (100 sample points)
-      const stepX = Math.max(1, Math.floor(w / 10));
-      const stepY = Math.max(1, Math.floor(h / 10));
+      // Sample a 12x8 grid (96 sample points across the card)
+      const cols = 12;
+      const rows = 8;
+      const stepX = Math.max(1, Math.floor(w / cols));
+      const stepY = Math.max(1, Math.floor(h / rows));
       let cleared = 0;
       let total = 0;
 
@@ -518,7 +546,8 @@ export const DateReveal = ({ isOpened }) => {
       const percent = total > 0 ? (cleared / total) * 100 : 0;
       setScratchPercent(Math.round(percent));
 
-      if (percent >= 50) {
+      // 36% threshold is ideal: reveals comfortably as soon as user scratches the core center
+      if (percent >= 36) {
         triggerRevealComplete();
       }
     } catch {
@@ -529,27 +558,52 @@ export const DateReveal = ({ isOpened }) => {
   // Convert pointer event to canvas coordinates
   const getCanvasPoint = (e) => {
     const canvas = canvasRef.current;
-    if (!canvas) return { x: 0, y: 0 };
+    if (!canvas) return { x: 0, y: 0, rawX: 0, rawY: 0 };
     const rect = canvas.getBoundingClientRect();
-    const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+    if (!rect.width || !rect.height) return { x: 0, y: 0, rawX: 0, rawY: 0 };
+
+    let clientX = e.clientX;
+    let clientY = e.clientY;
+
+    if (clientX === undefined) {
+      if (e.touches && e.touches.length > 0) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+      } else if (e.changedTouches && e.changedTouches.length > 0) {
+        clientX = e.changedTouches[0].clientX;
+        clientY = e.changedTouches[0].clientY;
+      } else {
+        clientX = rect.left + rect.width / 2;
+        clientY = rect.top + rect.height / 2;
+      }
+    }
+
+    // Precise normalized 0..1 ratio relative to rendered canvas bounds on screen
+    const normX = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+    const normY = Math.max(0, Math.min(1, (clientY - rect.top) / rect.height));
+
     return {
-      x: (e.clientX - rect.left) * dpr,
-      y: (e.clientY - rect.top) * dpr,
-      rawX: e.clientX,
-      rawY: e.clientY,
+      x: normX * canvas.width,
+      y: normY * canvas.height,
+      rawX: clientX,
+      rawY: clientY,
     };
   };
 
   // Erase pixels between two points with feathered round brush
   const eraseLine = (p1, p2) => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || hasTriggeredReveal.current) return;
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
-    const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
-    const brushRadius = 26 * dpr;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+
+    // Dynamic generous brush width (~36 CSS px wide)
+    const rect = canvas.getBoundingClientRect();
+    const scale = rect.width ? canvas.width / rect.width : 2;
+    const brushWidth = Math.max(28, Math.round(36 * scale));
 
     ctx.globalCompositeOperation = "destination-out";
-    ctx.lineWidth = brushRadius * 2;
+    ctx.lineWidth = brushWidth;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
 
@@ -586,10 +640,13 @@ export const DateReveal = ({ isOpened }) => {
   // Erase single point for tap/click
   const erasePoint = (p) => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || hasTriggeredReveal.current) return;
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
-    const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
-    const radius = 32 * dpr;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+
+    const rect = canvas.getBoundingClientRect();
+    const scale = rect.width ? canvas.width / rect.width : 2;
+    const radius = Math.max(22, Math.round(30 * scale));
 
     ctx.globalCompositeOperation = "destination-out";
     ctx.beginPath();
@@ -601,6 +658,12 @@ export const DateReveal = ({ isOpened }) => {
   const handlePointerDown = (e) => {
     if (hasTriggeredReveal.current) return;
     isDrawing.current = true;
+    hasStartedScratching.current = true;
+
+    if (e.cancelable) {
+      e.preventDefault();
+    }
+
     try {
       e.target.setPointerCapture(e.pointerId);
     } catch {}
@@ -608,11 +671,14 @@ export const DateReveal = ({ isOpened }) => {
     const pt = getCanvasPoint(e);
     lastPos.current = pt;
     erasePoint(pt);
+    checkScratchPercentage();
   };
 
   const handlePointerMove = (e) => {
     if (!isDrawing.current || hasTriggeredReveal.current) return;
-    e.preventDefault();
+    if (e.cancelable) {
+      e.preventDefault();
+    }
 
     const pt = getCanvasPoint(e);
     if (lastPos.current) {
@@ -623,7 +689,7 @@ export const DateReveal = ({ isOpened }) => {
     lastPos.current = pt;
 
     moveThrottle.current++;
-    if (moveThrottle.current % 4 === 0) {
+    if (moveThrottle.current % 3 === 0) {
       checkScratchPercentage();
     }
   };
@@ -637,6 +703,31 @@ export const DateReveal = ({ isOpened }) => {
     } catch {}
     checkScratchPercentage();
   };
+
+  const handlePointerCancel = (e) => {
+    isDrawing.current = false;
+    lastPos.current = null;
+    try {
+      e.target.releasePointerCapture(e.pointerId);
+    } catch {}
+  };
+
+  // Global pointer release listener to prevent stuck drawing state
+  useEffect(() => {
+    const handleGlobalUp = () => {
+      if (isDrawing.current) {
+        isDrawing.current = false;
+        lastPos.current = null;
+        checkScratchPercentage();
+      }
+    };
+    window.addEventListener("pointerup", handleGlobalUp);
+    window.addEventListener("pointercancel", handleGlobalUp);
+    return () => {
+      window.removeEventListener("pointerup", handleGlobalUp);
+      window.removeEventListener("pointercancel", handleGlobalUp);
+    };
+  }, [checkScratchPercentage]);
 
   // Smooth scroll to next scene (The Royal Couple Reveal)
   const handleScrollToCouple = () => {
@@ -760,7 +851,8 @@ export const DateReveal = ({ isOpened }) => {
               onPointerDown={handlePointerDown}
               onPointerMove={handlePointerMove}
               onPointerUp={handlePointerUp}
-              onPointerCancel={handlePointerUp}
+              onPointerCancel={handlePointerCancel}
+              style={{ touchAction: "none" }}
               title="Scratch to reveal wedding date"
               aria-hidden="true"
             />
