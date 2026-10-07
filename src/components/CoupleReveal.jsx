@@ -248,7 +248,6 @@ export const CoupleReveal = () => {
   const playPeacockCoupleReveal = (force = false) => {
     if (hasAnimatedRef.current && !force) return;
     hasAnimatedRef.current = true;
-    setHasAnimated(true);
 
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
@@ -373,6 +372,8 @@ export const CoupleReveal = () => {
       );
 
     tl.eventCallback("onComplete", () => {
+      setHasAnimated(true);
+
       // Gentle continuous floating when idle once reveal completes
       gsap.to(coupleImgRef.current, {
         y: -6,
@@ -393,8 +394,11 @@ export const CoupleReveal = () => {
   };
 
   useEffect(() => {
+    hasAnimatedRef.current = false;
+    namesRevealedRef.current = false;
+
     const ctx = gsap.context(() => {
-      // Initial hidden states: everything stays invisible until the user has scrolled 65-70% into the section
+      // Initial hidden states: everything stays invisible until the user has scrolled into the section
       if (sectionPreHeaderRef.current) {
         gsap.set(sectionPreHeaderRef.current, {
           opacity: 0,
@@ -417,15 +421,23 @@ export const CoupleReveal = () => {
       gsap.set(centerFlareRef.current, { scale: 0, opacity: 0 });
       gsap.set(featherShimmerRef.current, { opacity: 0, scale: 0.6 });
 
-      // 1. Trigger peacock & couple reveal ONLY when the couple section has been scrolled 65-70% into view
+      // 1. Trigger peacock & couple reveal when scrolled into view
       ScrollTrigger.create({
         trigger: containerRef.current,
-        start: "top 20%",
+        start: "top 75%",
         once: true,
         onEnter: () => {
-          playPeacockCoupleReveal();
+          playPeacockCoupleReveal(true);
         },
       });
+
+      // Also trigger if already in view on mount (direct view or quick scroll)
+      if (containerRef.current) {
+        const top = containerRef.current.getBoundingClientRect().top;
+        if (top <= window.innerHeight * 0.75) {
+          playPeacockCoupleReveal(true);
+        }
+      }
 
       // 2. Trigger names block reveal when user scrolls into the names section
       ScrollTrigger.create({
@@ -439,9 +451,24 @@ export const CoupleReveal = () => {
         },
       });
 
+      if (namesBlockRef.current) {
+        const nTop = namesBlockRef.current.getBoundingClientRect().top;
+        if (nTop <= window.innerHeight * 0.78) {
+          playNamesAndQuoteReveal(true);
+        }
+      }
+
+      // Ensure ScrollTrigger accurately measures positions after DOM and images settle
+      setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 150);
     }, containerRef);
 
-    return () => ctx.revert();
+    return () => {
+      hasAnimatedRef.current = false;
+      namesRevealedRef.current = false;
+      ctx.revert();
+    };
   }, []);
 
   return (
