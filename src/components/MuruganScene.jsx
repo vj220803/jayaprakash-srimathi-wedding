@@ -404,9 +404,10 @@ export const MuruganScene = ({ isOpened }) => {
 
   // Screen Peek / Nudge: Smoothly scrolls down slightly (~55px) and returns to 0
   const performScreenNudge = useCallback(() => {
+    // If user already scrolled or interacted, don't interrupt
     if (userHasScrolledRef.current || window.scrollY > 20) return;
 
-    // Synchronous subtle aura pulse on the scroll prompt badge
+    // Synchronous subtle glow pulse on the scroll prompt badge
     if (scrollPromptRef.current) {
       gsap.to(scrollPromptRef.current, {
         scale: 1.08,
@@ -444,39 +445,21 @@ export const MuruganScene = ({ isOpened }) => {
     }
   }, []);
 
-  // Set up screen nudges and handle user scroll interaction
+  // Set up screen nudges after Lord Murugan finishes arriving
   useEffect(() => {
     if (!isOpened) return;
 
-    const handleUserScroll = () => {
-      if (window.scrollY > 25) {
+    const handleUserInteraction = () => {
+      if (window.scrollY > 30) {
         userHasScrolledRef.current = true;
         if (nudgeTimerRef.current) clearTimeout(nudgeTimerRef.current);
         if (secondNudgeTimerRef.current) clearTimeout(secondNudgeTimerRef.current);
-        if (scrollPromptRef.current) {
-          gsap.to(scrollPromptRef.current, {
-            opacity: 0,
-            y: 12,
-            pointerEvents: "none",
-            duration: 0.3,
-            ease: "power2.in",
-          });
-        }
-      } else if (window.scrollY <= 10 && userHasScrolledRef.current) {
-        if (scrollPromptRef.current) {
-          gsap.to(scrollPromptRef.current, {
-            opacity: 1,
-            y: 0,
-            pointerEvents: "auto",
-            duration: 0.4,
-            ease: "power2.out",
-          });
-        }
       }
     };
 
-    window.addEventListener("scroll", handleUserScroll, { passive: true });
-    window.addEventListener("touchmove", handleUserScroll, { passive: true });
+    window.addEventListener("scroll", handleUserInteraction, { passive: true });
+    window.addEventListener("wheel", handleUserInteraction, { passive: true });
+    window.addEventListener("touchmove", handleUserInteraction, { passive: true });
 
     // First gentle nudge right after Lord Murugan & blessings settle (~5.2s)
     nudgeTimerRef.current = setTimeout(() => {
@@ -489,8 +472,9 @@ export const MuruganScene = ({ isOpened }) => {
     }, 10500);
 
     return () => {
-      window.removeEventListener("scroll", handleUserScroll);
-      window.removeEventListener("touchmove", handleUserScroll);
+      window.removeEventListener("scroll", handleUserInteraction);
+      window.removeEventListener("wheel", handleUserInteraction);
+      window.removeEventListener("touchmove", handleUserInteraction);
       if (nudgeTimerRef.current) clearTimeout(nudgeTimerRef.current);
       if (secondNudgeTimerRef.current) clearTimeout(secondNudgeTimerRef.current);
     };
@@ -734,21 +718,7 @@ export const MuruganScene = ({ isOpened }) => {
         <div className="prompt-pill-inner">
           <span className="prompt-star-icon">✦</span>
           <span className="prompt-main-text">SCROLL DOWN</span>
-          <span className="prompt-sub-tamil">கீழே உருட்டவும்</span>
-          <span className="prompt-chevron-wrap" aria-hidden="true">
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </span>
+          <span className="prompt-down-arrow" aria-hidden="true">↓</span>
         </div>
       </div>
     </section>

@@ -1516,13 +1516,7 @@
   user-select: none;
   -webkit-tap-highlight-color: transparent;
   outline: none;
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-.murugan-scroll-prompt.hidden-prompt {
-  opacity: 0 !important;
-  pointer-events: none !important;
-  transform: translate(-50%, 15px) !important;
+  transition: transform 0.25s ease, opacity 0.4s ease;
 }
 
 .prompt-aura-glow {
@@ -1553,7 +1547,7 @@
 
 .murugan-scroll-prompt:hover .prompt-pill-inner,
 .murugan-scroll-prompt:active .prompt-pill-inner {
-  transform: scale(1.04);
+  transform: scale(1.05);
   border-color: #ffe699;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.85), 0 0 32px rgba(255, 215, 100, 0.55);
 }
@@ -1566,7 +1560,7 @@
 
 .prompt-main-text {
   font-family: var(--font-display, 'Cinzel', serif);
-  font-size: clamp(0.72rem, 1.3vw, 0.84rem);
+  font-size: clamp(0.74rem, 1.3vw, 0.86rem);
   font-weight: 700;
   letter-spacing: 0.16em;
   color: #fff6da;
@@ -1574,27 +1568,13 @@
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
 }
 
-.prompt-sub-tamil {
-  font-family: var(--font-tamil, 'Noto Serif Tamil', serif);
-  font-size: clamp(0.68rem, 1.1vw, 0.78rem);
-  font-weight: 600;
-  color: #f5d78e;
-  letter-spacing: 0.04em;
-  opacity: 0.95;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
-}
-
-.prompt-chevron-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.prompt-down-arrow {
+  display: inline-block;
+  font-size: 0.92rem;
+  font-weight: 800;
   color: #ffd875;
-  animation: promptChevronHop 1.4s ease-in-out infinite;
-}
-
-.prompt-chevron-wrap svg {
-  display: block;
   filter: drop-shadow(0 0 4px rgba(255, 215, 100, 0.8));
+  animation: promptArrowBounce 1.4s ease-in-out infinite;
 }
 
 @keyframes promptFloatBounce {
@@ -1606,7 +1586,7 @@
   }
 }
 
-@keyframes promptChevronHop {
+@keyframes promptArrowBounce {
   0%, 100% {
     transform: translateY(-1px);
   }
@@ -1633,17 +1613,13 @@
   }
 
   .prompt-pill-inner {
-    gap: 6px;
-    padding: 7px 15px;
+    gap: 7px;
+    padding: 7px 16px;
   }
 
   .prompt-main-text {
-    font-size: 0.68rem;
-    letter-spacing: 0.12em;
-  }
-
-  .prompt-sub-tamil {
-    font-size: 0.64rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
   }
 }
 
