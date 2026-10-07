@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { KuthuVilakku } from "./Ornaments";
@@ -26,6 +26,10 @@ export const MuruganScene = ({ isOpened }) => {
   const leafLeftRef = useRef(null);
   const leafRightRef = useRef(null);
   const toranamRef = useRef(null);
+  const scrollPromptRef = useRef(null);
+  const nudgeTimerRef = useRef(null);
+  const secondNudgeTimerRef = useRef(null);
+  const userHasScrolledRef = useRef(false);
   const hasPlayedRef = useRef(false);
 
   // Cinematic incoming animation sequence
@@ -84,6 +88,7 @@ export const MuruganScene = ({ isOpened }) => {
     gsap.set(celestialRaysRef.current, { opacity: 0, scale: 0.35, rotation: -25 });
     gsap.set(crownHaloRef.current, { opacity: 0, scale: 0.6 });
     gsap.set(divineAuraRef.current, { opacity: 0, scale: 0.55 });
+    gsap.set(scrollPromptRef.current, { opacity: 0, y: 16, scale: 0.94 });
     gsap.set(muruganImgRef.current, {
       opacity: 0,
       y: 0,
@@ -354,6 +359,18 @@ export const MuruganScene = ({ isOpened }) => {
           ease: "sine.inOut",
         },
         4.6
+      )
+      // Reveal the interactive floating scroll prompt badge
+      .to(
+        scrollPromptRef.current,
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.85,
+          ease: "back.out(1.4)",
+        },
+        4.6
       );
 
     hasPlayedRef.current = true;
@@ -368,6 +385,116 @@ export const MuruganScene = ({ isOpened }) => {
       return () => clearTimeout(timer);
     }
   }, [isOpened]);
+
+  // Handle tap / click on the scroll prompt badge
+  const handleScrollDown = useCallback(() => {
+    if (nudgeTimerRef.current) clearTimeout(nudgeTimerRef.current);
+    if (secondNudgeTimerRef.current) clearTimeout(secondNudgeTimerRef.current);
+    userHasScrolledRef.current = true;
+
+    const target = document.getElementById("wedding-intro-scene");
+    if (window.__lenis) {
+      window.__lenis.scrollTo(target || window.innerHeight, { duration: 1.4 });
+    } else if (target) {
+      target.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
+    }
+  }, []);
+
+  // Screen Peek / Nudge: Smoothly scrolls down slightly (~55px) and returns to 0
+  const performScreenNudge = useCallback(() => {
+    if (userHasScrolledRef.current || window.scrollY > 20) return;
+
+    // Synchronous subtle aura pulse on the scroll prompt badge
+    if (scrollPromptRef.current) {
+      gsap.to(scrollPromptRef.current, {
+        scale: 1.08,
+        duration: 0.35,
+        yoyo: true,
+        repeat: 1,
+        ease: "power2.out",
+      });
+    }
+
+    const nudgePixels = window.innerWidth <= 768 ? 58 : 46;
+
+    if (window.__lenis) {
+      window.__lenis.scrollTo(nudgePixels, {
+        duration: 0.68,
+        easing: (t) => Math.sin((t * Math.PI) / 2),
+        onComplete: () => {
+          setTimeout(() => {
+            if (!userHasScrolledRef.current && window.scrollY <= nudgePixels + 15) {
+              window.__lenis.scrollTo(0, {
+                duration: 0.75,
+                easing: (t) => 1 - Math.cos((t * Math.PI) / 2),
+              });
+            }
+          }, 380);
+        },
+      });
+    } else {
+      window.scrollTo({ top: nudgePixels, behavior: "smooth" });
+      setTimeout(() => {
+        if (!userHasScrolledRef.current && window.scrollY <= nudgePixels + 15) {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }, 750);
+    }
+  }, []);
+
+  // Set up screen nudges and handle user scroll interaction
+  useEffect(() => {
+    if (!isOpened) return;
+
+    const handleUserScroll = () => {
+      if (window.scrollY > 25) {
+        userHasScrolledRef.current = true;
+        if (nudgeTimerRef.current) clearTimeout(nudgeTimerRef.current);
+        if (secondNudgeTimerRef.current) clearTimeout(secondNudgeTimerRef.current);
+        if (scrollPromptRef.current) {
+          gsap.to(scrollPromptRef.current, {
+            opacity: 0,
+            y: 12,
+            pointerEvents: "none",
+            duration: 0.3,
+            ease: "power2.in",
+          });
+        }
+      } else if (window.scrollY <= 10 && userHasScrolledRef.current) {
+        if (scrollPromptRef.current) {
+          gsap.to(scrollPromptRef.current, {
+            opacity: 1,
+            y: 0,
+            pointerEvents: "auto",
+            duration: 0.4,
+            ease: "power2.out",
+          });
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleUserScroll, { passive: true });
+    window.addEventListener("touchmove", handleUserScroll, { passive: true });
+
+    // First gentle nudge right after Lord Murugan & blessings settle (~5.2s)
+    nudgeTimerRef.current = setTimeout(() => {
+      performScreenNudge();
+    }, 5200);
+
+    // Second gentle reminder nudge at 10.5s if still untouched
+    secondNudgeTimerRef.current = setTimeout(() => {
+      performScreenNudge();
+    }, 10500);
+
+    return () => {
+      window.removeEventListener("scroll", handleUserScroll);
+      window.removeEventListener("touchmove", handleUserScroll);
+      if (nudgeTimerRef.current) clearTimeout(nudgeTimerRef.current);
+      if (secondNudgeTimerRef.current) clearTimeout(secondNudgeTimerRef.current);
+    };
+  }, [isOpened, performScreenNudge]);
 
   // Devotional idle lighting, living flame respiration, and scroll choreography
   useEffect(() => {
@@ -591,6 +718,37 @@ export const MuruganScene = ({ isOpened }) => {
             className="sanctum-banana-img"
             loading="eager"
           />
+        </div>
+      </div>
+
+      {/* Floating Scroll Indicator Prompt & Tap Action */}
+      <div
+        ref={scrollPromptRef}
+        className="murugan-scroll-prompt"
+        onClick={handleScrollDown}
+        role="button"
+        tabIndex={0}
+        aria-label="Scroll down to view wedding invitation"
+      >
+        <div className="prompt-aura-glow" aria-hidden="true" />
+        <div className="prompt-pill-inner">
+          <span className="prompt-star-icon">✦</span>
+          <span className="prompt-main-text">SCROLL DOWN</span>
+          <span className="prompt-sub-tamil">கீழே உருட்டவும்</span>
+          <span className="prompt-chevron-wrap" aria-hidden="true">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </span>
         </div>
       </div>
     </section>

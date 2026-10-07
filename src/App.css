@@ -1500,8 +1500,159 @@
   }
 }
 
+/* =========================================================
+   SCENE 1: FLOATING SCROLL INDICATOR & NUDGE PROMPT
+========================================================= */
+.murugan-scroll-prompt {
+  position: absolute;
+  bottom: clamp(16px, 2.8vh, 32px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.murugan-scroll-prompt.hidden-prompt {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translate(-50%, 15px) !important;
+}
+
+.prompt-aura-glow {
+  position: absolute;
+  inset: -6px;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(255, 215, 115, 0.4) 0%, rgba(212, 175, 55, 0.15) 55%, transparent 80%);
+  filter: blur(8px);
+  pointer-events: none;
+  animation: promptAuraPulse 2.8s ease-in-out infinite alternate;
+}
+
+.prompt-pill-inner {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: clamp(8px, 1.3vh, 11px) clamp(18px, 4vw, 26px);
+  background: linear-gradient(135deg, rgba(6, 32, 38, 0.94) 0%, rgba(3, 20, 24, 0.98) 100%);
+  border: 1.5px solid rgba(212, 175, 55, 0.85);
+  border-radius: 9999px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 0 24px rgba(212, 175, 55, 0.32), inset 0 1px 0 rgba(255, 245, 210, 0.35);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+  animation: promptFloatBounce 2.4s ease-in-out infinite;
+}
+
+.murugan-scroll-prompt:hover .prompt-pill-inner,
+.murugan-scroll-prompt:active .prompt-pill-inner {
+  transform: scale(1.04);
+  border-color: #ffe699;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.85), 0 0 32px rgba(255, 215, 100, 0.55);
+}
+
+.prompt-star-icon {
+  font-size: 0.72rem;
+  color: var(--gold-bright, #ffd700);
+  text-shadow: 0 0 8px rgba(255, 215, 100, 0.9);
+}
+
+.prompt-main-text {
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: clamp(0.72rem, 1.3vw, 0.84rem);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #fff6da;
+  text-transform: uppercase;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+.prompt-sub-tamil {
+  font-family: var(--font-tamil, 'Noto Serif Tamil', serif);
+  font-size: clamp(0.68rem, 1.1vw, 0.78rem);
+  font-weight: 600;
+  color: #f5d78e;
+  letter-spacing: 0.04em;
+  opacity: 0.95;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+.prompt-chevron-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffd875;
+  animation: promptChevronHop 1.4s ease-in-out infinite;
+}
+
+.prompt-chevron-wrap svg {
+  display: block;
+  filter: drop-shadow(0 0 4px rgba(255, 215, 100, 0.8));
+}
+
+@keyframes promptFloatBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes promptChevronHop {
+  0%, 100% {
+    transform: translateY(-1px);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+}
+
+@keyframes promptAuraPulse {
+  0% {
+    opacity: 0.45;
+    transform: scale(0.96);
+  }
+  100% {
+    opacity: 0.85;
+    transform: scale(1.05);
+  }
+}
+
+@media (max-width: 480px) {
+  .murugan-scroll-prompt {
+    bottom: clamp(14px, 2.2vh, 22px);
+    max-width: 92vw;
+  }
+
+  .prompt-pill-inner {
+    gap: 6px;
+    padding: 7px 15px;
+  }
+
+  .prompt-main-text {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+  }
+
+  .prompt-sub-tamil {
+    font-size: 0.64rem;
+  }
+}
+
 /* Responsive Refinements */
 @media (max-width: 768px) {
+  .murugan-scene-section {
+    padding-bottom: clamp(62px, 9vh, 80px);
+  }
+
   .murugan-devotional-text {
     padding-top: clamp(56px, 8.5vh, 78px);
   }
