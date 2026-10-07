@@ -6,260 +6,103 @@ gsap.registerPlugin(ScrollTrigger);
 
 export const VenueSection = () => {
   const containerRef = useRef(null);
-  const bgCanvasRef = useRef(null);
-  const bgImageRef = useRef(null);
-  const facadeGlowRef = useRef(null);
-  const goldBloomRef = useRef(null);
-  const lampLeftRef = useRef(null);
-  const lampRightRef = useRef(null);
-  const leavesLeftRef = useRef(null);
-  const leavesRightRef = useRef(null);
-  const headerRef = useRef(null);
-  const eyebrowRef = useRef(null);
-  const titleRef = useRef(null);
-  const dividerRef = useRef(null);
-  const venueNameRef = useRef(null);
-  const addressRef = useRef(null);
-  const dateTimeRef = useRef(null);
-  const lineRef = useRef(null);
+  const cardRef = useRef(null);
+  const glowRef = useRef(null);
   const actionsRef = useRef(null);
+  const scrollPromptRef = useRef(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
     const ctx = gsap.context(() => {
-      // 1. Initial states: Venue building starts in a soft, dreamy dusk silhouette with deep blur & warm golden amber mist
-      gsap.set(bgImageRef.current, {
-        opacity: 0.25,
-        scale: 1.12,
-        y: 45,
-        filter: "blur(14px) brightness(0.45) saturate(0.75)",
-        transformOrigin: "center 40%",
-      });
-      gsap.set(facadeGlowRef.current, {
+      // 1. Initial states for cinematic reveal
+      gsap.set(cardRef.current, {
         opacity: 0,
-        scale: 0.6,
+        y: 36,
+        scale: 0.96,
+        filter: "blur(10px) brightness(0.7)",
       });
-      gsap.set(goldBloomRef.current, {
+      gsap.set(glowRef.current, {
         opacity: 0,
         scale: 0.7,
       });
-      gsap.set([lampLeftRef.current, lampRightRef.current], {
-        opacity: 0,
-        scale: 0.6,
-      });
-      gsap.set(leavesLeftRef.current, {
-        opacity: 0,
-        x: -45,
-        rotation: -8,
-      });
-      gsap.set(leavesRightRef.current, {
-        opacity: 0,
-        x: 45,
-        rotation: 8,
-      });
-      gsap.set([eyebrowRef.current, titleRef.current, dividerRef.current], {
-        opacity: 0,
-        y: 18,
-      });
-      gsap.set([venueNameRef.current, addressRef.current, dateTimeRef.current, lineRef.current, actionsRef.current], {
+      gsap.set(actionsRef.current, {
         opacity: 0,
         y: 20,
       });
+      if (scrollPromptRef.current) {
+        gsap.set(scrollPromptRef.current, {
+          opacity: 0,
+          y: 15,
+        });
+      }
 
       // 2. Phased ScrollTrigger Timeline (Cinematic Entry Sequence)
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: headerRef.current,
-          start: "top 78%",
+          trigger: containerRef.current,
+          start: "top 76%",
           once: true,
         },
         defaults: { ease: "power2.out" },
       });
 
       tl
-        // Step 1: Golden Divine Aura & sunrise bloom ignites behind the palace
+        // Step 1: Golden Divine Aura blooms behind the mandapam
         .to(
-          facadeGlowRef.current,
+          glowRef.current,
           {
-            opacity: 0.9,
-            scale: 1.25,
-            duration: 1.8,
+            opacity: 0.85,
+            scale: 1.15,
+            duration: 1.6,
             ease: "power2.out",
           },
           0
         )
+        // Step 2: The Royal Mandapam Venue Card glides up with crisp illumination
         .to(
-          facadeGlowRef.current,
-          {
-            opacity: 0.55,
-            scale: 1.05,
-            duration: 1.2,
-            ease: "sine.inOut",
-          },
-          1.2
-        )
-        .to(
-          goldBloomRef.current,
-          {
-            opacity: 0.8,
-            scale: 1.1,
-            duration: 1.6,
-            ease: "power2.out",
-          },
-          0.1
-        )
-        // Step 2: The Royal Venue Building smoothly glides up, de-blurring into crisp grandeur, illuminated by golden dawn light
-        .to(
-          bgImageRef.current,
+          cardRef.current,
           {
             opacity: 1,
             y: 0,
-            scale: 1.02,
-            filter: "blur(0px) brightness(1.06) saturate(1.1)",
-            duration: 2.1,
+            scale: 1,
+            filter: "blur(0px) brightness(1.0)",
+            duration: 1.8,
             ease: "power3.out",
           },
           0.15
         )
-        .to(
-          bgImageRef.current,
-          {
-            filter: "blur(0px) brightness(1.0) saturate(1.0)",
-            duration: 1.0,
-            ease: "sine.out",
-          },
-          1.8
-        )
-        // Step 3: Foreground Banana Leaves part gently like ceremonial curtains welcoming the guest
-        .to(
-          [leavesLeftRef.current, leavesRightRef.current],
-          {
-            opacity: 1,
-            x: 0,
-            rotation: 0,
-            duration: 1.4,
-            stagger: 0.15,
-            ease: "power2.out",
-          },
-          0.5
-        )
-        // Step 4: Corner Brass Lamps ignite with living flame glow
-        .to(
-          [lampLeftRef.current, lampRightRef.current],
-          {
-            opacity: 1,
-            scale: 1,
-            duration: 1.0,
-            stagger: 0.2,
-            ease: "power2.out",
-          },
-          0.7
-        )
-        // Step 5: Eyebrow "JOIN US IN CELEBRATION" reveals smoothly
-        .to(
-          eyebrowRef.current,
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.85,
-            ease: "power2.out",
-          },
-          0.9
-        )
-        // Step 6: "THE AUSPICIOUS VENUE" title unfolds with royal presence
-        .to(
-          titleRef.current,
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.95,
-            ease: "power3.out",
-          },
-          1.1
-        )
-        // Step 7: Golden diamond divider
-        .to(
-          dividerRef.current,
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.65,
-            ease: "power2.out",
-          },
-          1.3
-        )
-        // Step 8: Hero Venue Name "V.R. MAHAL (A/C)" glides into position
-        .to(
-          venueNameRef.current,
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.9,
-            ease: "power2.out",
-          },
-          1.45
-        )
-        // Step 9: Location & Timing Information
-        .to(
-          [addressRef.current, dateTimeRef.current],
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            stagger: 0.15,
-            ease: "power2.out",
-          },
-          1.65
-        )
-        // Step 10: Ornamental Gold Divider Line
-        .to(
-          lineRef.current,
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.7,
-            ease: "power2.out",
-          },
-          1.85
-        )
-        // Step 11: Action Buttons float into place
+        // Step 3: Interactive Action Buttons float in smoothly
         .to(
           actionsRef.current,
           {
             opacity: 1,
             y: 0,
             duration: 0.85,
-            ease: "back.out(1.5)",
+            ease: "back.out(1.4)",
           },
-          2.0
+          0.85
+        )
+        // Step 4: Unified Scroll prompt reveals
+        .to(
+          scrollPromptRef.current,
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power2.out",
+          },
+          1.1
         );
 
-      // 3. Parallax Camera Drift: Continuous subtle approach on scroll without interfering with image entrance
-      gsap.fromTo(
-        bgCanvasRef.current,
-        { yPercent: -2 },
-        {
-          yPercent: 3,
-          ease: "none",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.2,
-          },
-        }
-      );
-
-      // 4. Idle ambient golden glow respiration
-      gsap.to(goldBloomRef.current, {
-        opacity: 0.65,
+      // Ambient breathing glow
+      gsap.to(glowRef.current, {
+        opacity: 0.55,
         scale: 1.05,
         duration: 4.5,
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut",
-        delay: 2.5,
+        delay: 2,
       });
     }, containerRef.current);
 
@@ -308,29 +151,21 @@ export const VenueSection = () => {
       id="venue-section"
       aria-label="The Auspicious Venue V.R. Mahal"
     >
-      {/* Layer 1: Background VR Mahal Hero Image (Full-Viewport Canvas) */}
-      <div ref={bgCanvasRef} className="venue-bg-canvas">
-        <img
-          ref={bgImageRef}
-          src="/assets/venue/wide_cinematic_golden_warm_softly_lit_wedding_v.png"
-          alt="V.R. Mahal (A/C), Kottalur"
-          className="venue-bg-hero-img"
-          loading="eager"
-        />
+      {/* Semantic Headings for SEO and Screen Readers */}
+      <div className="sr-only">
+        <h2>THE AUSPICIOUS VENUE</h2>
+        <h3>V.R. MAHAL (A/C)</h3>
+        <p>Kottalur, Pennagaram – Mettur Main Road, Dharmapuri District, Tamil Nadu</p>
+        <p>01 November 2026, Sunday • 7:00 AM – 11:00 AM</p>
       </div>
 
-      {/* Layer 2: Atmospheric Dark Teal Vignette & Golden Warm Temple Glow */}
+      {/* Atmospheric Background & Radiance Bloom */}
       <div className="venue-cinematic-overlay-teal-vignette" aria-hidden="true" />
-      <div ref={facadeGlowRef} className="venue-facade-divine-glow" aria-hidden="true" />
-      <div ref={goldBloomRef} className="venue-gold-atmosphere-bloom" aria-hidden="true" />
+      <div ref={glowRef} className="venue-facade-divine-glow" aria-hidden="true" />
       <div className="venue-blend-gradient-top" aria-hidden="true" />
       <div className="venue-blend-gradient-bottom" aria-hidden="true" />
 
-      {/* Layer 3: Brass Lamp Warm Glow Accents (Lighting the corner kuthu vilakkus) */}
-      <div ref={lampLeftRef} className="venue-lamp-pulse-glow venue-lamp-left" aria-hidden="true" />
-      <div ref={lampRightRef} className="venue-lamp-pulse-glow venue-lamp-right" aria-hidden="true" />
-
-      {/* Layer 4: Sparse Gold Dust & Sacred Petals Atmosphere */}
+      {/* Sparse Gold Dust & Sacred Lotus Petals Atmosphere */}
       <div className="venue-floating-particles-layer" aria-hidden="true">
         <span className="venue-particle p1" />
         <span className="venue-particle p2" />
@@ -343,103 +178,75 @@ export const VenueSection = () => {
         <span className="venue-petal pet3" />
       </div>
 
-      {/* Layer 5: Foreground Photorealistic Banana Leaves for 2.5D Depth */}
-      <div className="venue-foreground-framing-leaves" aria-hidden="true">
-        <img
-          ref={leavesLeftRef}
-          src="/assets/doors/banana-leaves-left.png"
-          alt=""
-          className="venue-foreground-leaf venue-leaf-top-left"
-        />
-        <img
-          ref={leavesRightRef}
-          src="/assets/doors/banana-leaves-right.png"
-          alt=""
-          className="venue-foreground-leaf venue-leaf-top-right"
-        />
-      </div>
-
-      {/* Layer 6: Scene Typography & Presentation (NO Card Container, Pure Scene Integration) */}
+      {/* Central Content Area */}
       <div className="venue-scene-content-wrapper">
-        {/* Upper Zone: Eyebrow, Title & Sacred Diamond */}
-        <header ref={headerRef} className="venue-scene-header">
-          <span ref={eyebrowRef} className="venue-eyebrow">
-            JOIN US IN CELEBRATION
-          </span>
-          <h2 ref={titleRef} className="venue-title">
-            THE AUSPICIOUS VENUE
-          </h2>
-          <span ref={dividerRef} className="venue-divider-icon" aria-hidden="true">
-            ✦
-          </span>
-        </header>
+        {/* The Auspicious Venue Royal Invitation Poster Card */}
+        <div
+          ref={cardRef}
+          className="venue-poster-card"
+          onClick={handleGetDirections}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              handleGetDirections();
+            }
+          }}
+          aria-label="View V.R. Mahal on Google Maps"
+          title="Click to view location on Google Maps"
+        >
+          <img
+            src="/assets/venue/vr_mahal_mandapam_theme.jpg"
+            alt="The Auspicious Venue: V.R. Mahal (A/C), Kottalur, Pennagaram – Mettur Main Road, Dharmapuri District, Tamil Nadu. 01 November 2026, Sunday 7:00 AM – 11:00 AM"
+            className="venue-poster-image"
+            loading="eager"
+          />
+          <div className="venue-card-gloss-sheen" aria-hidden="true" />
+        </div>
 
-        {/* Lower Zone: Venue Identity, Location, Date & Action Buttons */}
-        <div className="venue-scene-details-block">
-          {/* Hero Venue Name */}
-          <h3 ref={venueNameRef} className="venue-name-hero">
-            V.R. MAHAL (A/C)
-          </h3>
-
-          {/* Location Information */}
-          <div ref={addressRef} className="venue-address-block">
-            <p className="venue-location-lead">
-              Kottalur, Pennagaram – Mettur Main Road
-            </p>
-            <p className="venue-location-sub">
-              DHARMAPURI DISTRICT, TAMIL NADU
-            </p>
-          </div>
-
-          {/* Date & Time */}
-          <div ref={dateTimeRef} className="venue-datetime-block">
-            <span className="venue-date-highlight">01 NOVEMBER 2026</span>
-            <span className="venue-time-highlight">SUNDAY • 7:00 AM – 11:00 AM</span>
-          </div>
-
-          {/* Ornamental Gold Divider */}
-          <div ref={lineRef} className="venue-ornamental-line" aria-hidden="true">
-            <span className="line-half" />
-            <span className="line-diamond">✦</span>
-            <span className="line-half" />
-          </div>
-
-          {/* Elegant Action Buttons */}
-          <div ref={actionsRef} className="venue-cinematic-actions">
-            <button
-              onClick={handleGetDirections}
-              className="venue-btn-cinematic venue-btn-directions"
-              aria-label="Get Directions to V.R. Mahal in Google Maps"
-            >
-              <span className="venue-btn-icon" aria-hidden="true">📍</span>
-              <span className="venue-btn-text">GET DIRECTIONS</span>
-              <span className="venue-btn-arrow" aria-hidden="true">→</span>
-            </button>
-
-            <button
-              onClick={handleAddToCalendar}
-              className="venue-btn-cinematic venue-btn-calendar"
-              aria-label="Add wedding to Google Calendar"
-            >
-              <span className="venue-btn-icon" aria-hidden="true">✦</span>
-              <span className="venue-btn-text">ADD TO CALENDAR</span>
-            </button>
-          </div>
-
-          {/* Floating Scroll Indicator Prompt to Proceed to Family Blessings */}
-          <div
-            className="scene-scroll-prompt in-flow venue-scroll-prompt"
-            onClick={handleScrollToFamily}
-            role="button"
-            tabIndex={0}
-            aria-label="Scroll down to view family blessings and welcome"
+        {/* Elegant Action Buttons */}
+        <div ref={actionsRef} className="venue-cinematic-actions">
+          <button
+            onClick={handleGetDirections}
+            className="venue-btn-cinematic venue-btn-directions"
+            aria-label="Get Directions to V.R. Mahal in Google Maps"
           >
-            <div className="prompt-aura-glow" aria-hidden="true" />
-            <div className="prompt-pill-inner">
-              <span className="prompt-star-icon">✦</span>
-              <span className="prompt-main-text">SCROLL DOWN</span>
-              <span className="prompt-down-arrow" aria-hidden="true">↓</span>
-            </div>
+            <span className="venue-btn-icon" aria-hidden="true">📍</span>
+            <span className="venue-btn-text">GET DIRECTIONS</span>
+            <span className="venue-btn-arrow" aria-hidden="true">→</span>
+          </button>
+
+          <button
+            onClick={handleAddToCalendar}
+            className="venue-btn-cinematic venue-btn-calendar"
+            aria-label="Add wedding to Google Calendar"
+          >
+            <span className="venue-btn-icon" aria-hidden="true">✦</span>
+            <span className="venue-btn-text">ADD TO CALENDAR</span>
+          </button>
+        </div>
+
+        {/* Floating Scroll Indicator Prompt to Proceed to Family Blessings */}
+        <div
+          ref={scrollPromptRef}
+          className="scene-scroll-prompt in-flow venue-scroll-prompt"
+          onClick={handleScrollToFamily}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              handleScrollToFamily();
+            }
+          }}
+          aria-label="Scroll down to view family blessings and welcome"
+        >
+          <div className="prompt-aura-glow" aria-hidden="true" />
+          <div className="prompt-pill-inner">
+            <span className="prompt-star-icon">✦</span>
+            <span className="prompt-main-text">SCROLL DOWN</span>
+            <span className="prompt-down-arrow" aria-hidden="true">↓</span>
           </div>
         </div>
       </div>

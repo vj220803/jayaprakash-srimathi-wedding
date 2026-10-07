@@ -2818,6 +2818,21 @@
 /* =========================================================
    SCENE 5: THE AUSPICIOUS VENUE — FULL-SCREEN CINEMATIC ARRIVAL
 ========================================================= */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* =========================================================
+   SCENE 5: THE AUSPICIOUS VENUE — ROYAL MANDAPAM THEME
+========================================================= */
 .venue-cinematic-scene {
   position: relative;
   width: 100%;
@@ -2831,112 +2846,60 @@
   contain: paint;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  background-color: var(--bg-deep);
-}
-
-/* Layer 1: Background Canvas & Authentic VR Mahal Environment */
-.venue-bg-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  pointer-events: none;
-  overflow: hidden;
-  clip-path: inset(0);
-  contain: paint;
-  display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  background: radial-gradient(ellipse at 50% 45%, #05262c 0%, #03171b 50%, #010c0e 100%);
+  padding: clamp(36px, 5vh, 60px) var(--content-padding-inline) clamp(28px, 4vh, 48px);
 }
 
-.venue-bg-hero-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 36%;
-  transform-origin: center center;
-  opacity: 1;
-  filter: none;
-  transform: scale(1);
-  will-change: transform, opacity, filter;
-}
-
-/* Golden Divine Radiance Aura behind the Palace Facade */
-.venue-facade-divine-glow {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: min(88vw, 700px);
-  height: min(88vw, 700px);
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(255, 235, 160, 0.45) 0%,
-    rgba(255, 195, 75, 0.26) 32%,
-    rgba(212, 175, 55, 0.12) 55%,
-    transparent 76%
-  );
-  filter: blur(42px);
-  pointer-events: none;
-  z-index: 2;
-  mix-blend-mode: screen;
-  opacity: 0;
-  will-change: transform, opacity;
-}
-
-/* Layer 2: Atmospheric Dark Teal Vignette & Warm Golden Temple Illumination */
+/* Atmospheric Dark Emerald & Midnight Vignette */
 .venue-cinematic-overlay-teal-vignette {
   position: absolute;
   inset: 0;
   background: radial-gradient(
       ellipse at 50% 50%,
-      transparent 36%,
-      rgba(0, 43, 43, 0.35) 68%,
-      rgba(3, 20, 24, 0.92) 100%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(3, 20, 24, 0.5) 0%,
       transparent 28%,
-      transparent 72%,
-      rgba(3, 20, 24, 0.7) 100%
+      rgba(2, 20, 24, 0.45) 62%,
+      rgba(1, 12, 14, 0.95) 100%
     );
   z-index: 2;
   pointer-events: none;
 }
 
-.venue-gold-atmosphere-bloom {
+/* Golden Divine Radiance Aura behind the Mandapam Card */
+.venue-facade-divine-glow {
   position: absolute;
-  inset: 0;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(92vw, 680px);
+  height: min(92vw, 680px);
+  border-radius: 50%;
   background: radial-gradient(
-    ellipse at 50% 52%,
-    rgba(255, 195, 65, 0.22) 0%,
-    rgba(212, 175, 55, 0.08) 42%,
-    transparent 70%
+    circle,
+    rgba(255, 215, 110, 0.35) 0%,
+    rgba(255, 185, 60, 0.18) 35%,
+    rgba(212, 175, 55, 0.08) 55%,
+    transparent 74%
   );
-  z-index: 2;
+  filter: blur(48px);
   pointer-events: none;
-  opacity: 0.3;
+  z-index: 2;
   mix-blend-mode: screen;
-  will-change: opacity;
+  will-change: transform, opacity;
 }
 
-/* Seamless Edge Transition Gradients — Flow from Scene 4 to Scene 6 */
+/* Seamless Edge Transition Gradients */
 .venue-blend-gradient-top {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: clamp(100px, 16vh, 180px);
+  height: clamp(80px, 14vh, 160px);
   background: linear-gradient(
     to bottom,
     var(--bg-deep) 0%,
-    rgba(3, 20, 24, 0.85) 35%,
-    rgba(3, 20, 24, 0.25) 75%,
+    rgba(2, 20, 24, 0.8) 40%,
     transparent 100%
   );
   z-index: 3;
@@ -2948,66 +2911,22 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: clamp(140px, 22vh, 260px);
+  height: clamp(90px, 16vh, 180px);
   background: linear-gradient(
     to top,
     var(--bg-deep) 0%,
-    rgba(3, 20, 24, 0.95) 35%,
-    rgba(3, 20, 24, 0.35) 75%,
+    rgba(2, 20, 24, 0.85) 40%,
     transparent 100%
   );
   z-index: 3;
   pointer-events: none;
 }
 
-/* Layer 3: Brass Lamp Pulse Glows (Kuthu Vilakku Warmth) */
-.venue-lamp-pulse-glow {
-  position: absolute;
-  bottom: 8%;
-  width: 130px;
-  height: 130px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(255, 185, 60, 0.35) 0%,
-    rgba(212, 175, 55, 0.12) 48%,
-    transparent 75%
-  );
-  filter: blur(16px);
-  z-index: 4;
-  pointer-events: none;
-  animation: lampFlicker 3.4s ease-in-out infinite alternate;
-}
-
-.venue-lamp-left {
-  left: 3%;
-}
-
-.venue-lamp-right {
-  right: 3%;
-  animation-delay: 1.7s;
-}
-
-@keyframes lampFlicker {
-  0% {
-    opacity: 0.65;
-    transform: scale(0.96);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.06);
-  }
-  100% {
-    opacity: 0.75;
-    transform: scale(0.98);
-  }
-}
-
-/* Layer 4: Sparse Floating Gold Dust & Auspicious Petals */
+/* Atmospheric Floating Particles: Sacred Gold Dust & Lotus Petals */
 .venue-floating-particles-layer {
   position: absolute;
   inset: 0;
-  z-index: 4;
+  z-index: 3;
   pointer-events: none;
   overflow: hidden;
 }
@@ -3016,37 +2935,37 @@
   position: absolute;
   border-radius: 50%;
   background: radial-gradient(circle, #fff7dc 0%, #d4af37 80%);
-  box-shadow: 0 0 10px rgba(255, 230, 150, 0.8);
+  box-shadow: 0 0 10px rgba(255, 230, 150, 0.85);
   pointer-events: none;
   animation: venueParticleDrift 8s ease-in-out infinite alternate;
 }
 
 .venue-particle.p1 {
-  top: 22%;
-  left: 16%;
+  top: 20%;
+  left: 14%;
   width: 4px;
   height: 4px;
   animation-duration: 9s;
 }
 .venue-particle.p2 {
-  top: 38%;
-  left: 82%;
+  top: 36%;
+  left: 84%;
   width: 5px;
   height: 5px;
   animation-duration: 11s;
   animation-delay: -3s;
 }
 .venue-particle.p3 {
-  top: 62%;
-  left: 24%;
+  top: 60%;
+  left: 18%;
   width: 3px;
   height: 3px;
   animation-duration: 7s;
   animation-delay: -5s;
 }
 .venue-particle.p4 {
-  top: 78%;
-  left: 74%;
+  top: 76%;
+  left: 78%;
   width: 4px;
   height: 4px;
   animation-duration: 10s;
@@ -3061,8 +2980,8 @@
   animation-delay: -4s;
 }
 .venue-particle.p6 {
-  top: 85%;
-  left: 42%;
+  top: 84%;
+  left: 38%;
   width: 4px;
   height: 4px;
   animation-duration: 9.5s;
@@ -3072,11 +2991,11 @@
 @keyframes venueParticleDrift {
   0% {
     transform: translateY(0px) translateX(0px);
-    opacity: 0.3;
+    opacity: 0.35;
   }
   50% {
     transform: translateY(-16px) translateX(12px);
-    opacity: 0.85;
+    opacity: 0.9;
   }
   100% {
     transform: translateY(-30px) translateX(-8px);
@@ -3090,7 +3009,7 @@
   height: 10px;
   background: radial-gradient(ellipse at 40% 40%, #ff8da6 0%, #c43862 85%);
   border-radius: 60% 40% 70% 30% / 60% 30% 70% 40%;
-  opacity: 0.7;
+  opacity: 0.75;
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.4));
   animation: venuePetalFloat 12s ease-in-out infinite;
 }
@@ -3108,7 +3027,7 @@
 }
 .venue-petal.pet3 {
   bottom: 24%;
-  left: 18%;
+  left: 16%;
   animation-duration: 13s;
   animation-delay: -3s;
 }
@@ -3119,10 +3038,10 @@
     opacity: 0;
   }
   15% {
-    opacity: 0.75;
+    opacity: 0.8;
   }
   85% {
-    opacity: 0.75;
+    opacity: 0.8;
   }
   100% {
     transform: translate(45px, 90px) rotate(140deg);
@@ -3130,239 +3049,119 @@
   }
 }
 
-/* Layer 5: Foreground Photorealistic Banana Leaves for 2.5D Parallax */
-.venue-foreground-framing-leaves {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  pointer-events: none;
-  overflow: hidden;
-  clip-path: inset(0);
-}
-
-.venue-foreground-leaf {
-  position: absolute;
-  pointer-events: none;
-  opacity: 0.78;
-  filter: blur(1.2px) drop-shadow(0 15px 25px rgba(0, 0, 0, 0.85));
-  will-change: transform;
-}
-
-.venue-leaf-top-left {
-  top: -20px;
-  left: -20px;
-  width: clamp(120px, 20vw, 280px);
-  height: auto;
-  max-height: 38vh;
-  object-fit: contain;
-}
-
-.venue-leaf-top-right {
-  top: -20px;
-  right: -20px;
-  width: clamp(120px, 20vw, 280px);
-  height: auto;
-  max-height: 38vh;
-  object-fit: contain;
-}
-
-/* Layer 6: Content Wrapper & HTML Typography (Directly on Scene, No Card) */
+/* Scene Content Wrapper */
 .venue-scene-content-wrapper {
   position: relative;
-  z-index: 6;
+  z-index: 5;
   width: 100%;
-  height: 100%;
-  min-height: 100vh;
-  min-height: 100svh;
-  min-height: 100dvh;
   max-width: var(--content-max-width);
   margin: 0 auto;
-  padding: clamp(52px, 7.5vh, 72px) var(--content-padding-inline) clamp(22px, 3.5vh, 38px);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  text-align: center;
-  pointer-events: auto;
-}
-
-/* Upper Zone: Scene Header */
-.venue-scene-header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  will-change: transform, opacity;
+  justify-content: center;
+  gap: clamp(14px, 2vh, 20px);
 }
 
-.venue-eyebrow {
-  font-family: var(--font-display);
-  font-size: clamp(0.72rem, 1.2vw, 0.86rem);
-  letter-spacing: 0.32em;
-  color: var(--gold-light);
-  text-transform: uppercase;
-  font-weight: 600;
-  margin-bottom: 6px;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95), 0 0 16px rgba(212, 175, 55, 0.35);
+/* The Auspicious Mandapam Poster Card */
+.venue-poster-card {
+  position: relative;
+  width: 100%;
+  max-width: min(92vw, 410px);
+  border-radius: 20px;
+  overflow: hidden;
+  background: #031417;
+  border: 1.5px solid rgba(212, 175, 55, 0.55);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.88),
+    0 0 42px rgba(212, 175, 55, 0.24),
+    inset 0 1px 1px rgba(255, 242, 196, 0.45);
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+  will-change: transform, opacity, filter;
+  outline: none;
 }
 
-.venue-title {
-  font-family: var(--font-display);
-  font-size: clamp(1.8rem, 4vw, 3.2rem);
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  margin: 0;
-  background: linear-gradient(180deg, #ffffff 0%, #fff7dc 35%, #e6c87d 70%, #c8a45d 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 4px 18px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 25px rgba(212, 175, 55, 0.4));
-  text-wrap: balance;
+.venue-poster-card:focus-visible {
+  border-color: #fff4d0;
+  box-shadow:
+    0 0 0 3px rgba(212, 175, 55, 0.6),
+    0 20px 50px rgba(0, 0, 0, 0.9);
 }
 
-.venue-divider-icon {
-  font-size: clamp(0.75rem, 1.2vw, 0.95rem);
-  color: var(--gold-bright);
-  text-shadow: 0 0 12px rgba(255, 230, 150, 0.8);
-  margin-top: 8px;
+.venue-poster-card:hover {
+  transform: translateY(-3px) scale(1.01);
+  border-color: rgba(255, 235, 160, 0.85);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.95),
+    0 0 55px rgba(212, 175, 55, 0.38),
+    inset 0 1px 2px rgba(255, 242, 196, 0.6);
+}
+
+.venue-poster-image {
+  width: 100%;
+  height: auto;
   display: block;
+  object-fit: cover;
+  transform: translateZ(0);
 }
 
-/* Lower Zone: Details Block (NO CARD, Seamless Scene Integration) */
-.venue-scene-details-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: min(92vw, 860px);
-  padding: 0;
-  background: transparent;
-  border: none;
-  box-shadow: none;
-  will-change: transform, opacity;
+.venue-card-gloss-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.02) 28%,
+    transparent 50%,
+    rgba(212, 175, 55, 0.06) 100%
+  );
 }
 
-.venue-name-hero {
-  font-family: var(--font-display);
-  font-size: clamp(1.9rem, 4.4vw, 3.4rem);
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  color: #fff4d0;
-  margin: 0 0 clamp(4px, 1vh, 8px) 0;
-  background: linear-gradient(180deg, #ffffff 0%, #fff4d0 30%, #f0d588 70%, #d4af37 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 3px 14px rgba(0, 0, 0, 0.98)) drop-shadow(0 0 25px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 35px rgba(212, 175, 55, 0.5));
-  text-wrap: balance;
-}
-
-.venue-address-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  margin-bottom: clamp(6px, 1.2vh, 12px);
-}
-
-.venue-location-lead {
-  font-family: var(--font-body);
-  font-size: clamp(0.92rem, 1.7vw, 1.16rem);
-  color: var(--cream);
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  margin: 0;
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.98), 0 0 20px rgba(0, 0, 0, 0.95);
-  text-wrap: pretty;
-}
-
-.venue-location-sub {
-  font-family: var(--font-display);
-  font-size: clamp(0.74rem, 1.2vw, 0.84rem);
-  letter-spacing: 0.22em;
-  color: var(--gold-light);
-  font-weight: 600;
-  margin: 0;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.98), 0 0 16px rgba(0, 0, 0, 0.9);
-}
-
-/* Date & Time Highlights */
-.venue-datetime-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  margin-bottom: clamp(8px, 1.5vh, 14px);
-}
-
-.venue-date-highlight {
-  font-family: var(--font-display);
-  font-size: clamp(0.95rem, 1.6vw, 1.15rem);
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  color: #fff7dc;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.98), 0 0 18px rgba(0, 0, 0, 0.9);
-}
-
-.venue-time-highlight {
-  font-family: var(--font-display);
-  font-size: clamp(0.8rem, 1.3vw, 0.92rem);
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  color: var(--gold-light);
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.98), 0 0 16px rgba(0, 0, 0, 0.9);
-}
-
-/* Ornamental Divider Line */
-.venue-ornamental-line {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  width: 100%;
-  max-width: 340px;
-  margin: 0 0 clamp(10px, 1.8vh, 16px) 0;
-}
-
-.venue-ornamental-line .line-half {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.65), transparent);
-}
-
-.venue-ornamental-line .line-diamond {
-  font-size: 0.6rem;
-  color: var(--gold-bright);
-  text-shadow: 0 0 8px rgba(255, 242, 196, 0.8);
-}
-
-/* Refined Cinematic Action Buttons */
+/* Action Buttons Container */
 .venue-cinematic-actions {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(14px, 2.5vw, 24px);
-  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+  max-width: min(92vw, 380px);
   margin-top: 2px;
+  z-index: 6;
 }
 
 .venue-btn-cinematic {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  background: rgba(3, 20, 24, 0.82);
-  border: 1.5px solid rgba(212, 175, 55, 0.75);
+  gap: 7px;
   border-radius: 999px;
-  padding: 10px 26px;
-  min-height: 44px;
+  padding: 9px 16px;
+  min-height: 42px;
   cursor: pointer;
   transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 242, 196, 0.3);
   text-decoration: none;
+  border: 1.5px solid rgba(212, 175, 55, 0.7);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 242, 196, 0.3);
+  white-space: nowrap;
+}
+
+.venue-btn-directions {
+  background: linear-gradient(135deg, rgba(10, 48, 56, 0.95) 0%, rgba(3, 22, 26, 0.98) 100%);
+  border-color: rgba(230, 195, 85, 0.85);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.8), 0 0 16px rgba(212, 175, 55, 0.2), inset 0 1px 0 rgba(255, 242, 196, 0.35);
+}
+
+.venue-btn-calendar {
+  background: linear-gradient(135deg, rgba(4, 25, 30, 0.9) 0%, rgba(2, 16, 19, 0.96) 100%);
+  border-color: rgba(212, 175, 55, 0.6);
 }
 
 .venue-btn-cinematic:hover {
-  background: rgba(212, 175, 55, 0.22);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.28) 0%, rgba(6, 36, 42, 0.98) 100%);
   border-color: #fff4d0;
-  box-shadow: 0 0 24px rgba(212, 175, 55, 0.5), 0 6px 20px rgba(0, 0, 0, 0.85);
+  box-shadow: 0 0 22px rgba(212, 175, 55, 0.5), 0 6px 18px rgba(0, 0, 0, 0.85);
   transform: translateY(-2px);
 }
 
@@ -3371,101 +3170,98 @@
 }
 
 .venue-btn-icon {
-  font-size: 1rem;
+  font-size: 0.92rem;
   line-height: 1;
 }
 
 .venue-btn-text {
   font-family: var(--font-display);
-  font-size: clamp(0.78rem, 1.2vw, 0.88rem);
+  font-size: clamp(0.72rem, 1.1vw, 0.82rem);
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.12em;
   color: #fff9e6;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
 }
 
 .venue-btn-arrow {
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   color: var(--gold-bright);
   transition: transform 0.3s ease;
 }
 
 .venue-btn-cinematic:hover .venue-btn-arrow {
-  transform: translateX(4px);
+  transform: translateX(3px);
 }
 
-/* Responsive Layout */
+.venue-scroll-prompt {
+  margin-top: 2px;
+  z-index: 6;
+}
+
+/* Desktop Responsive Layout */
+@media (min-width: 769px) {
+  .venue-cinematic-scene {
+    min-height: 100vh;
+    padding: clamp(28px, 4vh, 44px) 24px clamp(20px, 3vh, 36px);
+  }
+
+  .venue-poster-card {
+    max-height: clamp(440px, 62vh, 580px);
+    width: auto;
+    max-width: none;
+    aspect-ratio: 576 / 1024;
+  }
+
+  .venue-poster-image {
+    height: 100%;
+    width: auto;
+    max-height: clamp(440px, 62vh, 580px);
+    object-fit: contain;
+  }
+}
+
+/* Mobile Responsive Layout */
 @media (max-width: 768px) {
   .venue-cinematic-scene {
     height: auto;
     min-height: 100svh;
     min-height: 100dvh;
+    padding: clamp(18px, 2.5vh, 28px) var(--content-padding-inline) clamp(16px, 2vh, 24px);
   }
 
-  .venue-bg-hero-img {
-    object-position: center 38%;
-  }
-
-  .venue-scene-content-wrapper {
-    padding: clamp(68px, 9.5vh, 88px) var(--content-padding-inline) clamp(22px, 3.5vh, 36px);
-    gap: clamp(14px, 2vh, 24px);
-  }
-
-  .venue-scene-details-block {
-    padding: 0;
-    background: transparent;
-    border: none;
-    box-shadow: none;
-  }
-
-  .venue-scene-header {
-    max-width: 300px;
-    margin: 0 auto;
-  }
-
-  .venue-eyebrow {
-    font-size: 0.66rem;
-    letter-spacing: 0.22em;
-    margin-bottom: 4px;
-  }
-
-  .venue-title {
-    font-size: clamp(1.22rem, 4.6vw, 1.52rem);
-    letter-spacing: 0.08em;
-  }
-
-  .venue-name-hero {
-    font-size: clamp(1.6rem, 6vw, 2.2rem);
-  }
-
-  .venue-location-lead {
-    font-size: clamp(0.85rem, 3.4vw, 1.02rem);
-  }
-
-  .venue-leaf-top-left {
-    width: clamp(80px, 22vw, 130px);
-    max-height: 25vh;
-    left: -10px;
-    top: -10px;
-  }
-
-  .venue-leaf-top-right {
-    width: clamp(80px, 22vw, 130px);
-    max-height: 25vh;
-    right: -10px;
-    top: -10px;
+  .venue-poster-card {
+    max-width: min(80vw, 305px);
   }
 
   .venue-cinematic-actions {
     flex-direction: column;
     width: 100%;
-    gap: 10px;
+    max-width: 260px;
+    gap: 7px;
+    margin-top: 4px;
   }
 
   .venue-btn-cinematic {
     width: 100%;
-    max-width: 270px;
-    padding: 11px 20px;
+    padding: 9px 18px;
+    min-height: 38px;
+  }
+
+  .venue-btn-text {
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
+  }
+
+  .venue-btn-icon {
+    font-size: 0.9rem;
+  }
+
+  .venue-btn-arrow {
+    font-size: 0.85rem;
+  }
+
+  .venue-scroll-prompt {
+    margin-top: 6px;
   }
 }
 

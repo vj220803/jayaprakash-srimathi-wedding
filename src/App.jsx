@@ -109,23 +109,29 @@ function App() {
 
       {/* Main Continuous Cinematic Invitation Flow */}
       <main className={`cinematic-main-experience ${isOpened ? "invitation-active" : "invitation-pre-open"}`}>
-        {/* Scene 1: Divine Sanctum — Lord Murugan & Vel */}
-        <MuruganScene isOpened={isOpened} />
+        {typeof window !== "undefined" && window.location.search.includes("only=venue") ? (
+          <VenueSection />
+        ) : (
+          <>
+            {/* Scene 1: Divine Sanctum — Lord Murugan & Vel */}
+            <MuruganScene isOpened={isOpened} />
 
-        {/* Scene 2: Wedding Invitation Intro — Ceremonial Curtains Opening & Invitation Revelation */}
-        <WeddingIntroScene isOpened={isOpened} />
+            {/* Scene 2: Wedding Invitation Intro — Ceremonial Curtains Opening & Invitation Revelation */}
+            <WeddingIntroScene isOpened={isOpened} />
 
-        {/* Scene 3: Interactive Date Reveal Scratch Card */}
-        <DateReveal isOpened={isOpened} />
+            {/* Scene 3: Interactive Date Reveal Scratch Card */}
+            <DateReveal isOpened={isOpened} />
 
-        {/* Scene 3: The Royal Peacock, Couple Reveal & Invitation Message */}
-        <CoupleReveal />
+            {/* Scene 3: The Royal Peacock, Couple Reveal & Invitation Message */}
+            <CoupleReveal />
 
-        {/* Scene 4: V.R. MAHAL VENUE REVEAL — The Auspicious Venue & Directions */}
-        <VenueSection />
+            {/* Scene 4: V.R. MAHAL VENUE REVEAL — The Auspicious Venue & Directions */}
+            <VenueSection />
 
-        {/* Scene 5: Emotional Closing Chapter — Family Blessings & Warm Welcome */}
-        <FamilyBlessings />
+            {/* Scene 5: Emotional Closing Chapter — Family Blessings & Warm Welcome */}
+            <FamilyBlessings />
+          </>
+        )}
       </main>
     </div>
   );
