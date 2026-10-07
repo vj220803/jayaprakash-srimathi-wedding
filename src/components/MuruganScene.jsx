@@ -11,7 +11,6 @@ export const MuruganScene = ({ isOpened }) => {
   const bgLayerRef = useRef(null);
   const divineAuraRef = useRef(null);
   const titleGlowRef = useRef(null);
-  const shlokaRef = useRef(null);
   const leadRef = useRef(null);
   const titleRef = useRef(null);
   const dividerRef = useRef(null);
@@ -61,11 +60,6 @@ export const MuruganScene = ({ isOpened }) => {
     gsap.set(toranamRef.current, { opacity: 0, y: -12 });
     gsap.set(leafLeftRef.current, { opacity: 0, x: -22 });
     gsap.set(leafRightRef.current, { opacity: 0, x: 22 });
-    gsap.set(shlokaRef.current, {
-      opacity: 0,
-      y: 14,
-      letterSpacing: "0.08em",
-    });
     gsap.set(leadRef.current, {
       opacity: 0,
       y: 12,
@@ -152,30 +146,17 @@ export const MuruganScene = ({ isOpened }) => {
         0.4
       )
 
-      // STEP 2 — TAMIL BLESSING (Reveals First) (~0.6s)
-      .to(
-        shlokaRef.current,
-        {
-          opacity: 1,
-          y: 0,
-          letterSpacing: "0.18em",
-          duration: 0.95,
-          ease: "power2.out",
-        },
-        0.6
-      )
-
-      // STEP 3 — ENGLISH BLESSING (~1.5s)
+      // STEP 2 — ENGLISH BLESSING (~0.9s)
       .to(
         leadRef.current,
         {
           opacity: 1,
           y: 0,
           letterSpacing: "0.28em",
-          duration: 0.85,
+          duration: 0.95,
           ease: "power2.out",
         },
-        1.5
+        0.9
       )
 
       // STEP 4 — LORD MURUGAN TITLE & GOLDEN AURA (~2.3s)
@@ -602,13 +583,6 @@ export const MuruganScene = ({ isOpened }) => {
         {/* Layer 2: Main Devotional Text & Divine Centerpiece */}
         <div className="murugan-scene-content">
           <div className="murugan-devotional-text">
-            {/* Sacred Tamil Mantra with Calligraphy Progressive Reveal */}
-            <div className="tamil-shloka-container">
-              <p ref={shlokaRef} className="tamil-shloka">
-                ॥ வெற்றிவேல் முருகனுக்கு அரோகரா ॥
-              </p>
-            </div>
-
             {/* Classical English Lead */}
             <h2 ref={leadRef} className="murugan-english-lead">
               WITH THE DIVINE BLESSINGS OF

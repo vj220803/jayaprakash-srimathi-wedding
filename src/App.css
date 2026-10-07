@@ -1049,26 +1049,6 @@
   position: relative;
 }
 
-/* Sacred Tamil Shloka with Calligraphy Progressive Reveal */
-.tamil-shloka-container {
-  display: inline-block;
-  position: relative;
-  margin-bottom: 8px;
-}
-
-.tamil-shloka {
-  font-family: var(--font-tamil), 'Noto Serif Tamil', Georgia, serif;
-  font-size: clamp(1rem, 2.3vw, 1.45rem);
-  font-weight: 600;
-  color: #fff2c4;
-  letter-spacing: 0.08em;
-  margin: 0;
-  text-shadow: 0 0 16px rgba(243, 224, 152, 0.45), 0 2px 8px rgba(0, 0, 0, 0.85);
-  text-wrap: balance;
-  overflow-wrap: break-word;
-  will-change: clip-path, opacity;
-}
-
 /* Classical English Lead */
 .murugan-english-lead {
   font-family: var(--font-serif), 'Cormorant Garamond', Georgia, serif;
