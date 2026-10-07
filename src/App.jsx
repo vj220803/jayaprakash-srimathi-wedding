@@ -79,14 +79,17 @@ function App() {
 
   return (
     <div ref={mainContainerRef} className="wedding-app-root">
-      {/* Background Wedding Music Track (Place your Tamil song as wedding-bgm.mp3 in public/assets/audio/) */}
+      {/* Background Wedding Music Track */}
       <audio
         id="wedding-bg-audio"
-        src="/assets/audio/wedding-bgm.mp3"
+        src="/assets/audio/wedding_bgm.mp3"
         loop
         preload="auto"
         playsInline
-      />
+      >
+        <source src="/assets/audio/wedding_bgm.mp3" type="audio/mpeg" />
+        <source src="/assets/audio/wedding-bgm.mp3" type="audio/mpeg" />
+      </audio>
 
       {/* Floating Canvas Petals & Light Embers */}
       <PetalCanvas />
