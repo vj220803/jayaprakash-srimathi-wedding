@@ -51,6 +51,9 @@ export const WeddingIntroScene = ({ isOpened }) => {
   const titleWrapRef = useRef(null);
   const titleRef = useRef(null);
   const titleGlowRef = useRef(null);
+  const coupleConnectorRef = useRef(null);
+  const coupleNamesRef = useRef(null);
+  const coupleNamesGlowRef = useRef(null);
   const dividerRef = useRef(null);
   const quoteLine1Ref = useRef(null);
   const quoteLine2Ref = useRef(null);
@@ -96,6 +99,8 @@ export const WeddingIntroScene = ({ isOpened }) => {
             inviteLeadLine1Ref.current,
             inviteLeadLine2Ref.current,
             titleRef.current,
+            coupleConnectorRef.current,
+            coupleNamesRef.current,
             dividerRef.current,
             quoteLine1Ref.current,
             quoteLine2Ref.current,
@@ -159,6 +164,14 @@ export const WeddingIntroScene = ({ isOpened }) => {
         filter: "blur(6px)",
       });
       gsap.set(titleGlowRef.current, { opacity: 0, scale: 0.6 });
+      gsap.set(coupleConnectorRef.current, { opacity: 0, y: 10, filter: "blur(4px)" });
+      gsap.set(coupleNamesRef.current, {
+        opacity: 0,
+        y: 16,
+        scale: 0.95,
+        filter: "blur(6px)",
+      });
+      gsap.set(coupleNamesGlowRef.current, { opacity: 0, scale: 0.7 });
 
       gsap.set(dividerRef.current, { opacity: 0, scaleX: 0 });
       gsap.set([quoteLine1Ref.current, quoteLine2Ref.current, quoteLine3Ref.current], {
@@ -386,6 +399,42 @@ export const WeddingIntroScene = ({ isOpened }) => {
           2.45
         );
 
+        // Step 7.1: "OF" connector appears gracefully
+        tl.to(
+          coupleConnectorRef.current,
+          {
+            opacity: 1,
+            y: 0,
+            filter: "blur(0px)",
+            duration: 0.55,
+            ease: "power2.out",
+          },
+          2.75
+        )
+        // Step 7.2: Couple's names "JAYAPRAKASH & SRIMATHI" bloom in golden radiance
+        .to(
+          coupleNamesRef.current,
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            filter: "blur(0px)",
+            duration: 0.9,
+            ease: "back.out(1.3)",
+          },
+          2.95
+        )
+        .to(
+          coupleNamesGlowRef.current,
+          {
+            opacity: 0.65,
+            scale: 1.12,
+            duration: 0.9,
+            ease: "power2.out",
+          },
+          2.95
+        );
+
         // Step 8: Auspicious Gold Divider draws outward
         tl.to(
           dividerRef.current,
@@ -395,7 +444,7 @@ export const WeddingIntroScene = ({ isOpened }) => {
             duration: 0.7,
             ease: "power2.inOut",
           },
-          3.0
+          3.5
         );
 
         // Step 9: Emotional Invitation Lines reveal one-by-one automatically
@@ -408,7 +457,7 @@ export const WeddingIntroScene = ({ isOpened }) => {
             duration: 0.55,
             ease: "power2.out",
           },
-          3.3
+          3.8
         )
         .to(
           quoteLine2Ref.current,
@@ -419,7 +468,7 @@ export const WeddingIntroScene = ({ isOpened }) => {
             duration: 0.55,
             ease: "power2.out",
           },
-          3.6
+          4.1
         )
         .to(
           quoteLine3Ref.current,
@@ -430,7 +479,7 @@ export const WeddingIntroScene = ({ isOpened }) => {
             duration: 0.55,
             ease: "power2.out",
           },
-          3.9
+          4.4
         );
 
         // Step 10: Delicate End Flourish settles in
@@ -442,7 +491,7 @@ export const WeddingIntroScene = ({ isOpened }) => {
             duration: 0.55,
             ease: "power2.out",
           },
-          4.2
+          4.7
         )
         // Step 11: Floating Scroll Down Prompt gently appears to guide visitor to next page
         .to(
@@ -454,7 +503,7 @@ export const WeddingIntroScene = ({ isOpened }) => {
             duration: 0.75,
             ease: "back.out(1.4)",
           },
-          4.1
+          4.6
         );
       };
 
@@ -629,6 +678,21 @@ export const WeddingIntroScene = ({ isOpened }) => {
               <h2 ref={titleRef} className="intro-wedding-title">
                 Wedding Celebration
               </h2>
+            </div>
+
+            {/* 4.5. Couple's Names Announcement Block */}
+            <div className="intro-couple-block">
+              <p ref={coupleConnectorRef} className="intro-couple-connector">
+                OF
+              </p>
+              <div className="intro-names-glow-wrap">
+                <div ref={coupleNamesGlowRef} className="intro-names-golden-aura" aria-hidden="true" />
+                <h3 ref={coupleNamesRef} className="intro-couple-names">
+                  <span className="name-word name-groom">JAYAPRAKASH</span>
+                  <span className="names-amp">&</span>
+                  <span className="name-word name-bride">SRIMATHI</span>
+                </h3>
+              </div>
             </div>
 
             {/* 5. Delicate Gold Divider Line */}

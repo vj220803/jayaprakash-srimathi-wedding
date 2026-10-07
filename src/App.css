@@ -5695,6 +5695,87 @@
   letter-spacing: 0.01em;
 }
 
+/* 4.5. Couple Names Announcement Block */
+.intro-couple-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: clamp(0px, 0.4vh, 4px) 0 clamp(8px, 1.8vh, 16px);
+  width: 100%;
+  position: relative;
+}
+
+.intro-couple-connector {
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: clamp(0.66rem, 1.6vw, 0.82rem);
+  font-weight: 700;
+  letter-spacing: clamp(0.24em, 0.5vw, 0.36em);
+  color: var(--gold-antique, #d4af37);
+  text-transform: uppercase;
+  margin: 0 0 clamp(2px, 0.6vh, 6px);
+  text-shadow: 0 0 10px rgba(212, 175, 55, 0.4), 0 2px 6px rgba(0, 0, 0, 0.85);
+  will-change: opacity, transform;
+}
+
+.intro-names-glow-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+}
+
+.intro-names-golden-aura {
+  position: absolute;
+  inset: -14px -22px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(255, 238, 178, 0.5) 0%, rgba(212, 175, 55, 0.2) 48%, transparent 75%);
+  filter: blur(20px);
+  pointer-events: none;
+  z-index: -1;
+  will-change: opacity, transform;
+}
+
+.intro-couple-names {
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: clamp(1.22rem, 3.8vw, 2.45rem);
+  font-weight: 800;
+  letter-spacing: clamp(0.08em, 0.25vw, 0.14em);
+  text-transform: uppercase;
+  line-height: 1.22;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(4px, 1vw, 10px);
+  background: linear-gradient(135deg, #FFFDF2 0%, #FFF4D0 22%, #F6DA8B 45%, #D4AF37 68%, #FCE09B 86%, #9A741E 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 22px rgba(212, 175, 55, 0.45));
+  will-change: transform, opacity, filter;
+  text-align: center;
+}
+
+.intro-couple-names .name-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.intro-couple-names .names-amp {
+  display: inline-block;
+  font-family: 'Great Vibes', 'Cormorant Garamond', serif;
+  font-size: clamp(1.15rem, 3.6vw, 2.15rem);
+  font-style: italic;
+  font-weight: 400;
+  color: #FFE699;
+  -webkit-text-fill-color: #FFE699;
+  filter: drop-shadow(0 0 8px rgba(255, 215, 100, 0.6));
+  line-height: 1;
+  margin: 0 clamp(2px, 0.5vw, 5px);
+}
+
 /* 5. Delicate Gold Divider */
 .intro-gold-divider {
   display: flex;
@@ -5968,11 +6049,33 @@
   .intro-flame-right {
     right: 12%;
   }
+
+  .intro-wedding-title-wrap {
+    margin: 0 0 clamp(2px, 0.5vh, 4px);
+  }
+
+  .intro-couple-block {
+    margin: 0 0 clamp(6px, 1.4vh, 10px);
+  }
+
+  .intro-couple-names {
+    font-size: clamp(1.12rem, 4.4vw, 1.45rem);
+    letter-spacing: 0.07em;
+  }
+
+  .intro-gold-divider {
+    margin: 4px auto clamp(8px, 1.8vh, 14px);
+  }
 }
 
 @media (max-width: 375px) {
   .intro-wedding-title {
     font-size: clamp(2.05rem, 7.2vw, 2.65rem);
+  }
+
+  .intro-couple-names {
+    font-size: 1.02rem;
+    letter-spacing: 0.05em;
   }
 
   .intro-sub-families {
