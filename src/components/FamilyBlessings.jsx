@@ -90,6 +90,15 @@ export const FamilyBlessings = () => {
   const tamilBlockRef = useRef(null);
   const bottomEmblemRef = useRef(null);
 
+  // Smooth scroll back to the top of the wedding invitation
+  const handleScrollToTop = () => {
+    if (window.__lenis) {
+      window.__lenis.scrollTo(0, { duration: 1.6 });
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
   useEffect(() => {
     const ctx = gsap.context(() => {
       // 1. Subtle idle ambient breeze on banana leaves (ultra-gentle 1.5 deg sway)
@@ -382,6 +391,22 @@ export const FamilyBlessings = () => {
           {/* Bottom Delicate Accent */}
           <div ref={bottomEmblemRef}>
             <BottomFloralAccent />
+          </div>
+
+          {/* Return to Top Button at the End of Invitation */}
+          <div
+            className="scene-scroll-prompt in-flow family-scroll-prompt"
+            onClick={handleScrollToTop}
+            role="button"
+            tabIndex={0}
+            aria-label="Back to beginning of wedding invitation"
+          >
+            <div className="prompt-aura-glow" aria-hidden="true" />
+            <div className="prompt-pill-inner">
+              <span className="prompt-star-icon">✦</span>
+              <span className="prompt-main-text">BACK TO TOP</span>
+              <span className="prompt-down-arrow prompt-up-arrow" aria-hidden="true">↑</span>
+            </div>
           </div>
         </div>
       </div>

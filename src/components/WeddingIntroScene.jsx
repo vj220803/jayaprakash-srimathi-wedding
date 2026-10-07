@@ -56,12 +56,26 @@ export const WeddingIntroScene = ({ isOpened }) => {
   const quoteLine2Ref = useRef(null);
   const quoteLine3Ref = useRef(null);
   const flourishRef = useRef(null);
+  const scrollPromptRef = useRef(null);
 
   // Decorative refs
   const lampLeftRef = useRef(null);
   const lampRightRef = useRef(null);
   const leafLeftRef = useRef(null);
   const leafRightRef = useRef(null);
+
+  // Smooth scroll down to Scene 03 (Date Reveal Scratch Card)
+  const handleScrollToDate = (e) => {
+    e?.stopPropagation?.();
+    const target = document.getElementById("date-reveal");
+    if (window.__lenis) {
+      window.__lenis.scrollTo(target || window.innerHeight * 2, { duration: 1.4 });
+    } else if (target) {
+      target.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.scrollTo({ top: window.innerHeight * 2, behavior: "smooth" });
+    }
+  };
 
   useEffect(() => {
     // Check for prefers-reduced-motion
@@ -92,6 +106,7 @@ export const WeddingIntroScene = ({ isOpened }) => {
         );
         gsap.set(titleRef.current, { clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)" });
         gsap.set(centralBloomRef.current, { opacity: 0.65, scale: 1 });
+        gsap.set(scrollPromptRef.current, { opacity: 1, y: 0, scale: 1 });
         if (glitterItemsRef.current) gsap.set(glitterItemsRef.current, { opacity: 0 });
         return;
       }
@@ -112,6 +127,7 @@ export const WeddingIntroScene = ({ isOpened }) => {
         transformOrigin: "top right",
       });
       gsap.set(seamGlowRef.current, { opacity: 0.95, scaleX: 1 });
+      gsap.set(scrollPromptRef.current, { opacity: 0, y: 16, scale: 0.94 });
 
       // Initial State for Inauguration Glitter: Hidden at center seam
       if (glitterItemsRef.current && glitterItemsRef.current.length > 0) {
@@ -427,6 +443,18 @@ export const WeddingIntroScene = ({ isOpened }) => {
             ease: "power2.out",
           },
           4.2
+        )
+        // Step 11: Floating Scroll Down Prompt gently appears to guide visitor to next page
+        .to(
+          scrollPromptRef.current,
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.75,
+            ease: "back.out(1.4)",
+          },
+          4.1
         );
       };
 
@@ -680,6 +708,23 @@ export const WeddingIntroScene = ({ isOpened }) => {
               </span>
             ))}
           </div>
+        </div>
+      </div>
+
+      {/* Floating Scroll Indicator Prompt & Tap Action */}
+      <div
+        ref={scrollPromptRef}
+        className="scene-scroll-prompt intro-scroll-prompt"
+        onClick={handleScrollToDate}
+        role="button"
+        tabIndex={0}
+        aria-label="Scroll down to reveal wedding date"
+      >
+        <div className="prompt-aura-glow" aria-hidden="true" />
+        <div className="prompt-pill-inner">
+          <span className="prompt-star-icon">✦</span>
+          <span className="prompt-main-text">SCROLL DOWN</span>
+          <span className="prompt-down-arrow" aria-hidden="true">↓</span>
         </div>
       </div>
     </section>

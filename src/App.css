@@ -1501,9 +1501,10 @@
 }
 
 /* =========================================================
-   SCENE 1: FLOATING SCROLL INDICATOR & NUDGE PROMPT
+   UNIVERSAL FLOATING SCROLL INDICATOR & GUIDANCE PROMPTS
 ========================================================= */
-.murugan-scroll-prompt {
+.murugan-scroll-prompt,
+.scene-scroll-prompt {
   position: absolute;
   bottom: clamp(16px, 2.8vh, 32px);
   left: 50%;
@@ -1517,6 +1518,16 @@
   -webkit-tap-highlight-color: transparent;
   outline: none;
   transition: transform 0.25s ease, opacity 0.4s ease;
+}
+
+/* In-Flow placement for sections with dynamic vertical content (scratch card, couple, venue) */
+.scene-scroll-prompt.in-flow {
+  position: relative;
+  bottom: auto;
+  left: auto;
+  transform: none;
+  margin: clamp(20px, 3.5vh, 36px) auto clamp(12px, 2vh, 20px);
+  z-index: 20;
 }
 
 .prompt-aura-glow {
@@ -1546,7 +1557,9 @@
 }
 
 .murugan-scroll-prompt:hover .prompt-pill-inner,
-.murugan-scroll-prompt:active .prompt-pill-inner {
+.murugan-scroll-prompt:active .prompt-pill-inner,
+.scene-scroll-prompt:hover .prompt-pill-inner,
+.scene-scroll-prompt:active .prompt-pill-inner {
   transform: scale(1.05);
   border-color: #ffe699;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.85), 0 0 32px rgba(255, 215, 100, 0.55);
@@ -1577,6 +1590,10 @@
   animation: promptArrowBounce 1.4s ease-in-out infinite;
 }
 
+.prompt-up-arrow {
+  animation: promptArrowUpBounce 1.4s ease-in-out infinite !important;
+}
+
 @keyframes promptFloatBounce {
   0%, 100% {
     transform: translateY(0);
@@ -1595,6 +1612,15 @@
   }
 }
 
+@keyframes promptArrowUpBounce {
+  0%, 100% {
+    transform: translateY(1px);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
 @keyframes promptAuraPulse {
   0% {
     opacity: 0.45;
@@ -1607,8 +1633,15 @@
 }
 
 @media (max-width: 480px) {
-  .murugan-scroll-prompt {
+  .murugan-scroll-prompt,
+  .scene-scroll-prompt:not(.in-flow) {
     bottom: clamp(14px, 2.2vh, 22px);
+    max-width: 92vw;
+  }
+
+  .scene-scroll-prompt.in-flow {
+    margin-top: clamp(16px, 2.5vh, 26px);
+    margin-bottom: clamp(8px, 1.5vh, 14px);
     max-width: 92vw;
   }
 

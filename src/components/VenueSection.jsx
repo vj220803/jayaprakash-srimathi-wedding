@@ -289,6 +289,18 @@ export const VenueSection = () => {
     );
   };
 
+  // Smooth scroll to next scene (Family Blessings & Warm Welcome)
+  const handleScrollToFamily = () => {
+    const familyEl = document.getElementById("family-blessings");
+    if (familyEl) {
+      if (window.__lenis) {
+        window.__lenis.scrollTo(familyEl, { duration: 1.4 });
+      } else {
+        familyEl.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
+
   return (
     <section
       ref={containerRef}
@@ -412,6 +424,22 @@ export const VenueSection = () => {
               <span className="venue-btn-icon" aria-hidden="true">✦</span>
               <span className="venue-btn-text">ADD TO CALENDAR</span>
             </button>
+          </div>
+
+          {/* Floating Scroll Indicator Prompt to Proceed to Family Blessings */}
+          <div
+            className="scene-scroll-prompt in-flow venue-scroll-prompt"
+            onClick={handleScrollToFamily}
+            role="button"
+            tabIndex={0}
+            aria-label="Scroll down to view family blessings and welcome"
+          >
+            <div className="prompt-aura-glow" aria-hidden="true" />
+            <div className="prompt-pill-inner">
+              <span className="prompt-star-icon">✦</span>
+              <span className="prompt-main-text">SCROLL DOWN</span>
+              <span className="prompt-down-arrow" aria-hidden="true">↓</span>
+            </div>
           </div>
         </div>
       </div>

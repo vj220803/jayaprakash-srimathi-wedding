@@ -39,6 +39,18 @@ export const CoupleReveal = () => {
   const namesTimelineRef = useRef(null);
   const namesRevealedRef = useRef(false);
 
+  // Smooth scroll to next scene (Venue Section)
+  const handleScrollToVenue = () => {
+    const venueEl = document.getElementById("venue-section");
+    if (venueEl) {
+      if (window.__lenis) {
+        window.__lenis.scrollTo(venueEl, { duration: 1.4 });
+      } else {
+        venueEl.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
+
   // Dedicated calligraphy-style reveal animation for the names and invitation message
   const playNamesAndQuoteReveal = (force = false) => {
     if (namesRevealedRef.current && !force) {
@@ -559,6 +571,22 @@ export const CoupleReveal = () => {
               <span className="tamil-quote-text">இருமனம் இணைந்து, இல்லறம் சிறந்து, வாழையடி வாழையென வாழ்க பல்லாண்டு!</span>
               <span className="tamil-quote-mark right">”</span>
             </p>
+          </div>
+        </div>
+
+        {/* Floating Scroll Indicator Prompt to Proceed to Venue Section */}
+        <div
+          className="scene-scroll-prompt in-flow couple-scroll-prompt"
+          onClick={handleScrollToVenue}
+          role="button"
+          tabIndex={0}
+          aria-label="Scroll down to view wedding venue"
+        >
+          <div className="prompt-aura-glow" aria-hidden="true" />
+          <div className="prompt-pill-inner">
+            <span className="prompt-star-icon">✦</span>
+            <span className="prompt-main-text">SCROLL DOWN</span>
+            <span className="prompt-down-arrow" aria-hidden="true">↓</span>
           </div>
         </div>
       </div>

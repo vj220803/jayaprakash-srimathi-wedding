@@ -884,28 +884,21 @@ export const DateReveal = ({ isOpened }) => {
           </div>
         </div>
 
-        {/* Guidance Prompt to Proceed to Couple Section */}
+        {/* Floating Scroll Indicator Prompt to Proceed to Couple Section */}
         <div
           ref={promptRef}
-          className={`scroll-to-couple-prompt ${isRevealed ? "prompt-visible" : ""}`}
+          className="scene-scroll-prompt in-flow date-scroll-prompt"
+          onClick={handleScrollToCouple}
+          role="button"
+          tabIndex={0}
+          aria-label="Scroll down to meet the bride and groom"
         >
-          <button
-            type="button"
-            onClick={handleScrollToCouple}
-            className="scroll-couple-action-btn"
-            aria-label="Scroll down to meet the bride and groom"
-          >
-            <span className="btn-lotus-accent">
-              <svg viewBox="0 0 24 20" width="18" height="15" fill="none">
-                <path d="M12 1.5 C10.8 6.5 10 12 12 16 C14 12 13.2 6.5 12 1.5 Z" fill="#F3E098" />
-                <path d="M12 16 C8.5 13.5 5 10.5 4 6.5 C6.5 9 9.5 13 12 16 Z" fill="#E6C87D" opacity="0.9" />
-                <path d="M12 16 C15.5 13.5 19 10.5 20 6.5 C17.5 9 14.5 13 12 16 Z" fill="#E6C87D" opacity="0.9" />
-                <circle cx="12" cy="16.5" r="1.5" fill="#FFEAA7" />
-              </svg>
-            </span>
-            <span className="btn-prompt-text">Scroll to Meet the Couple</span>
-            <span className="btn-down-arrow">↓</span>
-          </button>
+          <div className="prompt-aura-glow" aria-hidden="true" />
+          <div className="prompt-pill-inner">
+            <span className="prompt-star-icon">✦</span>
+            <span className="prompt-main-text">SCROLL DOWN</span>
+            <span className="prompt-down-arrow" aria-hidden="true">↓</span>
+          </div>
         </div>
       </div>
     </section>
