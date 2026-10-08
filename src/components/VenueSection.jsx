@@ -113,10 +113,10 @@ export const VenueSection = () => {
   const handleAddToCalendar = () => {
     const title = encodeURIComponent("Jayaprakash & Srimathi Wedding");
     const details = encodeURIComponent(
-      "With the divine blessings of Lord Murugan, celebrating the wedding of Jayaprakash & Srimathi at V.R. Mahal (A/C), Kottalur."
+      "With the divine blessings of Lord Murugan, celebrating the wedding of Jayaprakash & Srimathi at VR Mahal - Kottaiyur."
     );
     const location = encodeURIComponent(
-      "V.R. Mahal (A/C), Kottalur, Pennagaram – Mettur Main Road, Dharmapuri District, Tamil Nadu"
+      "VR Mahal - Kottaiyur, Pennagaram – Mecheri Main Road, Dharmapuri District, Tamil Nadu"
     );
     // 2026-11-01 from 07:00 to 11:00 IST (UTC+5:30 -> 01:30 UTC to 05:30 UTC)
     const dates = "20261101T013000Z/20261101T053000Z";
@@ -125,7 +125,7 @@ export const VenueSection = () => {
   };
 
   const handleGetDirections = () => {
-    // Opens Google Maps to V.R. Mahal Kottalur
+    // Opens Google Maps to VR Mahal - Kottaiyur
     window.open(
       "https://maps.app.goo.gl/3rqpNQTgvSsA5hLv6?g_st=aw",
       "_blank"
@@ -149,13 +149,13 @@ export const VenueSection = () => {
       ref={containerRef}
       className="venue-cinematic-scene"
       id="venue-section"
-      aria-label="The Auspicious Venue V.R. Mahal"
+      aria-label="The Auspicious Venue VR Mahal - Kottaiyur"
     >
       {/* Semantic Headings for SEO and Screen Readers */}
       <div className="sr-only">
         <h2>THE AUSPICIOUS VENUE</h2>
-        <h3>V.R. MAHAL (A/C)</h3>
-        <p>Kottalur, Pennagaram – Mettur Main Road, Dharmapuri District, Tamil Nadu</p>
+        <h3>VR MAHAL - Kottaiyur</h3>
+        <p>Pennagaram – Mecheri Main Road, Dharmapuri District, Tamil Nadu</p>
         <p>01 November 2026, Sunday • 7:00 AM – 11:00 AM</p>
       </div>
 
@@ -193,12 +193,12 @@ export const VenueSection = () => {
               handleGetDirections();
             }
           }}
-          aria-label="View V.R. Mahal on Google Maps"
+          aria-label="View VR Mahal - Kottaiyur on Google Maps"
           title="Click to view location on Google Maps"
         >
           <img
             src="/assets/venue/vr_mahal_mandapam_theme.jpg"
-            alt="The Auspicious Venue: V.R. Mahal (A/C), Kottalur, Pennagaram – Mettur Main Road, Dharmapuri District, Tamil Nadu. 01 November 2026, Sunday 7:00 AM – 11:00 AM"
+            alt="The Auspicious Venue: VR Mahal - Kottaiyur, Pennagaram – Mecheri Main Road. 01 November 2026, Sunday 7:00 AM – 11:00 AM"
             className="venue-poster-image"
             loading="eager"
           />
