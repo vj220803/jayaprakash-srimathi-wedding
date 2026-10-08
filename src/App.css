@@ -3206,7 +3206,7 @@
   }
 
   .venue-poster-card {
-    max-height: clamp(440px, 62vh, 580px);
+    max-height: clamp(480px, 66vh, 620px);
     width: auto;
     max-width: none;
     aspect-ratio: 576 / 1024;
@@ -3215,7 +3215,7 @@
   .venue-poster-image {
     height: 100%;
     width: auto;
-    max-height: clamp(440px, 62vh, 580px);
+    max-height: clamp(480px, 66vh, 620px);
     object-fit: contain;
   }
 }
@@ -3230,15 +3230,15 @@
   }
 
   .venue-poster-card {
-    max-width: min(80vw, 305px);
+    max-width: min(88vw, 350px);
   }
 
   .venue-cinematic-actions {
     flex-direction: column;
     width: 100%;
-    max-width: 260px;
-    gap: 7px;
-    margin-top: 4px;
+    max-width: min(88vw, 300px);
+    gap: 8px;
+    margin-top: 6px;
   }
 
   .venue-btn-cinematic {
