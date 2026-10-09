@@ -127,7 +127,7 @@ export const VenueSection = () => {
   const handleGetDirections = () => {
     // Opens Google Maps to VR Mahal - Kottaiyur
     window.open(
-      "https://maps.app.goo.gl/3rqpNQTgvSsA5hLv6?g_st=aw",
+      "https://maps.app.goo.gl/iLq3yTsEgjPvDKpC7?g_st=ac",
       "_blank"
     );
   };
