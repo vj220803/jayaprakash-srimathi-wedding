@@ -12,7 +12,7 @@ import { VenueSection } from "./components/VenueSection";
 import { FamilyBlessings } from "./components/FamilyBlessings";
 import { PetalCanvas } from "./components/PetalCanvas";
 import { MusicControl } from "./components/MusicControl";
-import { toggleDivineAudio, startDivineAudio } from "./utils/audioSynth";
+import { toggleDivineAudio, startDivineAudio, stopDivineAudio, pauseDivineAudioImmediate } from "./utils/audioSynth";
 
 import "./App.css";
 
@@ -29,6 +29,7 @@ function App() {
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const lenisRef = useRef(null);
   const mainContainerRef = useRef(null);
+  const wasPlayingBeforeHiddenRef = useRef(false);
 
   // Initialize Lenis smooth scroll
   useEffect(() => {
@@ -57,6 +58,45 @@ function App() {
       lenis.destroy();
     };
   }, []);
+
+  // Auto-pause audio when user leaves the website, minimizes browser, or switches tabs/apps
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      const audioEl = document.getElementById("wedding-bg-audio");
+      if (document.hidden) {
+        // User switched apps (e.g. back to WhatsApp), minimized browser, or switched tabs
+        if (isMusicPlaying || (audioEl && !audioEl.paused)) {
+          wasPlayingBeforeHiddenRef.current = true;
+          pauseDivineAudioImmediate();
+          setIsMusicPlaying(false);
+        }
+      } else {
+        // User returned to the website
+        if (wasPlayingBeforeHiddenRef.current && isOpened) {
+          startDivineAudio();
+          setIsMusicPlaying(true);
+          wasPlayingBeforeHiddenRef.current = false;
+        }
+      }
+    };
+
+    const handlePageHide = () => {
+      // User closed tab, navigated away, or backed out
+      pauseDivineAudioImmediate();
+      setIsMusicPlaying(false);
+      wasPlayingBeforeHiddenRef.current = false;
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("pagehide", handlePageHide);
+    window.addEventListener("beforeunload", handlePageHide);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("pagehide", handlePageHide);
+      window.removeEventListener("beforeunload", handlePageHide);
+    };
+  }, [isMusicPlaying, isOpened]);
 
   // Handle invitation opening
   const handleOpenInvitation = () => {

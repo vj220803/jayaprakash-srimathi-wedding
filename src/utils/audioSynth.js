@@ -121,6 +121,23 @@ export const stopDivineAudio = () => {
   }
 };
 
+export const pauseDivineAudioImmediate = () => {
+  try {
+    const audioEl = document.getElementById("wedding-bg-audio");
+    if (audioEl) {
+      audioEl.pause();
+    }
+    if (audioCtx && audioCtx.state === "running") {
+      audioCtx.suspend();
+    }
+    stopOscillators();
+    isPlaying = false;
+  } catch (err) {
+    console.warn("Immediate audio pause note:", err);
+    isPlaying = false;
+  }
+};
+
 const stopOscillators = () => {
   oscillators.forEach(({ osc, lfo }) => {
     try {
@@ -170,4 +187,27 @@ export const playSacredChime = () => {
     console.warn("Chime synth note:", err);
   }
 };
+
+// Global lifecycle safeguard: pause audio immediately if user minimizes or switches away
+if (typeof window !== "undefined" && typeof document !== "undefined") {
+  const handleImmediateStop = () => {
+    const audioEl = document.getElementById("wedding-bg-audio");
+    if (audioEl && !audioEl.paused) {
+      audioEl.pause();
+    }
+    if (audioCtx && audioCtx.state === "running") {
+      audioCtx.suspend();
+    }
+  };
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      handleImmediateStop();
+    }
+  });
+
+  window.addEventListener("pagehide", handleImmediateStop);
+  window.addEventListener("beforeunload", handleImmediateStop);
+}
+
 
